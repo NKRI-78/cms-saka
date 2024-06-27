@@ -1,0 +1,3 @@
+<script>
+    $('#dataOrder').DataTable();
+</script>

@@ -1,0 +1,132 @@
+.sign-in-detail {
+    color: var(--iq-white);
+    background: #c4942e;
+}
+
+.sign-in-logo img {
+    height: 90px !important;
+}
+
+.btn-custom {
+    background: #c4942e;
+    color: #fff;
+}
+
+.btn-custom:hover {
+    color: #fff;
+    background-color: #cfa447;
+}
+
+.bg-custom {
+    color: var(--iq-white);
+    background: linear-gradient(to right, #c4942e 0%, #c4942e 100%) !important;
+}
+
+.wrapper-menu {
+    font-size: 30px;
+    line-height: 15px;
+    color: #c4942e;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 330ms ease-out;
+}
+
+a {
+    color: #c4942e;
+}
+
+.iq-sidebar-menu .iq-menu li a {
+    font-size: 14px;
+    white-space: nowrap;
+    display: block;
+    color: #818181;
+    position: relative;
+    padding: 15px 20px;
+    line-height: 18px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 0 15px 15px 0;
+}
+
+.iq-sidebar-menu .iq-menu li a[aria-expanded="true"] {
+    color: var(--iq-white);
+    text-decoration: none;
+    background: linear-gradient(to right, #c4942e 0%, #c4942e 100%) !important;
+    transition: none;
+    border-radius: 0 15px 0 0;
+}
+
+/* .iq-sidebar-menu .iq-menu li a:hover {
+    color: rgb(177, 174, 174);
+} */
+
+.iq-sidebar-menu .iq-menu li ul li a {
+    color: #818181;
+}
+
+.iq-sidebar-logo img {
+    height: 33px;
+    margin-top: 3px;
+}
+
+.iq-sidebar-menu .iq-menu li.active>a {
+    color: var(--iq-white);
+    text-decoration: none;
+}
+
+.iq-sidebar-menu .iq-menu li.active .iq-submenu li.active>a {
+    background: var(--iq-light-primary);
+    color: #c4942e;
+    border-radius: 0;
+}
+
+.iq-sidebar-menu .iq-menu li.active>a {
+    color: var(--iq-white);
+    text-decoration: none;
+    background: linear-gradient(to right, #c4942e 0%, #c4942e 100%);
+    text-decoration: none;
+}
+
+/* untuk logo panjang */
+/* body.sidebar-main .iq-sidebar-logo img {
+    display: none;
+} */
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #c4942e;
+    border-color: #c4942e;
+}
+
+.page-link {
+    border: 1px solid #c4942e !important;
+}
+
+.form-control-sm {
+    line-height: 22px !important;
+}
+
+.form-control:focus {
+    color: black;
+    border-color: #c4942e;
+    box-shadow: none;
+}
+
+th,
+td {
+    white-space: nowrap !important;
+}
+
+div.dataTables_wrapper {
+    width: 100% !important;
+    margin: 0 auto !important;
+}
