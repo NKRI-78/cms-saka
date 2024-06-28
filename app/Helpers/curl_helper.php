@@ -56,14 +56,16 @@ function curlImageHelper($url, $data)
   $token = $session->get('token');
   $headers = ["Content-Type : application/json", "Authorization: Bearer " . $token];
   $postfields = [
-    "tags" => "test",
-    "file" => curl_file_create($data['file']['tmp_name'], $data['file']['type'], basename($data['file']['name']))
+    "folder" => "images" ,
+    "subfolder" => "saka",
+    "media" => curl_file_create($data['media']['tmp_name'], $data['media']['type'], basename($data['media']['name']))
   ];
   $curl = curl_init();
   $options = [
     CURLOPT_URL => $url,
     CURLOPT_POSTFIELDS => $postfields,
     CURLOPT_HTTPHEADER => $headers,
+    CURLOPT_SSL_VERIFYPEER => 0,
     CURLOPT_RETURNTRANSFER => true
   ];
   curl_setopt_array($curl, $options);
@@ -71,3 +73,5 @@ function curlImageHelper($url, $data)
   $decoded = json_decode($result);
   return $decoded;
 }
+
+

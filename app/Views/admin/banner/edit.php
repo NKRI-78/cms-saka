@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label>Image (Recommendation Size 960 x 390):</label>
-                                            <input type="file" class="dropify" id="imageBanner" data-default-file="<?= getenv('API_MEDIA') . $row->Media[0]->path ?>" data-height="200" />
+                                            <input type="file" class="dropify" id="imageBanner" data-default-file="<?= $row->Media[0]->path ?>" data-height="200" />
                                         </div>
                                     </div>
                                 <?php endforeach; ?>

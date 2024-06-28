@@ -42,7 +42,9 @@ class EventController extends BaseController
 
         if ($_FILES['picture']) {
             $bodyImage = [
-                "file" => $_FILES['picture']
+                "folder" => "images",
+                "subfolder" => "saka",
+                "media" => $_FILES['picture']
             ];
 
             $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
@@ -57,7 +59,7 @@ class EventController extends BaseController
             "end" => date("H:i", strtotime($end)),
             "location" => $location,
             "summary" => $summary,
-            "picture" => isset($_FILES['picture']) ? $result->body->media_id : '',
+            "picture" => isset($_FILES['picture']) ? $result->data->media_id : '',
             "share_news" => $shareValue,
         ];
         
@@ -103,7 +105,9 @@ class EventController extends BaseController
 
         if (isset($_FILES['picture'])) {
             $bodyImage = [
-                "file" => $_FILES['picture']
+                "folder" => "images",
+                "subfolder" => "saka",
+                "media" => $_FILES['picture']
             ];
 
             $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
@@ -117,7 +121,7 @@ class EventController extends BaseController
             "end" => date("H:i", strtotime($end)),
             "location" => $location,
             "summary" => $summary,
-            "picture" => isset($_FILES['picture']) ? $result->body->media_id : $image,
+            "picture" => isset($_FILES['picture']) ? $result->data->media_id : $image,
         ];
         
         $req = $client->put(

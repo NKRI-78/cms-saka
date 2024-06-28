@@ -62,7 +62,7 @@
             data: data,
             success: function(response) {
                 var data = JSON.parse(response);
-                $("#imageBanner").attr('src', `${apiUrl + data.data[0].Media[0].path}`);
+                $("#imageBanner").attr('src', `${data.data[0].Media[0].path}`);
             },
             error: function(err) {
                 toastr.error('something went wrong');
@@ -206,7 +206,7 @@
             success: function(response) {
                 var data = JSON.parse(response);
 
-                $("#imageEvent").attr('src', `${apiUrl + data.data[0].Media[0].path}`);
+                $("#imageEvent").attr('src', `${data.data[0].Media[0].path}`);
                 $("#eventDate").html(data.data[0].event_date);
                 $("#startEnd").html(data.data[0].start + " - " + data.data[0].end);
                 $("#description").html(data.data[0].description);
@@ -301,7 +301,7 @@
             success: function(response) {
                 var data = JSON.parse(response);
 
-                $("#imageNews").attr('src', `${apiUrl + data.data[0].Media[0].path}`);
+                $("#imageNews").attr('src', `${data.data[0].Media[0].path}`);
                 $("#contentNews").html(data.data[0].content);
             },
             error: function(err) {

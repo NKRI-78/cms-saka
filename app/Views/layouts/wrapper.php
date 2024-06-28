@@ -45,7 +45,7 @@ $request = Services::request();
                 <li class="<?= $request->uri->getSegment(2) == "news" ? "active" : "" ?>"><a href="<?= base_url("admin/news") ?>"><i class="ri-newspaper-line"></i>News</a></li>
               </ul>
             </li>
-            <li class="<?= $request->uri->getSegment(2) == "commerce-banner" ? "active" : ($request->uri->getSegment(2) == "category" ? "active" : ($request->uri->getSegment(2) == "campaign" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : ($request->uri->getSegment(2) == "configuration" ? "active" : ($request->uri->getSegment(2) == "courier" ? "active" : ""))))) ?>">
+            <!-- <li class="<?= $request->uri->getSegment(2) == "commerce-banner" ? "active" : ($request->uri->getSegment(2) == "category" ? "active" : ($request->uri->getSegment(2) == "campaign" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : ($request->uri->getSegment(2) == "configuration" ? "active" : ($request->uri->getSegment(2) == "courier" ? "active" : ""))))) ?>">
               <a href="#commerce" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="true"><i class="ri-store-2-line"></i><span>Commerce</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
               <ul id="commerce" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 <li class="<?= $request->uri->getSegment(2) == "commerce-banner" ? "active" : "" ?>"><a href="<?= base_url("admin/commerce-banner") ?>"><i class="ri-image-line"></i>Commerce Banner</a></li>
@@ -55,7 +55,7 @@ $request = Services::request();
                 <li class="<?= $request->uri->getSegment(2) == "configuration" ? "active" : "" ?>"><a href="<?= base_url("admin/configuration") ?>"><i class="ri-sound-module-line"></i>Configuration</a></li>
                 <li class="<?= $request->uri->getSegment(2) == "courier" ? "active" : "" ?>"><a href="<?= base_url("admin/courier") ?>"><i class="ri-truck-line"></i>Courier</a></li>
               </ul>
-            </li>
+            </li> -->
             <li class="<?= $request->uri->getSegment(2) == "broadcast" ? "active" : "" ?>" style="margin-top:10px;">
               <a href="<?= base_url("admin/broadcast") ?>" class="iq-waves-effect"><i class="ri-broadcast-fill"></i><span>Broadcast</span></a>
             </li>

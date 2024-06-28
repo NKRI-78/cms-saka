@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Image (Recommendation Size 700 x 525):</label>
-                                        <input type="file" class="dropify" id="imageNews" data-default-file="<?= getenv('API_MEDIA') . $news[0]->Media[0]->path ?>" data-height="200" />
+                                        <input type="file" class="dropify" id="imageNews" data-default-file="<?= $news[0]->Media[0]->path ?>" data-height="200" />
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Content:</label>

@@ -33,7 +33,9 @@ class NewsController extends BaseController
 
         if ($_FILES['image']) {
             $bodyImage = [
-                "file" => $_FILES['image']
+                "folder" => "images",
+                "subfolder" => "saka",
+                "media" => $_FILES['image']
             ];
 
             $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
@@ -46,7 +48,7 @@ class NewsController extends BaseController
             "highlight" => intval($highlight),
             "title" => $title,
             "type" => "news",
-            "picture" => isset($_FILES['image']) ? $result->body->media_id : '',
+            "picture" => isset($_FILES['image']) ? $result->data->media_id : '',
         ];
 
         $req = $client->post(
@@ -88,7 +90,9 @@ class NewsController extends BaseController
 
         if (isset($_FILES['image'])) {
             $bodyImage = [
-                "file" => $_FILES['image']
+                "folder" => "images",
+                "subfolder" => "saka",
+                "media" => $_FILES['image']
             ];
 
             $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
@@ -100,7 +104,7 @@ class NewsController extends BaseController
             "highlight" => intval($highlight),
             "title" => $title,
             "type" => "news",
-            "picture" => isset($_FILES['image']) ? $result->body->media_id : $image,
+            "picture" => isset($_FILES['image']) ? $result->data->media_id : $image,
         ];
 
         $req = $client->put(
