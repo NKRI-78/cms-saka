@@ -15,6 +15,7 @@ class BroadcastController extends BaseController
     public function post()
     {
         $client = new \GuzzleHttp\Client();
+        
         $session = Services::session();
         $request = Services::request();
 
@@ -27,7 +28,6 @@ class BroadcastController extends BaseController
             "message" => $message,
         ];
         
-
         $req = $client->post(
             $url,
             [

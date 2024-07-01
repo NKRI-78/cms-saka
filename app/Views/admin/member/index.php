@@ -127,9 +127,9 @@
             success: function(response) {
                 toastr.success('Hapus Member Berhasil');
 
-                setInterval(function() {
-                    location.reload();
-                }, 1000);
+                // setInterval(function() {
+                //     location.reload();
+                // }, 1000);
             },
             error: function(err) {
                 toastr.error('Hapus Member Gagal');
