@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="<?= base_url('public/assets/css/member.css') ?>">
+<style>
+.action{
+    width: 5.5rem !important;
+}
+</style>
 
 <!--  Content  -->
 <div id="content-page" class="content-page">
@@ -22,8 +27,9 @@
                             <table id="member" class="table">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th id="fullname">Full Name</th>
-                                        <th>Action</th>
+                                        <th class="action">Action</th>
                                         <th>Phone Number</th>
                                         <th>Email</th>
                                         <th>No Member</th>

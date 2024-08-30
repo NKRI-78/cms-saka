@@ -51,7 +51,7 @@
                         element.province ? element.province : "-",
                         element.city ? element.city : "-",
                         element.lanud ? element.lanud : "-",
-                        element.created ? element.created : "-",
+                        element.created ? moment(element.created).format('D MMMM YYYY') : "-",
                         element.address ? element.address : "-",
                     ]
                 });
