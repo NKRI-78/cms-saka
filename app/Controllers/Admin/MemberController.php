@@ -9,10 +9,19 @@ class MemberController extends BaseController
 {
     public function index()
     {
-        $result = curlHelper(getenv('API_URL') . '/user-service/users', 'GET');
-        $data["member"] = $result->body;
+        // $result = curlHelper(getenv('API_URL') . '/user-service/users', 'GET');
+        // $data["member"] = $result->body;
 
-        return view("admin/member/index", $data);
+        return view("admin/member/index");
+    }
+
+    public function getData()
+    {
+        $result = curlHelper(getenv('API_URL') . '/user-service/users', 'GET');
+
+        return json_encode([
+            "body" => $result->body
+        ]);
     }
 
     public function delete($userId)

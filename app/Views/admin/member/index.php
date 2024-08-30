@@ -30,73 +30,18 @@
                                         <th>Province</th>
                                         <th>City</th>
                                         <th>Lanud</th>
-                                        <th>Status</th>
+                                        <th>Tanggal Registrasi</th>
                                         <th>Address</th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
-                                    <?php $a = 0; ?>
-                                    <?php $i = 0; ?>
-                                    <?php if ($member != "") { ?>
-                                        <?php foreach ($member as $row) : ?>
-                                            <tr>
-                                                <td><?= $row->fullname ?></td>
-                                                <td>
-                                                    <div class="send-panel">
-                                                        <label class="ml-2 mb-0 iq-bg-primary rounded">
-                                                            <a href="<?= base_url("admin/member/edit/$row->user_id") ?>"> <i class="ri-pencil-line text-primary"></i></a>
-                                                        </label>
-                                                        <label class="ml-2 mb-0 iq-bg-primary rounded">
-                                                            <a href="#myModal<?= $a++ ?>" class="trigger-btn" data-toggle="modal" data-toggle="tooltip" data-placement="top" title="" data-original-title="Hapus Member"> <i class="ri-delete-bin-line text-primary"></i></a>
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td><?= $row->phone_number ?></td>
-                                                <td><?= $row->email_address ?></td>
-                                                <td><?= $row->no_member ?></td>
-                                                <td><?= $row->province ?></td>
-                                                <td><?= $row->city ?></td>
-                                                <td><?= $row->lanud ?></td>
-                                                <td>
-                                                    <?php switch ($row->status) {
-                                                        case "enabled":
-                                                            echo "<div class='badge badge-pill badge-success'>paid</div>";
-                                                            break;
-                                                        case "pending":
-                                                            echo "<div class='badge badge-pill badge-danger'>unpaid</div>";
-                                                            break;
-                                                    }  ?>
-                                                </td>
-                                                <td><?= $row->address ? $row->address : '-' ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    <?php } ?>
+                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <?php $b = 0; ?>
-                    <?php if ($member != "") { ?>
-                        <?php foreach ($member as $row) : ?>
-                            <div id="myModal<?= $b++ ?>" class="modal fade">
-                                <div class="modal-dialog modal-confirm">
-                                    <div class="modal-content">
-                                        <div class="modal-header flex-column">
-                                            <div class="icon-box">
-                                                <i class="material-icons">&#xE5CD;</i>
-                                            </div>
-                                            <h4 class="modal-title w-100">Apakah Anda Yakin?</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                        <div class="modal-footer justify-content-center">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                            <button type="button" onclick="Delete('<?= $row->user_id ?>')" class="btn btn-danger">Hapus</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php } ?>
+                    
 
                 </div>
             </div>

@@ -58,11 +58,13 @@ $routes->group('admin', function ($routes) {
 
   $routes->group('member', function ($routes) {
     $routes->get('/', 'MemberController::index', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('getData', 'MemberController::getData', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('delete/(:any)', 'MemberController::delete/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('detail/(:any)', 'MemberController::detail/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('edit/(:any)', 'MemberController::edit/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('update', 'MemberController::update', ['namespace' => 'App\Controllers\Admin']);
   });
+
   $routes->group('scannerjoin', function ($routes) {
     $routes->get('/', 'ScannerjoinController::index', ['namespace' => 'App\Controllers\Admin']);
     // $routes->get('delete/(:any)', 'MemberController::delete/$1', ['namespace' => 'App\Controllers\Admin']);

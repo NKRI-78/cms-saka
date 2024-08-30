@@ -1,7 +1,9 @@
 <script>
     $('#data').DataTable();
     $("#joinmember").DataTable({
-        order: [[2, 'asc']],
+        order: [
+            [2, 'asc']
+        ],
     });
     $('#detailJoin').DataTable({
         "pageLength": 100,
@@ -11,13 +13,93 @@
         "scrollX": true
     });
 
-    $('#member').DataTable({
+    let tabelMember = $('#member').DataTable({
         "scrollX": true,
         dom: 'Bfrtip',
         buttons: [
             'csv', 'excel', 'print'
         ],
     });
+
+    async function Data() {
+
+        tabelMember.clear().draw();
+
+        await $.ajax({
+            type: "POST",
+            url: `${baseUrl}/admin/member/getData`,
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: false,
+            success: function(response) {
+                var res = JSON.parse(response);
+                var no = 1;
+
+                var dataRows = res.body.map(element => {
+
+                    return [
+                        no++,
+                        element.fullname ? element.fullname : "-",
+                        `<div class="send-panel"> 
+                            <label class="ml-2 mb-0 iq-bg-primary rounded"><a href="${baseUrl}/admin/member/edit/${element.user_id}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Event"><i class="ri-edit-line text-primary"></i></a></label>&nbsp;
+                            <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DeleteMember('${element.user_id}')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Event"> <i class="ri-delete-bin-line text-primary"></i></a></label>
+                        </div>`,
+                        element.phone_number ? element.phone_number : "-",
+                        element.email_address ? element.email_address : "-",
+                        element.no_member ? element.no_member : "-",
+                        element.province ? element.province : "-",
+                        element.city ? element.city : "-",
+                        element.lanud ? element.lanud : "-",
+                        element.created ? element.created : "-",
+                        element.address ? element.address : "-",
+                    ]
+                });
+
+                tabelMember.rows.add(dataRows).draw();
+            },
+            error: function(err) {
+                $(".loader-table").css({
+                    "display": "none"
+                });
+                console.log(err);
+            }
+        });
+    }
+
+    Data()
+
+    function DeleteMember(userId) {
+        console.log('delete');
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Member ini akan dihapus!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: `${baseUrl}/admin/member/delete/${userId}`,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function(response) {
+                        toastr.success('Hapus Member Berhasil');
+                        location.reload();
+                    },
+                    error: function(err) {
+                        toastr.error('Hapus Member Gagal');
+                    }
+                });
+            }
+        });
+    }
 
     CreateBanner = async () => {
         let data = new FormData();
@@ -116,11 +198,11 @@
 
         if (summary == "") {
             return toastr.error('summary tidak boleh kosong');
-        } 
+        }
 
         if (description == "") {
             return toastr.error('description tidak boleh kosong');
-        } 
+        }
 
         data.append('start', start);
         data.append('end', end);
@@ -768,7 +850,7 @@
         data.append('confirmNewPassword', confirmNewPassword);
 
         $("#changePassword").text('Loading...');
-        
+
         await $.ajax({
             type: "POST",
             url: `${baseUrl}/admin/setting/change-password`,
