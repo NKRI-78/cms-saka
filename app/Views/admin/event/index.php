@@ -75,7 +75,7 @@
                                         <div id="description"></div><br>
                                         <label>Location:</label>
                                         <div id="location"></div><br>
-                                        <label>Summary:</label>
+                                        <label>Title:</label>
                                         <div id="summary"></div>
                                     </div>
                                 </div>

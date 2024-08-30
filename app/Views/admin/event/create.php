@@ -17,6 +17,11 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="form-group col-md-12">
+                                        <label>Title:</label>
+                                        <input type="text" class="form-control" id="summary">
+                                        <!-- <textarea id="summary" class="form-control"></textarea> -->
+                                    </div>
+                                    <div class="form-group col-md-12">
                                         <label>Event Date:</label>
                                         <input type="date" class="form-control" id="eventDate" placeholder="Event Date">
                                     </div>
@@ -35,10 +40,6 @@
                                     <div class="form-group col-md-12">
                                         <label>Location:</label>
                                         <textarea id="location" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Summary:</label>
-                                        <textarea id="summary" class="form-control"></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Description:</label>

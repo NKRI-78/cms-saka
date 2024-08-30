@@ -18,6 +18,11 @@
                                 <div class="row">
                                     <input type="text" id="eventId" value="<?= $event[0]->event_id ?>" hidden>
                                     <div class="form-group col-md-12">
+                                        <label>Title:</label>
+                                        <input type="text" class="form-control" id="summary" value="<?= $event[0]->summary ?>">
+                                        <!-- <textarea id="summary" class="form-control"><?= $event[0]->summary ?></textarea> -->
+                                    </div>
+                                    <div class="form-group col-md-12">
                                         <label>Event Date:</label>
                                         <input type="date" class="form-control" id="eventDate" value="<?= $event[0]->event_date ?>">
                                     </div>
@@ -36,10 +41,6 @@
                                     <div class="form-group col-md-12">
                                         <label>Location:</label>
                                         <textarea id="location" class="form-control"><?= $event[0]->location ?></textarea>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Summary:</label>
-                                        <textarea id="summary" class="form-control"><?= $event[0]->summary ?></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Description:</label>
