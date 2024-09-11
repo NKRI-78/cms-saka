@@ -46,15 +46,13 @@ class OfficialStoreController extends BaseController
                 $citys = $resultStore['data']['city'];
                 $district = $resultStore['data']['district'];
 
-                // var_dump($province, $citys, $district, $data); die;
-
                 $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province', 'GET');
                 $resultCity = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
                 $resultDistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $citys, 'GET');
                 $resultSubistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district, 'GET');
 
                 $data["province"] = $resultProvince->data;
-                $data["kota"] = $resultCity->data;
+                $data["citys"] = $resultCity->data;
                 $data["district"] = $resultDistrict->data;
                 $data["subdistrict"] = $resultSubistrict->data;
             }
