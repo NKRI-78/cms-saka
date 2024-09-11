@@ -32,7 +32,6 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <input type="text" id="productId" value="<?= $product->id ?>" hidden>
-                                    <!-- <input type="text" id="imageIds" value="<?= $product->medias[0]->path ?>" hidden> -->
                                     <input type="text" id="imageIds" value="<?= htmlspecialchars(json_encode(array_column($product->medias, 'path')), ENT_QUOTES, 'UTF-8') ?>" hidden>
                                     <div class="form-group col-md-6">
                                         <label>Title:</label>
