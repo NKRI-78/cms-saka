@@ -10,6 +10,11 @@
     .dz-details .dz-size {
         display: none;
     }
+
+    .custom {
+        line-height: normal;
+        height: 130px !important;
+    }
 </style>
 
 <div id="content-page" class="content-page">
@@ -59,7 +64,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Caption:</label>
-                                        <textarea id="caption" class="form-control"><?= $product->caption ?></textarea>
+                                        <textarea id="caption" class="form-control custom"><?= $product->caption ?></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Image:</label>
