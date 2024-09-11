@@ -145,6 +145,31 @@ $routes->group('admin', function ($routes) {
   $routes->group('reportOrder', function ($routes) {
     $routes->get('status/(:any)', 'OrderController::status/$1', ['namespace' => 'App\Controllers\Admin']);
   });
+
+  $routes->group('courier', function ($routes) {
+    $routes->get('/', 'CourierController::index', ['namespace' => 'App\Controllers\Admin']);
+  });
+
+  $routes->group('officialStore', function ($routes) {
+    $routes->get('/', 'OfficialStoreController::index', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('getCity', 'OfficialStoreController::getCity', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('getDistrict', 'OfficialStoreController::getDistrict', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('getSubdistrict', 'OfficialStoreController::getSubdistrict', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('update', 'OfficialStoreController::update', ['namespace' => 'App\Controllers\Admin']);
+    $routes->get('create', 'OfficialStoreController::create', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('post', 'OfficialStoreController::post', ['namespace' => 'App\Controllers\Admin']);
+  });
+
+  $routes->group('product', function ($routes) {
+    $routes->get('/', 'ProductController::index', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('getData', 'ProductController::getData', ['namespace' => 'App\Controllers\Admin']);
+    $routes->get('create', 'ProductController::create', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('post', 'ProductController::post', ['namespace' => 'App\Controllers\Admin']);
+    $routes->get('edit/(:any)', 'ProductController::edit/$1', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('update', 'ProductController::update', ['namespace' => 'App\Controllers\Admin']);
+    $routes->get('detail/(:any)', 'ProductController::detail/$1', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('delete/(:any)', 'ProductController::delete/$1', ['namespace' => 'App\Controllers\Admin']);
+  });
 });
 
 $routes->group('user', function ($routes) {

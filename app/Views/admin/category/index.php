@@ -12,7 +12,7 @@
                         <div class="iq-header-title">
                             <h4 class="card-title">Data Category</h4>
                         </div>
-                        <a href="<?= base_url("/admin/category/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
+                        <!-- <a href="<?= base_url("/admin/category/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a> -->
                     </div>
                     <div class="iq-card-body">
                         <div class="table-responsive">
@@ -21,8 +21,8 @@
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">File Name</th>
-                                        <th scope="col">&emsp;&emsp;Action</th>
+                                        <!-- <th scope="col">File Name</th> -->
+                                        <!-- <th scope="col">&emsp;&emsp;Action</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,14 +32,6 @@
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $row->name ?></td>
-                                                <td><?= $row->picture->originalName ?></td>
-                                                <td>
-                                                    <div class="send-panel">
-                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a href="<?= base_url('/admin/category/edit/' . $row->_id) ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Banner"> <i class="ri-edit-line text-primary"></i></a> </label>
-                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DetailCategory(<?= $row->_id ?>)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show Image"> <i class="ri-list-check-2 text-primary"></i></a> </label>
-                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a href="<?= base_url('/admin/category/delete/' . $row->_id) ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Banner"> <i class="ri-delete-bin-line text-primary"></i></a> </label>
-                                                    </div>
-                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php } ?>

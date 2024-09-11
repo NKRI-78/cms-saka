@@ -24,5 +24,6 @@
   <link rel="stylesheet" href="<?= base_url('public/assets/dropify/dropify.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url("public/assets/css/summernote.min.css") ?>">
   <link rel="stylesheet" href="<?= base_url("public/assets/css/switch.css") ?>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
   
 </head>
