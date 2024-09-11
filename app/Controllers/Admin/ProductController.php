@@ -170,15 +170,15 @@ class ProductController extends BaseController
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyImage); // POSTFIELDS harus berupa array dengan objek CURLFile
                 $response = curl_exec($ch);
-        
+
                 // Handle error
                 if (curl_errno($ch)) {
                     echo 'Error:' . curl_error($ch);
                 }
                 curl_close($ch);
-        
+
                 $result = json_decode($response);
-        
+
                 // Periksa apakah path berhasil diupload dan simpan
                 if (isset($result->data->path)) {
                     $imagePaths[] = $result->data->path;
@@ -214,7 +214,7 @@ class ProductController extends BaseController
         );
 
         $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store/image';
-        
+
         foreach ($imagePaths as $path) {
             $body = [
                 "product_id" => $product_id,
@@ -243,8 +243,6 @@ class ProductController extends BaseController
         $data["product"] = $result->data->product;
         $data["category"] = $resultCategory->data;
 
-        // var_dump($data); die;
-
         return view("admin/product/edit", $data);
     }
 
@@ -263,19 +261,6 @@ class ProductController extends BaseController
         $category = $request->getPost('category');
         $caption = $request->getPost('caption');
         $imageId = $request->getPost('imageId');
-
-        // if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        //     $bodyImage = [
-        //         "folder" => "saka",
-        //         "subfolder" => "product",
-        //         "media" => $_FILES['image']
-        //     ];
-
-        //     $result = curlImageHelper('https://api-media.inovatiftujuh8.com/api/v1/media/upload', $bodyImage);
-        //     $path = $result->data->path;
-        // } else {
-        //     $path = $imageOld;
-        // }
 
         $imagePaths = [];
 
@@ -298,17 +283,16 @@ class ProductController extends BaseController
                 $ch = curl_init('https://api-media.inovatiftujuh8.com/api/v1/media/upload');
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyImage); // POSTFIELDS harus berupa array dengan objek CURLFile
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyImage);
                 $response = curl_exec($ch);
-        
-                // Handle error
+
                 if (curl_errno($ch)) {
                     echo 'Error:' . curl_error($ch);
                 }
                 curl_close($ch);
-        
+
                 $result = json_decode($response);
-        
+
                 // Periksa apakah path berhasil diupload dan simpan
                 if (isset($result->data->path)) {
                     $imagePaths[] = $result->data->path;
@@ -328,8 +312,6 @@ class ProductController extends BaseController
             "cat_id" => $category,
         ];
 
-        // var_dump($body); die;
-
         $req = $client->put(
             $url,
             [
@@ -342,12 +324,10 @@ class ProductController extends BaseController
             ]
         );
 
-        // $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/update-product-image';
         $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store/image';
 
         foreach ($imagePaths as $path) {
             $body = [
-                // "id" => $imageId,
                 "product_id" => $product_id,
                 "path" => $path,
             ];
@@ -393,5 +373,32 @@ class ProductController extends BaseController
         );
 
         return redirect()->to(base_url('admin/product'));
+    }
+
+    public function deleteImage()
+    {
+        $client = new \GuzzleHttp\Client();
+        $session = Services::session();
+        $request = Services::request();
+
+        $imageId = $request->getPost('imageId');
+
+        $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/delete-product-image';
+
+        $body = [
+            "id" => $imageId,
+        ];
+
+        $req = $client->delete(
+            $url,
+            [
+                "body" => json_encode($body),
+                'headers' =>  [
+                    'Authorization' => 'Bearer ' . $session->get('token'),
+                    'Accept'        => 'application/json',
+                    'Content-Type' => 'application/json'
+                ]
+            ]
+        );
     }
 }

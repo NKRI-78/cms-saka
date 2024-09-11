@@ -15,6 +15,14 @@
         line-height: normal;
         height: 130px !important;
     }
+
+    .dz-error-message {
+        display: none !important;
+    }
+
+    .dz-error-mark {
+        display: none !important;
+    }
 </style>
 
 <div id="content-page" class="content-page">
@@ -32,7 +40,8 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <input type="text" id="productId" value="<?= $product->id ?>" hidden>
-                                    <input type="text" id="imageIds" value="<?= htmlspecialchars(json_encode(array_column($product->medias, 'path')), ENT_QUOTES, 'UTF-8') ?>" hidden>
+                                    <input type="text" id="imageIds" value="<?= htmlspecialchars(json_encode(array_column($product->medias, 'id')), ENT_QUOTES, 'UTF-8') ?>" hidden>
+                                    <input type="text" id="imagePath" value="<?= htmlspecialchars(json_encode(array_column($product->medias, 'path')), ENT_QUOTES, 'UTF-8') ?>" hidden>
                                     <div class="form-group col-md-6">
                                         <label>Title:</label>
                                         <input type="text" class="form-control" id="title" placeholder="Title Product" value="<?= $product->title ?>">
@@ -68,8 +77,7 @@
                                     <div class="form-group col-md-12">
                                         <label>Image:</label>
                                         <!-- <input type="file" class="dropify" id="imageProduct" data-height="200" data-default-file="<?= $product->medias[0]->path ?>"/> -->
-                                        <div id="image-dropzones" class="dropzone"></div>
-                                        <input type="text" id="imageId" value="<?= $product->medias[0]->id ?>" hidden />
+                                        <div id="image-dropzone" class="dropzone"></div>
                                     </div>
                                 </div>
                                 <button type="button" onclick="UpdateProduct()" id="updateNews" class="btn btn-custom" style="float: right;">Update</button><br>
@@ -87,29 +95,33 @@
 <script>
     Dropzone.autoDiscover = false;
 
-    const imageDropzone = new Dropzone("#image-dropzones", {
-        url: `${baseUrl}/admin/product/update`, // Ganti dengan endpoint upload Anda
-        maxFiles: 4,
-        maxFilesize: 2, // Max filesize in MB
+    const imageDropzone = new Dropzone("#image-dropzone", {
+        url: `${baseUrl}/admin/product/update`,
+        maxFiles: 5,
+        maxFilesize: 2,
         acceptedFiles: "image/*",
         addRemoveLinks: true,
         dictRemoveFile: "Remove",
         init: function() {
-            let fileIndex = 0;
+            // let fileIndex = 0;
 
-            const imagePaths = JSON.parse(document.getElementById('imageIds').value);
+            const imageId = JSON.parse(document.getElementById('imageIds').value);
+            const imagePath = JSON.parse(document.getElementById('imagePath').value);
 
-            console.log(imagePaths, 'aa');
+            const imageFiles = imageId.map((id, index) => ({
+                id: id,
+                path: imagePath[index]
+            }));
 
-            imagePaths.forEach((path) => {
+            imageFiles.forEach((file) => {
                 const mockFile = {
-                    name: path.split('/').pop(),
-                    // size: 123456,
-                    url: path
+                    name: file.path.split('/').pop(),
+                    url: file.path,
+                    id: file.id
                 };
 
                 this.emit("addedfile", mockFile);
-                this.emit("thumbnail", mockFile, path);
+                this.emit("thumbnail", mockFile, file.path);
                 this.emit("complete", mockFile);
             });
 
@@ -117,21 +129,19 @@
                 console.log(file, response, 'aaa')
             });
             this.on("removedfile", function(file) {
-                // Panggil API untuk menghapus gambar jika diperlukan
+                const fileId = file.id;
+
+                deleteImage(fileId);
             });
 
-            this.on("addedfile", function(file) {
-                if (this.getAcceptedFiles().length > 4) {
-                    // Hapus file terakhir yang diupload jika melebihi batas
-                    this.removeFile(file);
+            this.on("maxfilesexceeded", function(file) {
+                this.removeFile(file);
 
-                    // Tampilkan peringatan menggunakan SweetAlert2
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'Anda hanya dapat meng-upload maksimal 4 gambar.',
-                    });
-                }
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
+                });
             });
         }
     });
@@ -147,9 +157,9 @@
         var weight = $("#weight").val();
         var category = $("#category").val();
         var caption = $("#caption").val();
-        var imageOld = $("#imageOld").val();
+        // var imageOld = $("#imageOld").val();
         // let image = $('#imageProduct')[0].files[0];
-        let imageId = $('#imageId').val();
+        // let imageId = $('#imageId').val();
 
         data.append('productId', productId);
         data.append('title', title);
@@ -159,8 +169,8 @@
         data.append('category', category);
         data.append('caption', caption);
         // data.append('image', image);
-        data.append('imageOld', imageOld);
-        data.append('imageId', imageId);
+        // data.append('imageOld', imageOld);
+        // data.append('imageId', imageId);
 
         imageDropzone.files.forEach((file, index) => {
             data.append(`images[${index}]`, file);
@@ -175,14 +185,39 @@
             processData: false,
             data: data,
             success: function(response) {
+                console.log(response, 'edit');
                 toastr.success('update product success');
-                setInterval(function() {
-                    location.href = `${baseUrl}/admin/product`;
-                }, 1500);
+                // setInterval(function() {
+                //     location.href = `${baseUrl}/admin/product`;
+                // }, 1500);
             },
             error: function(err) {
                 toastr.error('something went wrong');
                 $("#updateNews").text('Submit');
+            }
+        });
+    }
+
+    function deleteImage(fileId) {
+        let data = new FormData();
+
+        let imageId = fileId;
+
+        data.append('imageId', imageId);
+
+        $.ajax({
+            type: "POST",
+            url: `${baseUrl}/admin/product/deleteImage`,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response, 'aa');
+                console.log('Image deleted successfully', response);
+            },
+            error: function(err) {
+                console.error('Error deleting image', err);
             }
         });
     }

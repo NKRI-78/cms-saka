@@ -169,6 +169,7 @@ $routes->group('admin', function ($routes) {
     $routes->post('update', 'ProductController::update', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('detail/(:any)', 'ProductController::detail/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('delete/(:any)', 'ProductController::delete/$1', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('deleteImage', 'ProductController::deleteImage', ['namespace' => 'App\Controllers\Admin']);
   });
 });
 

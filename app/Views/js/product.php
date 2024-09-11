@@ -34,55 +34,55 @@
     });
 
     // $(document).ready(function() {
-        CreateProduct = async () => {
-            let data = new FormData();
+    CreateProduct = async () => {
+        let data = new FormData();
 
-            var productId = uuid.v4();
-            var app_id = $("#app_id").val();
-            var store_id = $("#store_id").val();
-            var title = $("#title").val();
-            var price = $("#price").val().replace(/\./g, '');
-            var stock = $("#stock").val();
-            var weight = $("#weight").val();
-            var category = $("#category").val();
-            var caption = $("#caption").val();
-            // let image = $('#imageProduct')[0].files[0];
+        var productId = uuid.v4();
+        var app_id = $("#app_id").val();
+        var store_id = $("#store_id").val();
+        var title = $("#title").val();
+        var price = $("#price").val().replace(/\./g, '');
+        var stock = $("#stock").val();
+        var weight = $("#weight").val();
+        var category = $("#category").val();
+        var caption = $("#caption").val();
+        // let image = $('#imageProduct')[0].files[0];
 
-            data.append('productId', productId);
-            data.append('app_id', app_id);
-            data.append('store_id', store_id);
-            data.append('title', title);
-            data.append('price', price);
-            data.append('stock', stock);
-            data.append('weight', weight);
-            data.append('category', category);
-            data.append('caption', caption);
-            // data.append('image', image);
+        data.append('productId', productId);
+        data.append('app_id', app_id);
+        data.append('store_id', store_id);
+        data.append('title', title);
+        data.append('price', price);
+        data.append('stock', stock);
+        data.append('weight', weight);
+        data.append('category', category);
+        data.append('caption', caption);
+        // data.append('image', image);
 
-            imageDropzone.files.forEach((file, index) => {
-                data.append(`images[${index}]`, file);
-            });
+        imageDropzone.files.forEach((file, index) => {
+            data.append(`images[${index}]`, file);
+        });
 
-            $("#createProduct").text('Loading...');
-            await $.ajax({
-                type: "POST",
-                url: `${baseUrl}/admin/product/post`,
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: data,
-                success: function(response) {
-                    toastr.success('create product success');
-                    setInterval(function() {
-                        location.href = `${baseUrl}/admin/product`;
-                    }, 1500);
-                },
-                error: function(err) {
-                    toastr.error('something went wrong');
-                    $("#createProduct").text('Submit');
-                }
-            });
-        }
+        $("#createProduct").text('Loading...');
+        await $.ajax({
+            type: "POST",
+            url: `${baseUrl}/admin/product/post`,
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function(response) {
+                toastr.success('create product success');
+                setInterval(function() {
+                    location.href = `${baseUrl}/admin/product`;
+                }, 1500);
+            },
+            error: function(err) {
+                toastr.error('something went wrong');
+                $("#createProduct").text('Submit');
+            }
+        });
+    }
     // })
 
     $(document).ready(function() {
@@ -133,7 +133,7 @@
 
     const imageDropzone = new Dropzone("#image-dropzone", {
         url: `${baseUrl}/admin/product/post`, // Ganti dengan endpoint upload Anda
-        maxFiles: 4,
+        maxFiles: 5,
         maxFilesize: 2, // Max filesize in MB
         acceptedFiles: "image/*",
         addRemoveLinks: true,
@@ -149,18 +149,32 @@
                 // Panggil API untuk menghapus gambar jika diperlukan
             });
 
-            this.on("addedfile", function(file) {
-                if (this.getAcceptedFiles().length > 4) {
-                    // Hapus file terakhir yang diupload jika melebihi batas
-                    this.removeFile(file);
+            // this.on("addedfile", function(file) {
+            //     const fileCount = this.getAcceptedFiles().length;
 
-                    // Tampilkan peringatan menggunakan SweetAlert2
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'Anda hanya dapat meng-upload maksimal 4 gambar.',
-                    });
-                }
+            //     if (fileCount > 5) {
+            //         // Hapus file terakhir yang diupload jika melebihi batas
+            //         this.removeFile(file);
+
+            //         // Tampilkan peringatan menggunakan SweetAlert2
+            //         Swal.fire({
+            //             icon: 'warning',
+            //             title: 'Peringatan',
+            //             text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
+            //         });
+            //     }
+            // });
+
+            this.on("maxfilesexceeded", function(file) {
+                // Hapus file terakhir yang diupload jika melebihi batas
+                this.removeFile(file);
+
+                // Tampilkan peringatan menggunakan SweetAlert2
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
+                });
             });
         }
     });
