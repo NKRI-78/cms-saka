@@ -50,7 +50,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Province:</label>
-                                            <select class="form-control" id="province" name="category">
+                                            <select class="form-control" id="province" name="province">
                                                 <option disabled selected>Select Province</option>
                                                 <?php foreach ($province as $row) : ?>
                                                     <option value="<?= htmlspecialchars($row->province_name) ?>" <?= ($row->province_name == htmlspecialchars($store['province'])) ? 'selected' : '' ?>>
@@ -61,9 +61,9 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>City:</label>
-                                            <select class="form-control" id="city" name="category">
+                                            <select class="form-control" id="city" name="city">
                                                 <option disabled selected>Select City</option>
-                                                <?php foreach ($city as $row) : ?>
+                                                <?php foreach ($citys as $row) : ?>
                                                     <option value="<?= htmlspecialchars($row->city_name) ?>" <?= ($row->city_name == htmlspecialchars($store['city'])) ? 'selected' : '' ?>>
                                                         <?= htmlspecialchars($row->city_name) ?>
                                                     </option>
