@@ -53,7 +53,7 @@ class OfficialStoreController extends BaseController
                 $resultCity = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
                 $resultDistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $city, 'GET');
                 $resultSubistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district, 'GET');
-
+                
                 $data["province"] = $resultProvince->data;
                 $data["city"] = $resultCity->data;
                 $data["district"] = $resultDistrict->data;
