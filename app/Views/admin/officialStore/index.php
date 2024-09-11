@@ -63,7 +63,7 @@
                                             <label>City:</label>
                                             <select class="form-control" id="city" name="category">
                                                 <option disabled selected>Select City</option>
-                                                <?php foreach ($city as $row) : ?>
+                                                <?php foreach ($citys as $row) : ?>
                                                     <option value="<?= htmlspecialchars($row->city_name) ?>" <?= ($row->city_name == htmlspecialchars($store['city'])) ? 'selected' : '' ?>>
                                                         <?= htmlspecialchars($row->city_name) ?>
                                                     </option>
