@@ -63,11 +63,15 @@
                                             <label>City:</label>
                                             <select class="form-control" id="city" name="city">
                                                 <option disabled selected>Select City</option>
-                                                <?php foreach ($kota as $row) : ?>
-                                                    <option value="<?= htmlspecialchars($row->city_name) ?>" <?= ($row->city_name == htmlspecialchars($store['city'])) ? 'selected' : '' ?>>
-                                                        <?= htmlspecialchars($row->city_name) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
+                                                <?php if (isset($kota) && !empty($kota)): ?>
+                                                    <?php foreach ($kota as $row) : ?>
+                                                        <option value="<?= htmlspecialchars($row->city_name) ?>" <?= ($row->city_name == htmlspecialchars($store['city'])) ? 'selected' : '' ?>>
+                                                            <?= htmlspecialchars($row->city_name) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <option>No cities available</option>
+                                                <?php endif; ?>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
