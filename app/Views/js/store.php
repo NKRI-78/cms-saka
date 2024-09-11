@@ -54,16 +54,16 @@
 
     $('#district').change(function() {
 
-        var cityName = $(this).val();
+        var districtName = $(this).val();
 
         $('#subdistrict').html('<option disabled selected>Select City</option>');
 
-        if (cityName) {
+        if (districtName) {
             $.ajax({
                 url: `${baseUrl}/admin/officialStore/getSubdistrict`,
                 type: 'POST',
                 data: {
-                    city_name: cityName
+                    district_name: districtName
                 },
                 success: function(response) {
                     var districtResponse = JSON.parse(response);

@@ -46,6 +46,8 @@ class OfficialStoreController extends BaseController
                 $citys = $resultStore['data']['city'];
                 $district = $resultStore['data']['district'];
 
+                // var_dump($province, $citys, $district, $data); die;
+
                 $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province', 'GET');
                 $resultCity = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
                 $resultDistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $citys, 'GET');
@@ -107,8 +109,8 @@ class OfficialStoreController extends BaseController
     {
         $request = Services::request();
 
-        $district = $request->getPost('city_name');
-
+        $district = $request->getPost('district_name');
+        
         $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district, 'GET');
 
         return json_encode([
