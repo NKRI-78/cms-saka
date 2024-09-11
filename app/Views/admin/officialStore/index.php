@@ -70,7 +70,7 @@
                                                         </option>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
-                                                    <option>No cities available</option>
+                                                    <option>No city available</option>
                                                 <?php endif; ?>
                                             </select>
                                         </div>
@@ -78,22 +78,30 @@
                                             <label>District:</label>
                                             <select class="form-control" id="district" name="district">
                                                 <option disabled selected>Select District</option>
-                                                <?php foreach ($district as $row) : ?>
-                                                    <option value="<?= htmlspecialchars($row->district_name) ?>" <?= ($row->district_name == htmlspecialchars($store['district'])) ? 'selected' : '' ?>>
-                                                        <?= htmlspecialchars($row->district_name) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
+                                                <?php if (isset($district) && !empty($district)): ?>
+                                                    <?php foreach ($district as $row) : ?>
+                                                        <option value="<?= htmlspecialchars($row->district_name) ?>" <?= ($row->district_name == htmlspecialchars($store['district'])) ? 'selected' : '' ?>>
+                                                            <?= htmlspecialchars($row->district_name) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <option>No district available</option>
+                                                <?php endif; ?>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Subdistrict:</label>
                                             <select class="form-control" id="subdistrict" name="subdistrict">
                                                 <option disabled selected>Select Subdistrict</option>
-                                                <?php foreach ($subdistrict as $row) : ?>
-                                                    <option value="<?= htmlspecialchars($row->subdistrict_name) ?>" <?= ($row->subdistrict_name == htmlspecialchars($store['subdistrict'])) ? 'selected' : '' ?>>
-                                                        <?= htmlspecialchars($row->subdistrict_name) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
+                                                <?php if (isset($subdistrict) && !empty($subdistrict)): ?>
+                                                    <?php foreach ($subdistrict as $row) : ?>
+                                                        <option value="<?= htmlspecialchars($row->subdistrict_name) ?>" <?= ($row->subdistrict_name == htmlspecialchars($store['subdistrict'])) ? 'selected' : '' ?>>
+                                                            <?= htmlspecialchars($row->subdistrict_name) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <option>No subdistrict available</option>
+                                                <?php endif; ?>
                                             </select>
                                         </div>
 
