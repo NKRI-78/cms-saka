@@ -187,9 +187,9 @@
             success: function(response) {
                 console.log(response, 'edit');
                 toastr.success('update product success');
-                // setInterval(function() {
-                //     location.href = `${baseUrl}/admin/product`;
-                // }, 1500);
+                setInterval(function() {
+                    location.href = `${baseUrl}/admin/product`;
+                }, 1500);
             },
             error: function(err) {
                 toastr.error('something went wrong');
