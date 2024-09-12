@@ -2,6 +2,38 @@
 
 use Config\Services;
 
+// function curlHelper($url = '', $method = 'GET', $fields = [])
+// {
+//   $curl = curl_init();
+//   $session = Services::session();
+//   $token = $session->get('token');
+//   curl_setopt($curl, CURLOPT_URL, $url);
+//   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+//   if ($method === 'POST' || $method === 'PUT' || $method === "PATCH") {
+//     $template = "";
+//     $values = $fields;
+//     $keys = array_keys($fields);
+//     for ($i = 0; $i < count($keys); $i++) {
+//       $template .= $keys[$i] . '=' . $values[$keys[$i]] . '&';
+//       $query_string = substr($template, 0, -1);
+//     }
+//     curl_setopt($curl, CURLOPT_POSTFIELDS, $query_string);
+//   }
+//   curl_setopt($curl, CURLOPT_VERBOSE, true);
+//   curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+//   // SSL Certificate Problem : Self Signed Certificate 
+//   curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+//   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+//   curl_setopt($curl, CURLOPT_HTTPHEADER, [
+//     'Authorization: Bearer ' . $token,
+//   ]);
+//   $result = curl_exec($curl);
+//   $resultDecoded = json_decode($result);
+
+//   curl_close($curl);
+//   return $resultDecoded;
+// }
+
 function curlHelper($url = '', $method = 'GET', $fields = [])
 {
   $curl = curl_init();
@@ -9,28 +41,38 @@ function curlHelper($url = '', $method = 'GET', $fields = [])
   $token = $session->get('token');
   curl_setopt($curl, CURLOPT_URL, $url);
   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+
   if ($method === 'POST' || $method === 'PUT' || $method === "PATCH") {
-    $template = "";
-    $values = $fields;
-    $keys = array_keys($fields);
-    for ($i = 0; $i < count($keys); $i++) {
-      $template .= $keys[$i] . '=' . $values[$keys[$i]] . '&';
-      $query_string = substr($template, 0, -1);
-    }
+    $query_string = http_build_query($fields);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $query_string);
   }
+
   curl_setopt($curl, CURLOPT_VERBOSE, true);
   curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-  // SSL Certificate Problem : Self Signed Certificate 
-  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Disable SSL verification (not recommended for production)
   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($curl, CURLOPT_HTTPHEADER, [
     'Authorization: Bearer ' . $token,
   ]);
+
   $result = curl_exec($curl);
-  $resultDecoded = json_decode($result);
+  if ($result === false) {
+    $error = curl_error($curl);
+    log_message('error', 'Curl Error: ' . $error);
+  }
+
+  $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+  log_message('info', 'HTTP Code: ' . $http_code);
 
   curl_close($curl);
+
+  // Debug if response is null
+  if (!$result) {
+    log_message('error', 'Curl returned no data for URL: ' . $url);
+    return null;
+  }
+
+  $resultDecoded = json_decode($result);
   return $resultDecoded;
 }
 
@@ -56,7 +98,7 @@ function curlImageHelper($url, $data)
   $token = $session->get('token');
   $headers = ["Content-Type : application/json", "Authorization: Bearer " . $token];
   $postfields = [
-    "folder" => "images" ,
+    "folder" => "images",
     "subfolder" => "saka",
     "media" => curl_file_create($data['media']['tmp_name'], $data['media']['type'], basename($data['media']['name']))
   ];
@@ -73,5 +115,3 @@ function curlImageHelper($url, $data)
   $decoded = json_decode($result);
   return $decoded;
 }
-
-
