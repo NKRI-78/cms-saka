@@ -13,6 +13,7 @@
                 },
                 success: function(response) {
                     var cities = JSON.parse(response);
+                    console.log(cities, 'city');
 
                     cities.body.map(element => {
                         $('#city').append('<option value="' + element.city_name + '">' + element.city_name + '</option>');
