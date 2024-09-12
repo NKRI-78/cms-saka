@@ -81,7 +81,7 @@ class OfficialStoreController extends BaseController
     {
         $request = Services::request();
 
-        $province = $request->getPost('province_id');
+        $province = $request->getPost('provinceId');
 
         $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
 

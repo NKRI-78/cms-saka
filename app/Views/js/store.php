@@ -9,7 +9,7 @@
                 url: `${baseUrl}/admin/officialStore/getCity`,
                 type: 'POST',
                 data: {
-                    province_id: provinceId
+                    provinceId: provinceId
                 },
                 success: function(response) {
                     var cities = JSON.parse(response);
