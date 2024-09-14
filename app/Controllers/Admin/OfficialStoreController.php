@@ -81,27 +81,38 @@ class OfficialStoreController extends BaseController
     public function getCity()
     {
         $request = Services::request();
+        try {
+            $province = $request->getPost('provinceId');
 
-        $province = $request->getPost('provinceId');
+            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
 
-        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
-
-        return json_encode([
-            "body" =>  $result->data
-        ]);
+            return json_encode([
+                "body" =>  $result->data
+            ]);
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            return json_encode([
+                "error" => "Terjadi kesalahan saat mengambil data kota: " . $e->getMessage()
+            ]);
+        }
     }
 
     public function getDistrict()
     {
         $request = Services::request();
 
-        $city = $request->getPost('city_name');
+        try {
+            $city = $request->getPost('city_name');
 
-        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $city, 'GET');
+            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $city, 'GET');
 
-        return json_encode([
-            "body" =>  $result->data
-        ]);
+            return json_encode([
+                "body" =>  $result->data
+            ]);
+        } catch (\GuzzleHttp\Exception\ServerException $e) {
+            return json_encode([
+                "error" => "Terjadi kesalahan saat mengambil data district: " . $e->getMessage()
+            ]);
+        }
     }
 
     public function getSubdistrict()
@@ -109,7 +120,7 @@ class OfficialStoreController extends BaseController
         $request = Services::request();
 
         $district = $request->getPost('district_name');
-        
+
         $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district, 'GET');
 
         return json_encode([
