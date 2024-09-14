@@ -25,6 +25,13 @@
     }
 </style>
 
+<?php
+function formatRupiah($amount)
+{
+    return number_format($amount, 0, ',', '.');
+}
+?>
+
 <div id="content-page" class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -48,7 +55,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Price:</label>
-                                        <input type="text" class="form-control" id="price" placeholder="Price Product" value="<?= $product->price ?>">
+                                        <input type="text" class="form-control" id="price" placeholder="Price Product" value="<?= formatRupiah($product->price) ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Stock:</label>
@@ -57,7 +64,7 @@
                                     <div class="form-group col-md-6">
                                         <label>Weight:</label>
                                         <div style="display: flex;align-items: center; gap: 0.5rem;">
-                                            <input type="text" class="form-control" id="weight" placeholder="Weight Product" style="width: 9rem;">
+                                            <input type="text" class="form-control" id="weight" placeholder="Weight Product" style="width: 9rem;" value="<?= $product->weight ?>">
                                             <span style="color: #000;">gram</span>
                                         </div>
                                     </div>
@@ -66,7 +73,7 @@
                                         <select class="form-control" id="category" name="category">
                                             <option disabled selected>Select Category</option>
                                             <?php foreach ($category as $row) : ?>
-                                                <option value="<?= $row->id ?>"><?= $row->name ?></option>
+                                                <option value="<?= $row->id ?>" <?= ($row->id == htmlspecialchars($product->category->id)) ? 'selected' : '' ?>><?= $row->name ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -221,4 +228,21 @@
             }
         });
     }
+
+    const priceInput = document.getElementById('price');
+
+    priceInput.addEventListener('keyup', function(e) {
+        let value = this.value.replace(/[^,\d]/g, '');
+
+        let parts = value.split(',');
+        let integerPart = parts[0];
+        let decimalPart = parts[1];
+
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        this.value = decimalPart !== undefined ? integerPart + ',' + decimalPart : integerPart;
+
+        this.value = this.value;
+        // this.value = 'Rp ' + this.value;
+    });
 </script>

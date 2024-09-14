@@ -42,6 +42,7 @@ class ProductController extends BaseController
                 $nestedData['no'] = $no++;
                 $nestedData['name'] = $row->title;
                 $nestedData['stok'] = $row->stock;
+                $nestedData['category'] = $row->category->name;
                 $nestedData['price'] = formatRupiah($row->price);
                 $nestedData['action'] =
                     '
@@ -113,8 +114,6 @@ class ProductController extends BaseController
         $data["category"] = $result->data;
         $data["app"] = $resultApp->data;
         $data["store"] = $resultStore['data'];
-        // var_dump($data);
-        // die;
 
         return view("admin/product/create", $data);
     }

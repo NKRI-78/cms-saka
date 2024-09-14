@@ -1,4 +1,211 @@
 <script>
+    let selectedLatitude = parseFloat(document.getElementById("latitude").value) || -6.200000;
+    let selectedLongitude = parseFloat(document.getElementById("longitude").value) || 106.816666;
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: {
+                lat: selectedLatitude,
+                lng: selectedLongitude
+            },
+            zoom: 13,
+            mapTypeControl: false,
+        });
+
+        const marker = new google.maps.Marker({
+            position: {
+                lat: selectedLatitude,
+                lng: selectedLongitude
+            },
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29),
+            draggable: true,
+        });
+
+        const input = document.getElementById("pac-input");
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+            fields: ["formatted_address", "geometry", "name"],
+            strictBounds: false,
+        });
+
+        autocomplete.bindTo("bounds", map);
+
+        const infowindow = new google.maps.InfoWindow();
+        const infowindowContent = document.getElementById("infowindow-content");
+        infowindow.setContent(infowindowContent);
+
+        autocomplete.addListener("place_changed", () => {
+            infowindow.close();
+            marker.setVisible(false);
+
+            const place = autocomplete.getPlace();
+            if (place.geometry && place.geometry.location) {
+                selectedLatitude = place.geometry.location.lat();
+                selectedLongitude = place.geometry.location.lng();
+
+                // Set the updated latitude and longitude to input fields
+                document.getElementById("latitude").value = selectedLatitude;
+                document.getElementById("longitude").value = selectedLongitude;
+            }
+
+            selectedLatitude = place.geometry.location.lat();
+            selectedLongitude = place.geometry.location.lng();
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+            }
+
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+            infowindowContent.children["place-name"].textContent = place.name;
+            infowindowContent.children["place-address"].textContent = place.formatted_address;
+            infowindow.open(map, marker);
+
+            document.getElementById("latitude").value = selectedLatitude;
+            document.getElementById("longitude").value = selectedLongitude;
+            document.getElementById("pac-input").value = place.formatted_address;
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function(event) {
+            // const geocoder = new google.maps.Geocoder();
+            // const latlng = {
+            //     lat: event.latLng.lat(),
+            //     lng: event.latLng.lng()
+            // };
+
+            // geocoder.geocode({
+            //     location: latlng
+            // }, (results, status) => {
+            //     if (status === 'OK') {
+            //         if (results[0]) {
+            //             const address = results[0].formatted_address;
+            //             const name = results[0].address_components.find(component => component.types.includes('street_address'))?.long_name || 'No name found';
+
+            //             document.getElementById("latitude").value = latlng.lat;
+            //             document.getElementById("longitude").value = latlng.lng;
+            //             document.getElementById("pac-input").value = address;
+            //             infowindowContent.children["place-name"].textContent = name;
+            //             infowindowContent.children["place-address"].textContent = address;
+            //         } else {
+            //             window.alert('No results found');
+            //         }
+            //     } else {
+            //         window.alert('Geocoder failed due to: ' + status);
+            //     }
+            // });
+
+            selectedLatitude = event.latLng.lat();
+            selectedLongitude = event.latLng.lng();
+
+            document.getElementById("latitude").value = selectedLatitude;
+            document.getElementById("longitude").value = selectedLongitude;
+        });
+    }
+
+    // function initMap() {
+    //     const map = new google.maps.Map(document.getElementById("map"), {
+    //         center: {
+    //             lat: selectedLatitude,
+    //             lng: selectedLongitude
+    //         },
+    //         zoom: 13,
+    //         mapTypeControl: false,
+    //     });
+
+    //     const marker = new google.maps.Marker({
+    //         position: {
+    //             lat: selectedLatitude,
+    //             lng: selectedLongitude
+    //         },
+    //         map: map,
+    //         anchorPoint: new google.maps.Point(0, -29),
+    //         draggable: true,
+    //     });
+
+    //     const input = document.getElementById("pac-input");
+    //     const autocomplete = new google.maps.places.Autocomplete(input, {
+    //         fields: ["formatted_address", "geometry", "name"],
+    //         strictBounds: false,
+    //     });
+
+    //     autocomplete.bindTo("bounds", map);
+
+    //     const infowindow = new google.maps.InfoWindow();
+    //     const infowindowContent = document.getElementById("infowindow-content");
+    //     infowindow.setContent(infowindowContent);
+
+    //     autocomplete.addListener("place_changed", () => {
+    //         infowindow.close();
+    //         marker.setVisible(false);
+
+    //         const place = autocomplete.getPlace();
+    //         if (!place.geometry || !place.geometry.location) {
+    //             window.alert("No details available for input: '" + place.name + "'");
+    //             return;
+    //         }
+
+    //         selectedLatitude = place.geometry.location.lat();
+    //         selectedLongitude = place.geometry.location.lng();
+
+    //         if (place.geometry.viewport) {
+    //             map.fitBounds(place.geometry.viewport);
+    //         } else {
+    //             map.setCenter(place.geometry.location);
+    //             map.setZoom(17);
+    //         }
+
+    //         marker.setPosition(place.geometry.location);
+    //         marker.setVisible(true);
+
+    //         infowindowContent.children["place-name"].textContent = place.name;
+    //         infowindowContent.children["place-address"].textContent = place.formatted_address;
+    //         infowindow.open(map, marker);
+
+    //         // Update the hidden input fields with new latitude and longitude
+    //         document.getElementById("latitude").value = selectedLatitude;
+    //         document.getElementById("longitude").value = selectedLongitude;
+    //     });
+
+    //     // Listener for when the marker is dragged
+    //     google.maps.event.addListener(marker, 'dragend', function(event) {
+    //         const geocoder = new google.maps.Geocoder();
+    //         const latlng = {
+    //             lat: event.latLng.lat(),
+    //             lng: event.latLng.lng()
+    //         };
+
+    //         geocoder.geocode({
+    //             location: latlng
+    //         }, (results, status) => {
+    //             if (status === 'OK') {
+    //                 if (results[0]) {
+    //                     const address = results[0].formatted_address;
+    //                     const name = results[0].address_components.find(component => component.types.includes('street_address'))?.long_name || 'No name found';
+
+    //                     // Update the hidden input fields with new latitude and longitude
+    //                     document.getElementById("latitude").value = latlng.lat;
+    //                     document.getElementById("longitude").value = latlng.lng;
+
+    //                     // Update the input field with the new address
+    //                     document.getElementById("pac-input").value = address;
+
+    //                     infowindowContent.children["place-name"].textContent = name;
+    //                     infowindowContent.children["place-address"].textContent = address;
+    //                 } else {
+    //                     window.alert('No results found');
+    //                 }
+    //             } else {
+    //                 window.alert('Geocoder failed due to: ' + status);
+    //             }
+    //         });
+    //     });
+    // }
+
+    window.onload = initMap;
+
     $('#province').change(function() {
         var provinceId = $(this).val();
 
@@ -68,10 +275,12 @@
                 },
                 success: function(response) {
                     var districtResponse = JSON.parse(response);
+                    $('#posCode').val('');
 
                     districtResponse.body.map(element => {
-                        $('#subdistrict').append('<option value="' + element.subdistrict_name + '">' + element.subdistrict_name + '</option>');
-                        $('#posCode').append( element.zip_code);
+                        // $('#subdistrict').append('<option value="' + element.subdistrict_name + '">' + element.subdistrict_name + '</option>');
+                        // $('#posCode').append(element.zip_code);
+                        $('#subdistrict').append('<option value="' + element.subdistrict_name + '" data-zipcode="' + element.zip_code + '">' + element.subdistrict_name + '</option>');
                     });
                 },
                 error: function(xhr, status, error) {
@@ -79,6 +288,15 @@
                 }
             });
         }
+    });
+
+    $('#subdistrict').change(function() {
+        // Ketika subdistrict berubah, ambil zip code dari atribut data-zipcode
+        var selectedSubdistrict = $('#subdistrict option:selected');
+        var zipCode = selectedSubdistrict.data('zipcode');
+
+        // Isi zip code ke input posCode
+        $('#posCode').val(zipCode);
     });
 
     UpdateStore = async () => {
@@ -89,7 +307,7 @@
         var title = $("#title").val();
         var email = $("#email").val();
         var phone = $("#phone").val();
-        var address = $("#address").val();
+        var address = $("#pac-input").val();
         var province = $("#province").val();
         var city = $("#city").val();
         var district = $("#district").val();
@@ -98,6 +316,11 @@
         var posCode = $("#posCode").val();
         var imageOld = $("#oldImage").val();
         let image = $('#imageStore')[0].files[0];
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
+        var posCode = $("#posCode").val();
+
+        console.log(latitude, longitude, 'mm');
 
         data.append('store_id', store_id);
         data.append('title', title);
@@ -111,6 +334,9 @@
         data.append('description', description);
         data.append('imageOld', imageOld);
         data.append('image', image);
+        data.append('latitude', latitude);
+        data.append('longitude', longitude);
+        data.append('posCode', posCode);
 
         console.log(data, 'data');
 
@@ -124,9 +350,9 @@
             data: data,
             success: function(response) {
                 toastr.success('update store success');
-                setInterval(function() {
-                    location.href = `${baseUrl}/admin/officialStore`;
-                }, 1500);
+                // setInterval(function() {
+                //     location.href = `${baseUrl}/admin/officialStore`;
+                // }, 1500);
             },
             error: function(err) {
                 toastr.error('something went wrong');
@@ -142,7 +368,7 @@
         var title = $("#title").val();
         var email = $("#email").val();
         var phone = $("#phone").val();
-        var address = $("#address").val();
+        var address = $("#pac-input").val();
         var province = $("#province").val();
         var city = $("#city").val();
         var district = $("#district").val();
@@ -151,6 +377,8 @@
         var posCode = $("#posCode").val();
         var imageOld = $("#oldImage").val();
         let image = $('#imageStore')[0].files[0];
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
 
         data.append('store_id', store_id);
         data.append('title', title);
@@ -164,6 +392,9 @@
         data.append('description', description);
         data.append('imageOld', imageOld);
         data.append('image', image);
+        data.append('latitude', latitude);
+        data.append('longitude', longitude);
+        data.append('posCode', posCode);
 
         $("#createStore").text('Loading...');
         await $.ajax({
@@ -236,4 +467,6 @@
     //     this.value = this.value;
     //     this.value = 'Rp ' + this.value;
     // });
+
+    // window.initMap = initMap;
 </script>

@@ -43,6 +43,7 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Name Product</th>
                                         <th scope="col">Stock</th>
+                                        <th scope="col">Category</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">&emsp;Action</th>
                                     </tr>

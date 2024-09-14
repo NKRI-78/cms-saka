@@ -24,6 +24,13 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <input type="text" id="posCode" hidden>
+                                    <input type="hidden" id="latitude" hidden>
+                                    <input type="hidden" id="longitude" hidden>
+
+                                    <div class="form-group col-md-12">
+                                        <label>Image (Recommendation Size 700 x 525):</label>
+                                        <input type="file" class="dropify" id="imageStore" data-height="200" />
+                                    </div>
                                     <div class="form-group col-md-6">
                                         <label>Name:</label>
                                         <input type="text" class="form-control" id="title" placeholder="Name Store">
@@ -38,7 +45,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Address:</label>
-                                        <input type="text" class="form-control" id="address" placeholder="Address Store">
+                                        <input type="text" class="form-control" id="pac-input" placeholder="Address Store">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Province:</label>
@@ -75,8 +82,7 @@
                                         <textarea id="description" class="form-control custom" placeholder="Description Store"></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label>Image (Recommendation Size 700 x 525):</label>
-                                        <input type="file" class="dropify" id="imageStore" data-height="200" />
+                                        <div id="map" style="height: 400px; width: 100%;"></div>
                                     </div>
                                 </div>
                                 <button type="button" onclick="CreateStore()" id="createStore" class="btn btn-custom" style="float: right;">Submit</button><br>

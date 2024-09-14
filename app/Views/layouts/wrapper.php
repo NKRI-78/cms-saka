@@ -102,7 +102,7 @@ $request = Services::request();
                 <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : "" ?>"><a href="<?= base_url("admin/share/ppob") ?>" class="iq-waves-effect"><i class="ri-shopping-cart-2-line"></i><span>Ppob</span></a></li>
                 <li class="<?= $request->uri->getSegment(3) == "payment-topup" ? "active" : "" ?>"><a href="<?= base_url("admin/share/payment-topup") ?>" class="iq-waves-effect"><i class="ri-share-circle-line"></i><span>Topup</span></a></li>
                 <li class="<?= $request->uri->getSegment(3) == "commerce" ? "active" : "" ?>"><a href="<?= base_url("admin/share/commerce") ?>" class="iq-waves-effect"><i class="ri-shopping-bag-line"></i><span>Jual Beli</span></a></li>
-                <li class="<?= $request->uri->getSegment(3) == "reportOrder" ? "active" : "" ?>"><a href="<?= base_url("admin/reportOrder/status/received") ?>"><i class="ri-file-text-line"></i>Report Order</a></li>
+                <li class="<?= $request->uri->getSegment(3) == "reportOrder" ? "active" : "" ?>"><a href="<?= base_url("admin/reportOrder/status/confirmed") ?>"><i class="ri-file-text-line"></i>Report Order</a></li>
               </ul>
             </li>
             <li class="<?= $request->uri->getSegment(2) == "broadcast" ? "active" : "" ?>" style="margin-top:10px;">

@@ -142,6 +142,8 @@ class OfficialStoreController extends BaseController
         $description = $request->getPost('description');
         $imageOld = $request->getPost('imageOld');
         $posCode = $request->getPost('posCode');
+        $latitude = $request->getPost('latitude');
+        $longitude = $request->getPost('longitude');
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $bodyImage = [
@@ -174,6 +176,8 @@ class OfficialStoreController extends BaseController
             "email" => $email,
             "app_id" => $appId,
             "user_id" => $user_id,
+            "lat" => $latitude,
+            "lng" => $longitude,
         ];
 
         // var_dump($body); die;
@@ -225,6 +229,8 @@ class OfficialStoreController extends BaseController
         $description = $request->getPost('description');
         $imageOld = $request->getPost('imageOld');
         $posCode = $request->getPost('posCode');
+        $latitude = $request->getPost('latitude');
+        $longitude = $request->getPost('longitude');
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $bodyImage = [
@@ -257,6 +263,8 @@ class OfficialStoreController extends BaseController
             "email" => $email,
             "app_id" => $appId,
             "user_id" => $user_id,
+            "lat" => $latitude,
+            "lng" => $longitude,
         ];
 
         // var_dump($body); die;

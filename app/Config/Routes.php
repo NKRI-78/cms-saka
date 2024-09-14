@@ -141,9 +141,11 @@ $routes->group('admin', function ($routes) {
     $routes->get('commerce', 'ShareProfitController::commerce', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('commerce', 'ShareProfitController::commercePost', ['namespace' => 'App\Controllers\Admin']);
   });
-
+  
   $routes->group('reportOrder', function ($routes) {
     $routes->get('status/(:any)', 'OrderController::status/$1', ['namespace' => 'App\Controllers\Admin']);
+    $routes->get('detail/(:any)', 'OrderController::detail/$1', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('confirmed', 'OrderController::confirmed', ['namespace' => 'App\Controllers\Admin']);
   });
 
   $routes->group('courier', function ($routes) {

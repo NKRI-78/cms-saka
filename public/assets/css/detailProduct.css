@@ -1,0 +1,23 @@
+.product{
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-satu{
+    display: flex;
+    gap: 1rem;
+}
+
+.img-product{
+    border-radius: 10px;
+    border: solid 1px;
+    width: 100px;
+        height: 100px;
+        max-height: 150px;
+        border-radius: 10px;
+}
+
+.product-container{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

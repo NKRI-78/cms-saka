@@ -25,6 +25,9 @@
                 "data": "stok"
             },
             {
+                "data": "category"
+            },
+            {
                 "data": "price"
             },
             {
@@ -87,15 +90,18 @@
 
     $(document).ready(function() {
         DetailProduct = async (productId) => {
+            $("#carouselIndicators").empty();
+            $("#carouselInner").empty();
             $("#imageNews").removeAttr("src");
+
             $('#detailProduct').modal('show');
+
             await $.ajax({
                 type: "GET",
                 url: `${baseUrl}/admin/product/detail/${productId}`,
                 cache: false,
                 contentType: false,
                 processData: false,
-                data: data,
                 success: function(response) {
                     var data = JSON.parse(response);
                     console.log(data.data.medias, 'data');
@@ -127,18 +133,19 @@
                 }
             });
         }
-    })
+    });
+
 
     Dropzone.autoDiscover = false;
 
     const imageDropzone = new Dropzone("#image-dropzone", {
-        url: `${baseUrl}/admin/product/post`, // Ganti dengan endpoint upload Anda
+        url: `${baseUrl}/admin/product/post`, 
         maxFiles: 5,
-        maxFilesize: 2, // Max filesize in MB
+        maxFilesize: 2, 
         acceptedFiles: "image/*",
         addRemoveLinks: true,
         dictRemoveFile: "Remove",
-        thumbnailWidth: 150, // Sesuaikan ukuran thumbnail
+        thumbnailWidth: 150, 
         thumbnailHeight: 150,
         init: function() {
 
@@ -146,7 +153,7 @@
                 console.log(file, response, 'aaa')
             });
             this.on("removedfile", function(file) {
-                // Panggil API untuk menghapus gambar jika diperlukan
+                
             });
 
             // this.on("addedfile", function(file) {

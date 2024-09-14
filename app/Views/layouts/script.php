@@ -51,6 +51,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJD7w_-wHs4Pe5rWMf0ubYQFpAt2QF2RA&libraries=places&language=id&callback=initMap" async defer></script>
+  
   <!-- CONSTANT -->
   <script>
     const baseUrl = '<?= base_url(); ?>';

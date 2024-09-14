@@ -32,21 +32,28 @@
                                         <input type="text" id="oldImage" value="<?= $store['logo'] ?>" hidden>
                                         <!-- <h5 id="store_id"><?= $store['id'] ?></h5> -->
                                         <input type="text" id="posCode" hidden>
+                                        <input type="hidden" id="latitude" value="<?= $store['lat'] ?>" hidden>
+                                        <input type="hidden" id="longitude" value="<?= $store['lng'] ?>" hidden>
+
+                                        <div class="form-group col-md-12">
+                                            <label>Image (Recommendation Size 700 x 525):</label>
+                                            <input type="file" class="dropify" id="imageStore" data-height="200" data-default-file="<?= isset($store['logo']) ? $store['logo'] : '' ?>" />
+                                        </div>
                                         <div class="form-group col-md-6">
                                             <label>Name:</label>
-                                            <input type="text" class="form-control" id="title" placeholder="Title Product" value="<?= $store['name'] ?>">
+                                            <input type="text" class="form-control" id="title" placeholder="Name Toko" value="<?= $store['name'] ?>">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Email:</label>
-                                            <input type="text" class="form-control" id="email" placeholder="Price Product" value="<?= $store['email'] ?>">
+                                            <input type="text" class="form-control" id="email" placeholder="Email Toko" value="<?= $store['email'] ?>">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Phone:</label>
-                                            <input type="number" class="form-control" id="phone" placeholder="Stock Product" value="<?= $store['phone'] ?>">
+                                            <input type="number" class="form-control" id="phone" placeholder="Phone Toko" value="<?= $store['phone'] ?>">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Address:</label>
-                                            <input type="text" class="form-control" id="address" placeholder="Weight Product" value="<?= $store['address'] ?>">
+                                            <input type="text" class="form-control" id="pac-input" placeholder="Alamat Toko" value="<?= $store['address'] ?>" autocomplete="off">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Province:</label>
@@ -110,8 +117,7 @@
                                             <textarea id="description" class="form-control custom"><?= $store['description'] ?></textarea>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label>Image (Recommendation Size 700 x 525):</label>
-                                            <input type="file" class="dropify" id="imageStore" data-height="200" data-default-file="<?= isset($store['logo']) ? $store['logo'] : '' ?>" />
+                                            <div id="map" style="height: 400px; width: 100%;"></div>
                                         </div>
                                     </div>
                                     <button type="button" onclick="UpdateStore()" id="updateStore" class="btn btn-custom" style="float: right;">Update</button><br>
