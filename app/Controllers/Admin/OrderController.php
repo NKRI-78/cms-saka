@@ -25,10 +25,11 @@ class OrderController extends BaseController
     $statusMapping = [
       'received' => 'WAITING_PAYMENT',
       'confirmed' => 'PAID',
+      'packing' => 'PACKING',
       'shipping' => 'ON PROCESS',
       'delivered' => 'DELIVERED',
-      'done' => 'DONE',
-      'cancelled' => 'CANCELLED',
+      // 'done' => 'DONE',
+      // 'cancelled' => 'CANCELLED',
     ];
 
     if (isset($statusMapping[$status])) {
@@ -40,7 +41,7 @@ class OrderController extends BaseController
         'order_status' => $privateStatus
       ];
 
-      $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/order/list';
+      $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/order/seller/list';
 
       $response = $client->post(
         $url,

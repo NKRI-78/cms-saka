@@ -1,6 +1,7 @@
 <?php
 
 use Config\Services;
+use PHPUnit\Util\Color;
 
 $request = Services::request();
 ?>
@@ -34,17 +35,20 @@ $request = Services::request();
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "confirmed" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/confirmed") ?>">Confirmed</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link <?= $request->uri->getSegment(4) == "packing" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/packing") ?>">Packing</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "shipping" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/shipping") ?>">Shipping</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "delivered" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/delivered") ?>">Delivered</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "done" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/done") ?>">Done</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "cancelled" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/cancelled") ?>">Cancel</a>
-                            </li>
+                            </li> -->
                         </ul>
                         <!-- <ul class="nav nav-tabs" id="myTab-1" role="tablist">
                             <li class="nav-item">
@@ -69,7 +73,7 @@ $request = Services::request();
                                                 <th scope="col">No</th>
                                                 <th scope="col">No Invoice</th>
                                                 <th scope="col">Price</th>
-                                                <!-- <th scope="col">Product Name</th> -->
+                                                <th scope="col">Status</th>
                                                 <!-- <th scope="col">Qty</th> -->
                                                 <!-- <th scope="col">Buyer</th> -->
                                                 <!-- <th scope="col">Delivery Cost</th> -->
@@ -85,8 +89,30 @@ $request = Services::request();
                                                         <td><?= $row['invoice'] ?></td>
                                                         <td><?= 'Rp ' . number_format($row['total_price'], 0, ',', '.') ?></td>
                                                         <td>
+                                                            <?php switch ($row['order_status']) {
+                                                                case "DONE":
+                                                                    echo "<div class='badge badge-pill badge-success'>Done</div>";
+                                                                    break;
+                                                                case "CANCELLED":
+                                                                    echo "<div class='badge badge-pill badge-danger'>Cancel</div>";
+                                                                    break;
+                                                                case "PAID":
+                                                                    echo "<div class='badge badge-pill' style='background-Color: #007bff; color: #fff;'>Received</div>";
+                                                                    break;
+                                                                case "PACKING":
+                                                                    echo "<div class='badge badge-pill badge-warning'>Packing</div>";
+                                                                    break;
+                                                                case "SHIPPING":
+                                                                    echo "<div class='badge badge-pill badge-info'>Shipping</div>";
+                                                                    break;
+                                                                case "DELIVERED":
+                                                                    echo "<div class='badge badge-pill badge-secondary'>Delivered</div>";
+                                                                    break;
+                                                            }  ?>
+                                                        </td>
+                                                        <td>
                                                             <?php if ($row['order_status'] == 'PAID') { ?>
-                                                                <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>')" id="confirmedProduct" class="btn mb-3 btn-success" style="color: #fff;">Confirmed</a>
+                                                                <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>', this)" class="btn mb-3 btn-success confirmedProduct" style="color: #fff;">Confirmed</a>
                                                             <?php } ?>
                                                             <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a>
                                                         </td>
@@ -119,6 +145,7 @@ $request = Services::request();
                 <div class="modal-body">
                     <h5 style="font-weight:bold">Invoice: <span id="invoice" style="font-weight: 700 !important;color: #8b44ed;"></span></h5>
                     <h5 style="font-weight:bold">Tanggal Pembelian: <span id="purchaseDate" style="font-weight: normal !important;"></span></h5>
+                    <h5 style="font-weight:bold">No Resi: <span id="resi" style="font-weight: normal !important;"></span></h5>
                     <div class="product-container" id="productContainer">
 
                     </div>
@@ -191,6 +218,7 @@ $request = Services::request();
                     $("#payment").html(element.payment_code);
                     $("#courier").html(element.items[0].courier_id);
                     $("#costs").html(formatRupiah(element.items[0].courier_price));
+                    $("#resi").html(element.waybill);
                 });
             },
             error: function(err) {
@@ -199,14 +227,14 @@ $request = Services::request();
         });
     }
 
-    ConfirmedProduct = async (transactionId) => {
+    ConfirmedProduct = async (transactionId, el) => {
         let data = new FormData();
 
         // let transactionId = transactionId;
 
         data.append('transactionId', transactionId);
 
-        $("#confirmedProduct").text('Loading...');
+        $(el).text('Loading...');
         await $.ajax({
             type: "POST",
             url: `${baseUrl}/admin/reportOrder/confirmed`,
@@ -219,10 +247,13 @@ $request = Services::request();
                 // setInterval(function() {
                 //     location.href = `${baseUrl}/admin/officialStore`;
                 // }, 1500);
+                setTimeout(function() {
+                    location.reload();
+                }, 1500);
             },
             error: function(err) {
                 toastr.error('something went wrong');
-                $("#confirmedProduct").text('Confirmed');
+                $(el).text('Confirmed');
             }
         });
     }
