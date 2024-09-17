@@ -48,11 +48,12 @@ class OfficialStoreController extends BaseController
                 $district = $resultStore['data']['district'];
                 // var_dump($province, $citys, $district); die;
 
-                $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province', 'GET');
-                $resultCity = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
-                $resultDistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $citys, 'GET');
-                $resultSubistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district, 'GET');
+                $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province?search=', 'GET');
+                $resultCity = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province . '?search=', 'GET');
+                $resultDistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $citys . '?search=', 'GET');
+                $resultSubistrict = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district . '?search=', 'GET');
 
+                // var_dump($resultProvince); die;
                 $data["province"] = $resultProvince->data;
                 $data["city"] = $resultCity->data;
                 $data["district"] = $resultDistrict->data;
@@ -84,7 +85,7 @@ class OfficialStoreController extends BaseController
         try {
             $province = $request->getPost('provinceId');
 
-            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province, 'GET');
+            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province . '?search=', 'GET');
 
             return json_encode([
                 "body" =>  $result->data
@@ -103,7 +104,7 @@ class OfficialStoreController extends BaseController
         try {
             $city = $request->getPost('city_name');
 
-            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $city, 'GET');
+            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/district/' . $city . '?search=', 'GET');
 
             return json_encode([
                 "body" =>  $result->data
@@ -121,7 +122,7 @@ class OfficialStoreController extends BaseController
 
         $district = $request->getPost('district_name');
 
-        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district, 'GET');
+        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/subdistrict/' . $district . '?search=', 'GET');
 
         return json_encode([
             "body" =>  $result->data
