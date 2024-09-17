@@ -97,7 +97,7 @@ $request = Services::request();
                                                                     echo "<div class='badge badge-pill badge-danger'>Cancel</div>";
                                                                     break;
                                                                 case "PAID":
-                                                                    echo "<div class='badge badge-pill' style='background-Color: #007bff; color: #fff;'>Received</div>";
+                                                                    echo "<div class='badge badge-pill' style='background-Color: #007bff; color: #fff;'>On Process</div>";
                                                                     break;
                                                                 case "PACKING":
                                                                     echo "<div class='badge badge-pill badge-warning'>Packing</div>";
