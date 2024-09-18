@@ -249,7 +249,7 @@ $request = Services::request();
                 //     location.href = `${baseUrl}/admin/officialStore`;
                 // }, 1500);
                 setTimeout(function() {
-                    // location.reload();
+                    location.reload();
                 }, 1500);
             },
             error: function(err) {
