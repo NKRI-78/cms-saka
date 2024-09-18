@@ -36,6 +36,7 @@ class OrderController extends BaseController
       $privateStatus = $statusMapping[$status];
 
       $postData = [
+        'app' => 'saka',
         'user_id' => $user_id,
         // 'user_id' => '21244e96-b9ff-40aa-b4b9-1c2e6dffd905',
         'order_status' => $privateStatus
@@ -141,13 +142,15 @@ class OrderController extends BaseController
     $user_id = $session->get('userId');
 
     $transactionId = $request->getPost('transactionId');
+    $buyerId = $request->getPost('buyerId');
 
     $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/order/confirm';
 
     $body = [
       // "user_id" => $user_id,
-      "user_id" => '21244e96-b9ff-40aa-b4b9-1c2e6dffd905',
+      "user_id" => $buyerId,
       "transaction_id" => $transactionId,
+      "app" => "saka",
     ];
 
     $req = $client->post(

@@ -112,7 +112,7 @@ $request = Services::request();
                                                         </td>
                                                         <td>
                                                             <?php if ($row['order_status'] == 'PAID') { ?>
-                                                                <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>', this)" class="btn mb-3 btn-success confirmedProduct" style="color: #fff;">Confirmed</a>
+                                                                <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>' , '<?= $row['buyer']['id'] ?>', this)" class="btn mb-3 btn-success confirmedProduct" style="color: #fff;">Confirmed</a>
                                                             <?php } ?>
                                                             <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a>
                                                         </td>
@@ -227,12 +227,13 @@ $request = Services::request();
         });
     }
 
-    ConfirmedProduct = async (transactionId, el) => {
+    ConfirmedProduct = async (transactionId, buyerId, el) => {
         let data = new FormData();
 
         // let transactionId = transactionId;
 
         data.append('transactionId', transactionId);
+        data.append('buyerId', buyerId);
 
         $(el).text('Loading...');
         await $.ajax({
@@ -248,7 +249,7 @@ $request = Services::request();
                 //     location.href = `${baseUrl}/admin/officialStore`;
                 // }, 1500);
                 setTimeout(function() {
-                    location.reload();
+                    // location.reload();
                 }, 1500);
             },
             error: function(err) {
