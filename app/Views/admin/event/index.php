@@ -20,9 +20,9 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">Event Start Date</th>
                                         <th scope="col">Event End Date</th>
-                                        <th scope="col">Description</th>
                                         <th scope="col">&emsp;&emsp;Action</th>
                                     </tr>
                                 </thead>
@@ -32,9 +32,9 @@
                                         <?php foreach ($event as $row) : ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
-                                                <td><?= $row->start_date ?></td>
-                                                <td><?= $row->end_date ?></td>
                                                 <td><?= character_limiter($row->description, 20) ?></td>
+                                                <td><?= date('j F Y', strtotime($row->start_date)) ?></td>
+                                                <td><?= date('j F Y', strtotime($row->end_date)) ?></td>
                                                 <td>
                                                     <div class="send-panel">
                                                         <label class="ml-2 mb-0 iq-bg-primary rounded"> <a href="<?= base_url("admin/event/edit/$row->event_id") ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Event"> <i class="ri-edit-line text-primary"></i></a> </label>
