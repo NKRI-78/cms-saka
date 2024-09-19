@@ -189,7 +189,8 @@
         let data = new FormData();
         var start = $("#start").val();
         var end = $("#end").val();
-        var eventDate = $("#eventDate").val();
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
         var description = $("#description").val();
         let picture = $('#picture')[0].files[0];
         var location = $("#location").val();
@@ -206,7 +207,8 @@
 
         data.append('start', start);
         data.append('end', end);
-        data.append('eventDate', eventDate);
+        data.append('startDate', startDate);
+        data.append('endDate', endDate);
         data.append('description', description);
         data.append('picture', picture);
         data.append('location', location);
@@ -239,7 +241,8 @@
         var eventId = $("#eventId").val();
         var start = $("#start").val();
         var end = $("#end").val();
-        var eventDate = $("#eventDate").val();
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
         var description = $("#description").val();
         let picture = $('#picture')[0].files[0];
         var location = $("#location").val();
@@ -248,7 +251,8 @@
         data.append('eventId', eventId);
         data.append('start', start);
         data.append('end', end);
-        data.append('eventDate', eventDate);
+        data.append('startDate', startDate);
+        data.append('endDate', endDate);
         data.append('description', description);
         data.append('picture', picture);
         data.append('location', location);
