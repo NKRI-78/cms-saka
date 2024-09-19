@@ -28,11 +28,12 @@ class EventController extends BaseController
 
         $start = $request->getPost('start');
         $end = $request->getPost('end');
-        $eventDate = $request->getPost('eventDate');
         $description = $request->getPost('description');
         $location = $request->getPost('location');
         $summary = $request->getPost('summary');
         $shareNews = $request->getPost('shareNews');
+        $startDate = $request->getPost('startDate');
+        $endDate = $request->getPost('endDate');
 
         if ($shareNews == "true") {
             $shareValue = true;
@@ -53,7 +54,8 @@ class EventController extends BaseController
 
         $url = getenv('API_URL') . '/content-service/event';
         $body = [
-            "event_date" => $eventDate,
+            "start_date" => $startDate,
+            "end_date" => $endDate,
             "description" => $description,
             "start" => date("H:i", strtotime($start)),
             "end" => date("H:i", strtotime($end)),
@@ -93,7 +95,8 @@ class EventController extends BaseController
         $eventId = $request->getPost('eventId');
         $start = $request->getPost('start');
         $end = $request->getPost('end');
-        $eventDate = $request->getPost('eventDate');
+        $startDate = $request->getPost('startDate');
+        $endDate = $request->getPost('endDate');
         $description = $request->getPost('description');
         $location = $request->getPost('location');
         $summary = $request->getPost('summary');
@@ -115,7 +118,8 @@ class EventController extends BaseController
 
         $url = getenv('API_URL') . '/content-service/event/' . $eventId;
         $body = [
-            "event_date" => $eventDate,
+            "start_date" => $startDate,
+            "end_date" => $endDate,
             "description" => $description,
             "start" => date("H:i", strtotime($start)),
             "end" => date("H:i", strtotime($end)),

@@ -21,9 +21,13 @@
                                         <input type="text" class="form-control" id="summary">
                                         <!-- <textarea id="summary" class="form-control"></textarea> -->
                                     </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Event Date:</label>
-                                        <input type="date" class="form-control" id="eventDate" placeholder="Event Date">
+                                    <div class="form-group col-md-6">
+                                        <label>Event Start Date:</label>
+                                        <input type="date" class="form-control" id="startDate" placeholder="Event Start Date">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Event End Date:</label>
+                                        <input type="date" class="form-control" id="endDate" placeholder="Event End Date">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Start:</label>

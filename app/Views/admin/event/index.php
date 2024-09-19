@@ -20,7 +20,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Event Date</th>
+                                        <th scope="col">Event Start Date</th>
+                                        <th scope="col">Event End Date</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">&emsp;&emsp;Action</th>
                                     </tr>
@@ -31,7 +32,8 @@
                                         <?php foreach ($event as $row) : ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
-                                                <td><?= $row->event_date ?></td>
+                                                <td><?= $row->start_date ?></td>
+                                                <td><?= $row->end_date ?></td>
                                                 <td><?= character_limiter($row->description, 20) ?></td>
                                                 <td>
                                                     <div class="send-panel">

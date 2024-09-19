@@ -22,9 +22,13 @@
                                         <input type="text" class="form-control" id="summary" value="<?= $event[0]->summary ?>">
                                         <!-- <textarea id="summary" class="form-control"><?= $event[0]->summary ?></textarea> -->
                                     </div>
-                                    <div class="form-group col-md-12">
-                                        <label>Event Date:</label>
-                                        <input type="date" class="form-control" id="eventDate" value="<?= $event[0]->event_date ?>">
+                                    <div class="form-group col-md-6">
+                                        <label>Event Start Date:</label>
+                                        <input type="date" class="form-control" id="startDate" value="<?= $event[0]->start_date ?>">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Event End Date:</label>
+                                        <input type="date" class="form-control" id="endDate" value="<?= $event[0]->end_date ?>">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Start:</label>
