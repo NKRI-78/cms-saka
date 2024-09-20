@@ -87,8 +87,6 @@ class OfficialStoreController extends BaseController
 
             $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province . '?search=', 'GET');
 
-            die(var_dump(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/city/' . $province . '?search='));
-
             return json_encode([
                 "body" =>  $result->data
             ]);
