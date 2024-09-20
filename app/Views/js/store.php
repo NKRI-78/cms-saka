@@ -209,6 +209,10 @@
     $('#province').change(function() {
         var provinceId = $(this).val();
 
+        const city = provinceId;
+        const encodedCity = encodeURIComponent(city);
+        console.log(encodedCity, 'city');
+
         $('#city').html('<option disabled selected>Select City</option>');
 
         if (provinceId) {
@@ -216,7 +220,7 @@
                 url: `${baseUrl}/admin/officialStore/getCity`,
                 type: 'POST',
                 data: {
-                    provinceId: provinceId
+                    provinceId: encodedCity
                 },
                 success: function(response) {
                     var cities = JSON.parse(response);
