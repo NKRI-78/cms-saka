@@ -211,7 +211,6 @@
 
         const city = provinceId;
         const encodedCity = encodeURIComponent(city);
-        console.log(encodedCity, 'city');
 
         $('#city').html('<option disabled selected>Select City</option>');
 
@@ -240,6 +239,8 @@
     $('#city').change(function() {
 
         var cityName = $(this).val();
+        const district = cityName;
+        const encodedDistrict = encodeURIComponent(city);
 
         $('#district').html('<option disabled selected>Select City</option>');
 
@@ -248,7 +249,7 @@
                 url: `${baseUrl}/admin/officialStore/getDistrict`,
                 type: 'POST',
                 data: {
-                    city_name: cityName
+                    city_name: encodedDistrict
                 },
                 success: function(response) {
                     var districtResponse = JSON.parse(response);
@@ -267,6 +268,8 @@
     $('#district').change(function() {
 
         var districtName = $(this).val();
+        const subdistrict = cityName;
+        const encodedSubdistrict = encodeURIComponent(city);
 
         $('#subdistrict').html('<option disabled selected>Select City</option>');
 
@@ -275,7 +278,7 @@
                 url: `${baseUrl}/admin/officialStore/getSubdistrict`,
                 type: 'POST',
                 data: {
-                    district_name: districtName
+                    district_name: encodedSubdistrict
                 },
                 success: function(response) {
                     var districtResponse = JSON.parse(response);
