@@ -20,12 +20,12 @@ class ProductController extends BaseController
         $page = $start / $limit + 1;
 
         if (empty($_POST['search']['value'])) {
-            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/all?page=' . $page . '&limit=' . $limit . '&search=&app_name=saka', 'GET');
+            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/all?page=' . $page . '&limit=' . $limit . '&search=&app_name=saka&cat=', 'GET');
             $recordsTotal = intval($result->data->page_detail->total);
         } else {
             $search = $_POST['search']['value'];
             $search = str_replace(" ", "%20", $search);
-            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/all?page=' . $page . '&limit=' . $limit . '&search=' . $search . '&app_name=saka', 'GET');
+            $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/all?page=' . $page . '&limit=' . $limit . '&search=' . $search . '&app_name=saka&cat=', 'GET');
             $recordsTotal = intval($result->data->page_detail->total);
         }
 
@@ -199,6 +199,7 @@ class ProductController extends BaseController
             "app_id" => $app_id,
             "store_id" => $store_id,
         ];
+        // var_dump($body); die;
 
         $req = $client->post(
             $url,
@@ -213,7 +214,6 @@ class ProductController extends BaseController
         );
 
         $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store/image';
-
         foreach ($imagePaths as $path) {
             $body = [
                 "product_id" => $product_id,
@@ -241,6 +241,8 @@ class ProductController extends BaseController
 
         $data["product"] = $result->data->product;
         $data["category"] = $resultCategory->data;
+
+        // var_dump($data); die;
 
         return view("admin/product/edit", $data);
     }
