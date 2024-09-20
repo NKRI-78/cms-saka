@@ -240,7 +240,7 @@
 
         var cityName = $(this).val();
         const district = cityName;
-        const encodedDistrict = encodeURIComponent(city);
+        const encodedDistrict = encodeURIComponent(district);
 
         $('#district').html('<option disabled selected>Select City</option>');
 
@@ -268,8 +268,8 @@
     $('#district').change(function() {
 
         var districtName = $(this).val();
-        const subdistrict = cityName;
-        const encodedSubdistrict = encodeURIComponent(city);
+        const subdistrict = districtName;
+        const encodedSubdistrict = encodeURIComponent(subdistrict);
 
         $('#subdistrict').html('<option disabled selected>Select City</option>');
 
