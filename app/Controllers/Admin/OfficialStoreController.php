@@ -43,9 +43,9 @@ class OfficialStoreController extends BaseController
                 $data["storeNotFound"] = true;
             } else {
                 $data["store"] = $resultStore['data'];
-                $province = $resultStore['data']['province'];
-                $citys = $resultStore['data']['city'];
-                $district = $resultStore['data']['district'];
+                $province = rawurlencode($resultStore['data']['province']);
+                $citys = rawurlencode($resultStore['data']['city']);
+                $district = rawurlencode($resultStore['data']['district']);
                 // var_dump($province, $citys, $district); die;
 
                 $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province?search=', 'GET');
