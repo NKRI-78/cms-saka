@@ -209,7 +209,7 @@ class OfficialStoreController extends BaseController
 
     public function create()
     {
-        $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province', 'GET');
+        $resultProvince = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/regions/province?search=', 'GET');
 
         $data["province"] = $resultProvince->data;
 
