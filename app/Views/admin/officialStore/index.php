@@ -7,6 +7,14 @@
         line-height: normal;
         height: 130px !important;
     }
+
+    textarea.custom {
+        overflow: hidden;
+        resize: none;
+        min-height: 130px;
+        /* Atur tinggi minimal */
+        line-height: normal;
+    }
 </style>
 
 <div id="content-page" class="content-page">
@@ -134,3 +142,18 @@
 <?= view('layouts/footer'); ?>
 <?= view('layouts/script'); ?>
 <?= view('js/store'); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('description');
+
+        // Fungsi untuk memperbesar tinggi berdasarkan isi
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto'; // Reset tinggi terlebih dahulu
+            this.style.height = (this.scrollHeight) + 'px'; // Atur tinggi sesuai dengan scroll height
+        });
+
+        // Memastikan textarea disesuaikan saat halaman dimuat
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    });
+</script>
