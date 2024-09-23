@@ -50,8 +50,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJD7w_-wHs4Pe5rWMf0ubYQFpAt2QF2RA&libraries=places&language=id&callback=initMap" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dropzone@5/dist/min/dropzone.min.js"></script>
+  <script src="assets/plugins/global/plugins.bundle.js"></script>
   
   <!-- CONSTANT -->
   <script>

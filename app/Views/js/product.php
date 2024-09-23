@@ -62,7 +62,7 @@
         data.append('caption', caption);
         // data.append('image', image);
 
-        imageDropzone.files.forEach((file, index) => {
+        myDropzone.files.forEach((file, index) => {
             data.append(`images[${index}]`, file);
         });
 
@@ -136,55 +136,55 @@
     });
 
 
-    Dropzone.autoDiscover = false;
+    // Dropzone.autoDiscover = false;
 
-    const imageDropzone = new Dropzone("#image-dropzone", {
-        url: `${baseUrl}/admin/product/post`, 
-        maxFiles: 5,
-        maxFilesize: 2, 
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        dictRemoveFile: "Remove",
-        thumbnailWidth: 150, 
-        thumbnailHeight: 150,
-        init: function() {
+    // const imageDropzone = new Dropzone("#image-dropzone", {
+    //     url: `${baseUrl}/admin/product/post`, 
+    //     maxFiles: 5,
+    //     maxFilesize: 2, 
+    //     acceptedFiles: "image/*",
+    //     addRemoveLinks: true,
+    //     dictRemoveFile: "Remove",
+    //     thumbnailWidth: 150, 
+    //     thumbnailHeight: 150,
+    //     init: function() {
 
-            this.on("success", function(file, response) {
-                console.log(file, response, 'aaa')
-            });
-            this.on("removedfile", function(file) {
-                
-            });
+    //         this.on("success", function(file, response) {
+    //             console.log(file, response, 'aaa')
+    //         });
+    //         this.on("removedfile", function(file) {
 
-            // this.on("addedfile", function(file) {
-            //     const fileCount = this.getAcceptedFiles().length;
+    //         });
 
-            //     if (fileCount > 5) {
-            //         // Hapus file terakhir yang diupload jika melebihi batas
-            //         this.removeFile(file);
+    //         // this.on("addedfile", function(file) {
+    //         //     const fileCount = this.getAcceptedFiles().length;
 
-            //         // Tampilkan peringatan menggunakan SweetAlert2
-            //         Swal.fire({
-            //             icon: 'warning',
-            //             title: 'Peringatan',
-            //             text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
-            //         });
-            //     }
-            // });
+    //         //     if (fileCount > 5) {
+    //         //         // Hapus file terakhir yang diupload jika melebihi batas
+    //         //         this.removeFile(file);
 
-            this.on("maxfilesexceeded", function(file) {
-                // Hapus file terakhir yang diupload jika melebihi batas
-                this.removeFile(file);
+    //         //         // Tampilkan peringatan menggunakan SweetAlert2
+    //         //         Swal.fire({
+    //         //             icon: 'warning',
+    //         //             title: 'Peringatan',
+    //         //             text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
+    //         //         });
+    //         //     }
+    //         // });
 
-                // Tampilkan peringatan menggunakan SweetAlert2
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Peringatan',
-                    text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
-                });
-            });
-        }
-    });
+    //         this.on("maxfilesexceeded", function(file) {
+    //             // Hapus file terakhir yang diupload jika melebihi batas
+    //             this.removeFile(file);
+
+    //             // Tampilkan peringatan menggunakan SweetAlert2
+    //             Swal.fire({
+    //                 icon: 'warning',
+    //                 title: 'Peringatan',
+    //                 text: 'Anda hanya dapat meng-upload maksimal 5 gambar.',
+    //             });
+    //         });
+    //     }
+    // });
 
     function DeleteProduct(productId) {
         Swal.fire({
@@ -235,5 +235,177 @@
 
         this.value = this.value;
         // this.value = 'Rp ' + this.value;
+    });
+
+    // const id = "#kt_dropzonejs_example_3";
+    // const dropzone = document.querySelector(id);
+    // var previewNode = dropzone.querySelector(".dropzone-item");
+    // previewNode.id = "";
+    // var previewTemplate = previewNode.parentNode.innerHTML;
+    // previewNode.parentNode.removeChild(previewNode);
+
+    // var myDropzone = new Dropzone(id, {
+    //     url: "https://keenthemes.com/scripts/void.php", // URL untuk upload file
+    //     parallelUploads: 20,
+    //     maxFilesize: 1, // Ukuran file maksimum dalam MB
+    //     maxFiles: 5, // Maksimal file yang diizinkan
+    //     previewTemplate: previewTemplate, // Template untuk preview
+    //     previewsContainer: id + " .dropzone-items", // Kontainer untuk menampilkan preview
+    //     clickable: id + " .dropzone-select" // Elemen yang digunakan untuk memilih file
+    // });
+
+    // // Mendapatkan elemen tombol "Attach files"
+    // const attachButton = document.querySelector(id + " .dropzone-select");
+
+    // // Event listener untuk menampilkan preview gambar
+    // myDropzone.on("addedfile", function (file) {
+    //     // Menampilkan item preview
+    //     const dropzoneItems = dropzone.querySelectorAll('.dropzone-item');
+    //     dropzoneItems.forEach(dropzoneItem => {
+    //         dropzoneItem.style.display = '';
+    //     });
+    // });
+
+    // // Event listener ketika jumlah file mencapai batas maksimal
+    // myDropzone.on("maxfilesreached", function() {
+    //     // Menonaktifkan tombol "Attach files"
+    //     attachButton.classList.add("disabled");
+    //     attachButton.style.pointerEvents = "none";
+    // });
+
+    // // Event listener ketika ada file yang melebihi batas maksimal
+    // myDropzone.on("maxfilesexceeded", function(file) {
+    //     // Menghapus file yang melebihi batas maksimal
+    //     myDropzone.removeFile(file);
+    //     alert("Maksimal 5 gambar yang dapat diunggah.");
+    // });
+
+    // // Event listener ketika file dihapus
+    // myDropzone.on("removedfile", function() {
+    //     // Mengecek jika jumlah file kurang dari batas maksimal
+    //     if (myDropzone.files.length < myDropzone.options.maxFiles) {
+    //         // Mengaktifkan kembali tombol "Attach files"
+    //         attachButton.classList.remove("disabled");
+    //         attachButton.style.pointerEvents = "auto";
+    //     }
+    // });
+
+    // // Event listener untuk mengupdate progress bar
+    // myDropzone.on("totaluploadprogress", function (progress) {
+    //     const progressBars = dropzone.querySelectorAll('.progress-bar');
+    //     progressBars.forEach(progressBar => {
+    //         progressBar.style.width = progress + "%";
+    //     });
+    // });
+
+    // // Event listener ketika file mulai dikirim
+    // myDropzone.on("sending", function (file) {
+    //     // Menampilkan progress bar ketika upload dimulai
+    //     const progressBars = dropzone.querySelectorAll('.progress-bar');
+    //     progressBars.forEach(progressBar => {
+    //         progressBar.style.opacity = "1";
+    //     });
+    // });
+
+    // // Event listener ketika upload selesai
+    // myDropzone.on("complete", function (progress) {
+    //     const progressBars = dropzone.querySelectorAll('.dz-complete');
+
+    //     setTimeout(function () {
+    //         progressBars.forEach(progressBar => {
+    //             progressBar.querySelector('.progress-bar').style.opacity = "0";
+    //             progressBar.querySelector('.progress').style.opacity = "0";
+    //         });
+    //     }, 300);
+    // });
+
+    const id = "#kt_dropzonejs_example_3";
+    const dropzone = document.querySelector(id);
+
+    // Menyiapkan elemen template preview
+    var previewNode = dropzone.querySelector(".dropzone-item");
+    previewNode.id = "";
+    var previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
+
+    // Inisialisasi Dropzone dengan opsi yang diinginkan
+    var myDropzone = new Dropzone(id, {
+        url: `${baseUrl}/admin/product/post`,
+        parallelUploads: 20,
+        maxFilesize: 1,
+        previewTemplate: previewTemplate,
+        previewsContainer: id + " .dropzone-items",
+        clickable: id + " .dropzone-select",
+        maxFiles: 5
+    });
+
+    function updateButtonState() {
+        const button = document.getElementById('upload-image-button');
+        if (myDropzone.files.length >= 4) {
+            button.classList.add('disabled');
+            button.style.pointerEvents = 'none';
+        } else {
+            button.classList.remove('disabled');
+            button.style.pointerEvents = 'auto';
+        }
+    }
+
+    // Menambahkan event listener untuk menampilkan preview gambar
+    myDropzone.on("addedfile", function(file) {
+        const dropzoneItems = dropzone.querySelectorAll('.dropzone-item');
+        dropzoneItems.forEach(dropzoneItem => {
+            dropzoneItem.style.display = '';
+        });
+
+        const totalFiles = myDropzone.files.length;
+
+        // Jika total file lebih dari 5, hapus file yang paling baru ditambahkan
+        if (totalFiles > 5) {
+            myDropzone.removeFile(file);
+            // alert("Jumlah maksimal gambar adalah 5. Gambar terbaru yang ditambahkan akan dihapus.");
+        }
+
+        updateButtonState();
+    });
+
+    // Event listener untuk mengupdate progress bar
+    myDropzone.on("totaluploadprogress", function(progress) {
+        const progressBars = dropzone.querySelectorAll('.progress-bar');
+        progressBars.forEach(progressBar => {
+            progressBar.style.width = progress + "%";
+        });
+    });
+
+    // Event listener ketika file mulai dikirim
+    myDropzone.on("sending", function(file) {
+        const progressBars = dropzone.querySelectorAll('.progress-bar');
+        progressBars.forEach(progressBar => {
+            progressBar.style.opacity = "1";
+        });
+    });
+
+    // Event listener ketika upload selesai
+    myDropzone.on("complete", function(progress) {
+        const progressBars = dropzone.querySelectorAll('.dz-complete');
+
+        setTimeout(function() {
+            progressBars.forEach(progressBar => {
+                progressBar.querySelector('.progress-bar').style.opacity = "0";
+                progressBar.querySelector('.progress').style.opacity = "0";
+            });
+        }, 300);
+    });
+
+    // Event listener untuk menampilkan preview gambar
+    myDropzone.on("thumbnail", function(file, dataUrl) {
+        var dropzoneItem = file.previewElement;
+        var imgElement = dropzoneItem.querySelector("img");
+        if (imgElement) {
+            imgElement.src = dataUrl;
+        }
+    });
+
+    myDropzone.on("removedfile", function() {
+        updateButtonState();
     });
 </script>
