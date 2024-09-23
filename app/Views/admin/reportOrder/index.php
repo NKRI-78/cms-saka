@@ -72,10 +72,14 @@ $request = Services::request();
                                             <tr>
                                                 <th scope="col">No</th>
                                                 <th scope="col">No Invoice</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">No Resi</th>
                                                 <th scope="col">Price</th>
+                                                <th scope="col">Buyer</th>
+                                                <th scope="col">Expedition</th>
+                                                <th scope="col">Shipping Costs</th>
                                                 <th scope="col">Status</th>
-                                                <!-- <th scope="col">Qty</th> -->
-                                                <!-- <th scope="col">Buyer</th> -->
+                                                <th scope="col">Purchase Date</th>
                                                 <!-- <th scope="col">Delivery Cost</th> -->
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -87,7 +91,21 @@ $request = Services::request();
                                                     <tr>
                                                         <td><?= $no++ ?></td>
                                                         <td><?= $row['invoice'] ?></td>
+                                                        <td>
+                                                            <!-- Menampilkan nama produk ke bawah -->
+                                                            <ul style="margin-left: -2.5rem;">
+                                                                <?php foreach ($row['items'] as $item) : ?>
+                                                                    <li>
+                                                                        <?= $item['product']['title'] ?> (Qty: <?= $item['qty'] ?>)
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </td>
+                                                        <td><?= $row['waybill'] ?></td>
                                                         <td><?= 'Rp ' . number_format($row['total_price'], 0, ',', '.') ?></td>
+                                                        <td><?= $row['buyer']['fullname'] ?></td>
+                                                        <td><?= $row['items'][0]['courier_id'] ?></td>
+                                                        <td><?= 'Rp ' . number_format($row['items'][0]['courier_price'], 0, ',', '.') ?></td>
                                                         <td>
                                                             <?php switch ($row['order_status']) {
                                                                 case "DONE":
@@ -110,11 +128,12 @@ $request = Services::request();
                                                                     break;
                                                             }  ?>
                                                         </td>
+                                                        <td><?= date('j F Y, H:i:s', strtotime($row['created_at'])) ?></td>
                                                         <td>
                                                             <?php if ($row['order_status'] == 'PAID') { ?>
                                                                 <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>' , '<?= $row['buyer']['id'] ?>', this)" class="btn mb-3 btn-success confirmedProduct" style="color: #fff;">Confirmed</a>
                                                             <?php } ?>
-                                                            <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a>
+                                                            <!-- <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a> -->
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -188,8 +207,8 @@ $request = Services::request();
             success: function(response) {
                 let data = JSON.parse(response);
 
+                console.log(data, 'data');
                 let dataRows = data.body.map(element => {
-                    console.log(element, 'data');
                     let date = moment(element.created_at).format('DD MMMM YYYY, HH:mm');
                     let orderItemPrice = formatRupiah(element.items[0].product.price);
                     let productHtml = `

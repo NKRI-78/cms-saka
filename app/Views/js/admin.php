@@ -436,7 +436,9 @@
     }
 
     $('#dataCommerceBanner').DataTable();
-    $('#dataOrder').DataTable();
+    $('#dataOrder').DataTable({
+        scrollX:true,
+    });
     $('#dataCampaign').DataTable();
 
     CreateCommerceBanner = async () => {
