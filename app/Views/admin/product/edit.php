@@ -255,6 +255,7 @@ function formatRupiah($amount)
             data.append(`images[${index}]`, file);
         });
 
+        $("#updateNews").prop('disabled', true);
         $("#updateNews").text('Loading...');
         await $.ajax({
             type: "POST",
