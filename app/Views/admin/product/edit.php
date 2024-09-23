@@ -43,13 +43,13 @@
         color: red;
     }
 
-    .custom-btn{
-        background-Color: #007bff !important; 
+    .custom-btn {
+        background-Color: #007bff !important;
         color: #fff !important;
     }
 
-    .custom-btn:hover{
-        background-Color: #295F98 !important; 
+    .custom-btn:hover {
+        background-Color: #295F98 !important;
         color: #fff !important;
     }
 </style>
@@ -456,5 +456,13 @@ function formatRupiah($amount)
         if (fileId) {
             deleteImage(fileId);
         }
+    });
+
+    $('#title').on('input', function() {
+        let inputValue = $(this).val();
+        let capitalizedValue = inputValue.replace(/\b\w/g, function(char) {
+            return char.toUpperCase();
+        });
+        $(this).val(capitalizedValue);
     });
 </script>

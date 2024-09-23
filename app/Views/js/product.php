@@ -327,4 +327,12 @@
     myDropzone.on("removedfile", function() {
         updateButtonState();
     });
+
+    $('#title').on('input', function() {
+        let inputValue = $(this).val();
+        let capitalizedValue = inputValue.replace(/\b\w/g, function(char) {
+            return char.toUpperCase();
+        });
+        $(this).val(capitalizedValue);
+    });
 </script>
