@@ -576,15 +576,25 @@
         });
     }
 
+    function capitalizeWords(str) {
+        return str.replace(/\b\w/g, function(char) {
+            return char.toUpperCase();
+        });
+    }
+
+    document.getElementById('nameCategory').addEventListener('input', function() {
+        this.value = capitalizeWords(this.value);
+    });
+
     CreateCategory = async () => {
         let data = new FormData();
-        var name = $("#name").val();
-        var parent = $("#parent").val();
-        let image = $('#imageCategory')[0].files[0];
+        var name = $("#nameCategory").val();
+        // var parent = $("#parent").val();
+        // let image = $('#imageCategory')[0].files[0];
 
         data.append('name', name);
-        data.append('parent', parent);
-        data.append('image', image);
+        // data.append('parent', parent);
+        // data.append('image', image);
 
         $("#createCategory").text('Loading...');
         await $.ajax({
@@ -597,7 +607,8 @@
             success: function(response) {
                 toastr.success('create category success');
                 setInterval(function() {
-                    location.reload();
+                    // location.reload();
+                    window.top.location.href = `${baseUrl}/admin/studentNew`;
                 }, 2000);
             },
             error: function(err) {

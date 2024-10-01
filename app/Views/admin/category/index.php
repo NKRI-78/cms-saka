@@ -12,7 +12,7 @@
                         <div class="iq-header-title">
                             <h4 class="card-title">Data Category</h4>
                         </div>
-                        <!-- <a href="<?= base_url("/admin/category/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a> -->
+                        <a href="<?= base_url("/admin/category/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
                     </div>
                     <div class="iq-card-body">
                         <div class="table-responsive">

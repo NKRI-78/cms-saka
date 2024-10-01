@@ -17,10 +17,8 @@ class CategoryController extends BaseController
 
     public function create()
     {
-        $result = curlHelper(getenv('API_URL') . '/commerce-service/category', 'GET');
-        $data["category"] = $result->data;
 
-        return view("admin/category/create", $data);
+        return view("admin/category/create");
     }
 
     public function post()
@@ -30,37 +28,34 @@ class CategoryController extends BaseController
         $request = Services::request();
 
         $name = $request->getPost('name');
-        $parent = $request->getPost('parent');
+        // $parent = $request->getPost('parent');
 
-        if (isset($_FILES['image'])) {
-            $url = getenv('API_URL') . '/commerce-service/upload';
-            $options = [
-                'multipart' => [
-                    [
-                        'name' => 'file',
-                        'contents' => fopen($_FILES['image']['tmp_name'], 'r'),
-                        'filename' => $_FILES['image']['name']
-                    ],
-                ],
-            ];
+        // if (isset($_FILES['image'])) {
+        //     $url = getenv('API_URL') . '/commerce-service/upload';
+        //     $options = [
+        //         'multipart' => [
+        //             [
+        //                 'name' => 'file',
+        //                 'contents' => fopen($_FILES['image']['tmp_name'], 'r'),
+        //                 'filename' => $_FILES['image']['name']
+        //             ],
+        //         ],
+        //     ];
 
-            $req = $client->post($url, $options);
-            $response = $req->getBody()->getContents();
-            $result = json_decode($response);
-            $contentType = $result->data->contentType;
-            $path = $result->data->path;
-            $fileLength = $result->data->fileLength;
-            $originalName = $result->data->originalName;
-        }
+        //     $req = $client->post($url, $options);
+        //     $response = $req->getBody()->getContents();
+        //     $result = json_decode($response);
+        //     $contentType = $result->data->contentType;
+        //     $path = $result->data->path;
+        //     $fileLength = $result->data->fileLength;
+        //     $originalName = $result->data->originalName;
+        // }
 
-        $url = getenv('API_URL') . '/commerce-service/category';
+        $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category';
+
         $data = [
             "name" => $name,
-            "contentType" => $contentType,
-            "path" => $path,
-            "fileLength" => $fileLength,
-            "originalName" => $originalName,
-            "oid" => $parent
+            "app" => 'saka',
         ];
 
         $req = $client->post(
