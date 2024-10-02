@@ -118,6 +118,121 @@ class ProductController extends BaseController
         return view("admin/product/create", $data);
     }
 
+    // public function post()
+    // {
+    //     $client = new \GuzzleHttp\Client();
+    //     $session = Services::session();
+    //     $request = Services::request();
+
+    //     $product_id = $request->getPost('productId');
+    //     $app_id = $request->getPost('app_id');
+    //     $store_id = $request->getPost('store_id');
+    //     $title = $request->getPost('title');
+    //     $price = $request->getPost('price');
+    //     $stock = $request->getPost('stock');
+    //     $weight = $request->getPost('weight');
+    //     $category = $request->getPost('category');
+    //     $caption = $request->getPost('caption');
+
+    //     // if ($_FILES['image']) {
+    //     //     $bodyImage = [
+    //     //         "folder" => "saka",
+    //     //         "subfolder" => "product",
+    //     //         "media" => $_FILES['image']
+    //     //     ];
+
+    //     //     $result = curlImageHelper('https://api-media.inovatiftujuh8.com/api/v1/media/upload', $bodyImage);
+    //     // }
+
+    //     // $path = isset($_FILES['image']) ? $result->data->path : '';
+
+    //     $imagePaths = [];
+
+    //     if (!empty($_FILES['images'])) {
+    //         foreach ($_FILES['images']['tmp_name'] as $key => $tmpName) {
+    //             $file = new \CURLFile($tmpName, $_FILES['images']['type'][$key], $_FILES['images']['name'][$key]);
+
+    //             $bodyImage = [
+    //                 "folder" => "saka",
+    //                 "subfolder" => "product",
+    //                 "media" => $file
+    //             ];
+
+    //             // $result = curlImageHelper('https://api-media.inovatiftujuh8.com/api/v1/media/upload', $bodyImage);
+
+    //             // if (isset($result->data->path)) {
+    //             //     $imagePaths[] = $result->data->path;
+    //             // }
+
+    //             $ch = curl_init('https://api-media.inovatiftujuh8.com/api/v1/media/upload');
+    //             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //             curl_setopt($ch, CURLOPT_POST, true);
+    //             curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyImage); // POSTFIELDS harus berupa array dengan objek CURLFile
+    //             $response = curl_exec($ch);
+
+    //             // Handle error
+    //             if (curl_errno($ch)) {
+    //                 echo 'Error:' . curl_error($ch);
+    //             }
+    //             curl_close($ch);
+
+    //             $result = json_decode($response);
+
+    //             // Periksa apakah path berhasil diupload dan simpan
+    //             if (isset($result->data->path)) {
+    //                 $imagePaths[] = $result->data->path;
+    //             }
+    //         }
+    //     }
+
+    //     $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store';
+
+    //     $body = [
+    //         "id" => $product_id,
+    //         "title" => $title,
+    //         "caption" => $caption,
+    //         "price" => $price,
+    //         "weight" => $weight,
+    //         "stock" => $stock,
+    //         "is_draft" => 0,
+    //         "cat_id" => $category,
+    //         "app_id" => $app_id,
+    //         "store_id" => $store_id,
+    //     ];
+
+    //     $req = $client->post(
+    //         $url,
+    //         [
+    //             "body" => json_encode($body),
+    //             'headers' =>  [
+    //                 'Authorization' => 'Bearer ' . $session->get('token'),
+    //                 'Accept'        => 'application/json',
+    //                 'Content-Type' => 'application/json'
+    //             ]
+    //         ]
+    //     );
+
+    //     $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store/image';
+    //     foreach ($imagePaths as $path) {
+    //         $body = [
+    //             "product_id" => $product_id,
+    //             "path" => $path,
+    //         ];
+
+    //         $client->post(
+    //             $imageUrl,
+    //             [
+    //                 "body" => json_encode($body),
+    //                 'headers' => [
+    //                     'Authorization' => 'Bearer ' . $session->get('token'),
+    //                     'Accept'        => 'application/json',
+    //                     'Content-Type'  => 'application/json'
+    //                 ]
+    //             ]
+    //         );
+    //     }
+    // }
+
     public function post()
     {
         $client = new \GuzzleHttp\Client();
@@ -134,102 +249,92 @@ class ProductController extends BaseController
         $category = $request->getPost('category');
         $caption = $request->getPost('caption');
 
-        // if ($_FILES['image']) {
-        //     $bodyImage = [
-        //         "folder" => "saka",
-        //         "subfolder" => "product",
-        //         "media" => $_FILES['image']
-        //     ];
-
-        //     $result = curlImageHelper('https://api-media.inovatiftujuh8.com/api/v1/media/upload', $bodyImage);
-        // }
-
-        // $path = isset($_FILES['image']) ? $result->data->path : '';
-
         $imagePaths = [];
 
         if (!empty($_FILES['images'])) {
             foreach ($_FILES['images']['tmp_name'] as $key => $tmpName) {
-                $file = new \CURLFile($tmpName, $_FILES['images']['type'][$key], $_FILES['images']['name'][$key]);
+                try {
 
-                $bodyImage = [
-                    "folder" => "saka",
-                    "subfolder" => "product",
-                    "media" => $file
-                ];
+                    // Using Guzzle to upload image
+                    $response = $client->post('https://api-media.inovatiftujuh8.com/api/v1/media/upload', [
+                        'multipart' => [
+                            [
+                                'name' => 'folder',
+                                'contents' => 'saka'
+                            ],
+                            [
+                                'name' => 'subfolder',
+                                'contents' => 'product'
+                            ],
+                            [
+                                'name' => 'media',
+                                'contents' => fopen($tmpName, 'r'),
+                                'filename' => $_FILES['images']['name'][$key],
+                                'headers'  => ['Content-Type' => $_FILES['images']['type'][$key]]
+                            ]
+                        ]
+                    ]);
 
-                // $result = curlImageHelper('https://api-media.inovatiftujuh8.com/api/v1/media/upload', $bodyImage);
+                    $result = json_decode($response->getBody()->getContents());
 
-                // if (isset($result->data->path)) {
-                //     $imagePaths[] = $result->data->path;
-                // }
-
-                $ch = curl_init('https://api-media.inovatiftujuh8.com/api/v1/media/upload');
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyImage); // POSTFIELDS harus berupa array dengan objek CURLFile
-                $response = curl_exec($ch);
-
-                // Handle error
-                if (curl_errno($ch)) {
-                    echo 'Error:' . curl_error($ch);
-                }
-                curl_close($ch);
-
-                $result = json_decode($response);
-
-                // Periksa apakah path berhasil diupload dan simpan
-                if (isset($result->data->path)) {
-                    $imagePaths[] = $result->data->path;
+                    // Check if the path is successfully uploaded
+                    if (isset($result->data->path)) {
+                        $imagePaths[] = $result->data->path;
+                    }
+                } catch (\Exception $e) {
+                    // Handle any errors that occur during the image upload
+                    echo 'Error uploading image: ' . $e->getMessage();
                 }
             }
         }
 
-        $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store';
+        try {
+            // Prepare the body for the product data
+            $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store';
 
-        $body = [
-            "id" => $product_id,
-            "title" => $title,
-            "caption" => $caption,
-            "price" => $price,
-            "weight" => $weight,
-            "stock" => $stock,
-            "is_draft" => 0,
-            "cat_id" => $category,
-            "app_id" => $app_id,
-            "store_id" => $store_id,
-        ];
-
-        $req = $client->post(
-            $url,
-            [
-                "body" => json_encode($body),
-                'headers' =>  [
-                    'Authorization' => 'Bearer ' . $session->get('token'),
-                    'Accept'        => 'application/json',
-                    'Content-Type' => 'application/json'
-                ]
-            ]
-        );
-
-        $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store/image';
-        foreach ($imagePaths as $path) {
             $body = [
-                "product_id" => $product_id,
-                "path" => $path,
+                "id" => $product_id,
+                "title" => $title,
+                "caption" => $caption,
+                "price" => $price,
+                "weight" => $weight,
+                "stock" => $stock,
+                "is_draft" => 0,
+                "cat_id" => $category,
+                "app_id" => $app_id,
+                "store_id" => $store_id,
             ];
 
-            $client->post(
-                $imageUrl,
-                [
+            // Post product data
+            $response = $client->post($url, [
+                "body" => json_encode($body),
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $session->get('token'),
+                    'Accept'        => 'application/json',
+                    'Content-Type'  => 'application/json'
+                ]
+            ]);
+
+            // Post the uploaded image paths
+            $imageUrl = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/store/image';
+            foreach ($imagePaths as $path) {
+                $body = [
+                    "product_id" => $product_id,
+                    "path" => $path,
+                ];
+
+                $client->post($imageUrl, [
                     "body" => json_encode($body),
                     'headers' => [
                         'Authorization' => 'Bearer ' . $session->get('token'),
                         'Accept'        => 'application/json',
                         'Content-Type'  => 'application/json'
                     ]
-                ]
-            );
+                ]);
+            }
+        } catch (\Exception $e) {
+            // Handle any errors that occur during the product data post
+            echo 'Error posting product data: ' . $e->getMessage();
         }
     }
 
