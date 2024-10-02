@@ -199,7 +199,7 @@ class ProductController extends BaseController
             "app_id" => $app_id,
             "store_id" => $store_id,
         ];
-        die(var_dump($body));
+        // die(var_dump($body));
 
         $req = $client->post(
             $url,
