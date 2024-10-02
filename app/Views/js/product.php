@@ -66,7 +66,7 @@
             data.append(`images[${index}]`, file);
         });
 
-        $("#createProduct").prop('disabled', true);
+        // $("#createProduct").prop('disabled', true);
         $("#createProduct").text('Loading...');
         await $.ajax({
             type: "POST",
@@ -78,7 +78,7 @@
             success: function(response) {
                 toastr.success('create product success');
                 setInterval(function() {
-                    location.href = `${baseUrl}/admin/product`;
+                    // location.href = `${baseUrl}/admin/product`;
                 }, 1500);
             },
             error: function(err) {
