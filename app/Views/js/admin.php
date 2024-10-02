@@ -608,7 +608,7 @@
                 toastr.success('create category success');
                 setInterval(function() {
                     // location.reload();
-                    window.top.location.href = `${baseUrl}/admin/studentNew`;
+                    window.top.location.href = `${baseUrl}/admin/category`;
                 }, 2000);
             },
             error: function(err) {
