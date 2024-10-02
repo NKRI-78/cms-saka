@@ -82,7 +82,7 @@
                 }, 1500);
             },
             error: function(err) {
-                console.log(err, response, 'cek');
+                console.log(err, 'cek');
                 toastr.error('something went wrong');
                 $("#createProduct").text('Submit');
             }
