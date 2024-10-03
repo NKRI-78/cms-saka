@@ -76,6 +76,7 @@ $request = Services::request();
                                                 <th scope="col">No Resi</th>
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Buyer</th>
+                                                <th scope="col">Payment</th>
                                                 <th scope="col">Expedition</th>
                                                 <th scope="col">Shipping Costs</th>
                                                 <th scope="col">Status</th>
@@ -104,6 +105,7 @@ $request = Services::request();
                                                         <td><?= $row['waybill'] ?></td>
                                                         <td><?= 'Rp ' . number_format($row['total_price'], 0, ',', '.') ?></td>
                                                         <td><?= $row['buyer']['fullname'] ?></td>
+                                                        <td><?= $row['payment_code'] ?></td>
                                                         <td><?= $row['items'][0]['courier_id'] ?></td>
                                                         <td><?= 'Rp ' . number_format($row['items'][0]['courier_price'], 0, ',', '.') ?></td>
                                                         <td>
