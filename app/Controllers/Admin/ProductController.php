@@ -324,14 +324,16 @@ class ProductController extends BaseController
                     "path" => $path,
                 ];
 
-                $client->post($imageUrl, [
+                $response = $client->post($imageUrl, [
                     "body" => json_encode($body),
                     'headers' => [
-                        'Authorization' => 'Bearer ' . $session->get('token'),
+                        // 'Authorization' => 'Bearer ' . $session->get('token'),
                         'Accept'        => 'application/json',
                         'Content-Type'  => 'application/json'
                     ]
                 ]);
+
+                echo $response->getBody()->getContents();
             }
         } catch (\Exception $e) {
             // Handle any errors that occur during the product data post
