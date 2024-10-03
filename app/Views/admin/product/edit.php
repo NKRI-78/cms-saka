@@ -145,7 +145,7 @@ function formatRupiah($amount)
                                                         <span class="form-text text-muted">Maximum of 5 image uploads.</span>
                                                     </div>
 
-                                                    <div class="dropzone-items wm-200px" style="display: flex;">
+                                                    <div class="dropzone-items wm-200px" style="display: flex; margin-top: 1rem;">
                                                         <div class="dropzone-item">
                                                             <div style="display: flex !important; align-items: center; margin-top: 1rem; margin-right: 2rem;">
                                                                 <div class="dropzone-toolbar" style="font-size: 2.5rem;">
