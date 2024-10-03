@@ -146,34 +146,17 @@ class CategoryController extends BaseController
 
     public function delete($categoryId)
     {
-        $session = Services::session();
         $client = new \GuzzleHttp\Client();
+        $session = Services::session();
 
-        $url = getenv('API_URL') . '/commerce-service/category?categoryId=' . $categoryId;
-        $result = curlHelper($url, 'GET');
+        $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/' . $categoryId;
 
-        $parent = "";
-        if (isset($result->data[0]->parent->{'$id'})) {
-            $parent = $result->data[0]->parent->{'$id'};
-        }
-
-        $data = [
-            "name" => $result->data[0]->name,
-            "contentType" => $result->data[0]->picture->contentType,
-            "path" => $result->data[0]->picture->path,
-            "fileLength" => $result->data[0]->picture->fileLength,
-            "originalName" => $result->data[0]->picture->originalName,
-            "oid" =>  $parent,
-            "status" => 0
-        ];
-
-        $req = $client->put(
+        $req = $client->delete(
             $url,
             [
-                "body" => json_encode($data),
                 'headers' =>  [
                     'Authorization' => 'Bearer ' . $session->get('token'),
-                    'Content-Type'        => 'application/json',
+                    'Accept'        => 'application/json',
                 ]
             ]
         );

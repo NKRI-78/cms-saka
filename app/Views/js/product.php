@@ -124,11 +124,10 @@
             success: function(response) {
                 toastr.success('create product success');
                 setInterval(function() {
-                    // location.href = `${baseUrl}/admin/product`;
+                    location.href = `${baseUrl}/admin/product`;
                 }, 1500);
             },
             error: function(err) {
-                console.log(err, 'cek error');
                 toastr.error('something went wrong');
                 $("#createProduct").text('Submit');
             }

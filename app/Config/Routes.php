@@ -108,7 +108,7 @@ $routes->group('admin', function ($routes) {
     $routes->post('post', 'CategoryController::post', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('edit/(:any)', 'CategoryController::edit/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('update', 'CategoryController::update', ['namespace' => 'App\Controllers\Admin']);
-    $routes->get('delete/(:any)', 'CategoryController::delete/$1', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('delete/(:any)', 'CategoryController::delete/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('detail/(:any)', 'CategoryController::detail/$1', ['namespace' => 'App\Controllers\Admin']);
   });
 

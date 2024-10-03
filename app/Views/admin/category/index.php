@@ -22,7 +22,7 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Name</th>
                                         <!-- <th scope="col">File Name</th> -->
-                                        <!-- <th scope="col">&emsp;&emsp;Action</th> -->
+                                        <th scope="col">&emsp;&emsp;Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,6 +32,11 @@
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $row->name ?></td>
+                                                <td>
+                                                    <div class="send-panel">
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DeleteCategory('<?= $row->id ?>')" data-toggle="tooltip" data-placement="top" title="Delete Category" data-original-title="Delete Category"> <i class="ri-delete-bin-line text-primary"></i></a> </label>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php } ?>
@@ -66,3 +71,21 @@
 <?= view('layouts/footer'); ?>
 <?= view('layouts/script'); ?>
 <?= view('js/admin'); ?>
+<script>
+    function DeleteCategory(categoryId) {
+        $.ajax({
+            type: "post",
+            url: `${baseUrl}/admin/category/delete/${categoryId}`,
+            success: function(response) {
+                setInterval(function() {
+                    toastr.success('delete category success');
+                    location.reload();
+                }, 1500);
+            },
+            error: function(err) {
+                toastr.error(err);
+                console.error('Error:', err);
+            }
+        });
+    }
+</script>
