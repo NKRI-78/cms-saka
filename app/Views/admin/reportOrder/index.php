@@ -9,6 +9,7 @@ $request = Services::request();
 <?= view('layouts/header'); ?>
 <?= view('layouts/wrapper'); ?>
 <?= view('layouts/navbar'); ?>
+<?= date_default_timezone_set('Asia/Jakarta'); ?>
 <!-- <style>
     .styleModal {
         padding-right: 147px !important;
