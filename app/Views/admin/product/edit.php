@@ -153,7 +153,7 @@ function formatRupiah($amount)
                                                                 </div>
                                                                 <div class="dropzone-file" style="display: flex; align-items: center;">
                                                                     <div class="dropzone-filename" title="some_image_file_name.jpg" style="display: grid;">
-                                                                        <img data-dz-thumbnail style="max-width: 100px; height: 100px; object-fit: cover; border: 1.5px solid #000; border-radius: 10px;" />
+                                                                        <img data-dz-thumbnail style="width: 100px; height: 100px; object-fit: cover; border: 1.5px solid #000; border-radius: 10px;" />
                                                                         <span data-dz-name class="image-name">some_image_file_name.jpg</span>
                                                                         <!-- <strong>(<span data-dz-size>340kb</span>)</strong> -->
                                                                     </div>
