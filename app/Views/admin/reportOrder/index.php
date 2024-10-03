@@ -133,7 +133,7 @@ $request = Services::request();
                                                             <?php if ($row['order_status'] == 'PAID') { ?>
                                                                 <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>' , '<?= $row['buyer']['id'] ?>', this)" class="btn mb-3 btn-success confirmedProduct" style="color: #fff;">Confirmed</a>
                                                             <?php } ?>
-                                                            <!-- <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a> -->
+                                                            <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -153,7 +153,7 @@ $request = Services::request();
 
 <div class="iq-card-body">
     <div class="modal fade styleModal" id="detailProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Detail Transaction</h5>
@@ -162,19 +162,35 @@ $request = Services::request();
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5 style="font-weight:bold">Invoice: <span id="invoice" style="font-weight: 700 !important;color: #8b44ed;"></span></h5>
-                    <h5 style="font-weight:bold">Tanggal Pembelian: <span id="purchaseDate" style="font-weight: normal !important;"></span></h5>
-                    <h5 style="font-weight:bold">No Resi: <span id="resi" style="font-weight: normal !important;"></span></h5>
-                    <div class="product-container" id="productContainer">
-
+                    <div style="display: flex; justify-content: flex-end">
+                        <button class="btn btn-info" id="download-detail" style="background-color: #1230AE !important;">
+                            Download
+                        </button>
                     </div>
-                    <h5 style="font-weight: bold;">Buyer Information</h5>
-                    <h6>Name: <span id="name"></span></h6>
-                    <h6>Email: <span id="email"></span></h6>
-                    <h6>Payment Method: <span id="payment"></span></h6>
-                    <h5 style="font-weight: bold; margin-top: 0.5rem;">Shipping Information</h5>
-                    <h6>Courier: <span id="courier"></span></h6>
-                    <h6>Shipping Costs: <span id="costs"></span></h6>
+                    <div id="detail-product-ss">
+                        <h4 style="font-weight: bold;">Kurir</h4>
+                        <h5 style="display: flex;justify-content: space-between;">Nama <span id="namaEkspedisi"></span></h5>
+                        <h5 style="display: flex;justify-content: space-between;">Layanan <span id="layananEkspedisi"></span></h5>
+                        <h5 style="display: flex;justify-content: space-between;">Biaya <span id="biayaEkspedisi"></span></h5>
+                        <div style="text-align: center;">
+                            <svg id="barcodeResi"></svg>
+                        </div>
+                        <h5 style="display: flex;justify-content: space-between;">No Resi <span id="resi" style="color: #6C48C5; font-weight: 700;"></span></h5>
+                        <div style="display: flex; gap: 6rem;">
+                            <h5 style="font-weight: bold;">Pengirim</h5>
+                            <div>
+                                <h6 id="nameStore"></h6>
+                                <p id="addressStore" style="color: #000;"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6rem;">
+                            <h5 style="font-weight: bold;">Penerima</h5>
+                            <div style="margin-left: -2px;">
+                                <h6 id="nameBuyer"></h6>
+                                <p id="addressBuyer" style="color: #000;"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,37 +223,55 @@ $request = Services::request();
             success: function(response) {
                 let data = JSON.parse(response);
 
-                console.log(data, 'data');
                 let dataRows = data.body.map(element => {
-                    let date = moment(element.created_at).format('DD MMMM YYYY, HH:mm');
-                    let orderItemPrice = formatRupiah(element.items[0].product.price);
-                    let productHtml = `
-                        <div class="product">
-                            <div class="section-satu">
-                                <div class="image-product">
-                                    <img class="img-product" src="${element.items[0].product.medias[0].path !== null ? element.items[0].product.medias[0].path : baseUrl + '/public/assets/images/image-default.png'}" alt="image">
-                                </div>
-                                <div class="text-product">
-                                    <label class="text-product">${element.items[0].product.title !== null ? element.items[0].product.title : "Produk tidak ada"}</label><br>
-                                    <label class="text-product">${element.items[0].qty} x ${orderItemPrice}</label><br>
-                                </div>
-                            </div>
-                            <div class="section-dua">
-                                <h5>Total Harga</h5>
-                                <label class="label">${orderItemPrice}</label>
-                            </div>
-                        </div>
-                    `;
+                    console.log(element, 'data');
+                    // let date = moment(element.created_at).format('DD MMMM YYYY, HH:mm');
+                    // let orderItemPrice = formatRupiah(element.items[0].product.price);
+                    // let productHtml = `
+                    //     <div class="product">
+                    //         <div class="section-satu">
+                    //             <div class="image-product">
+                    //                 <img class="img-product" src="${element.items[0].product.medias[0].path !== null ? element.items[0].product.medias[0].path : baseUrl + '/public/assets/images/image-default.png'}" alt="image">
+                    //             </div>
+                    //             <div class="text-product">
+                    //                 <label class="text-product">${element.items[0].product.title !== null ? element.items[0].product.title : "Produk tidak ada"}</label><br>
+                    //                 <label class="text-product">${element.items[0].qty} x ${orderItemPrice}</label><br>
+                    //             </div>
+                    //         </div>
+                    //         <div class="section-dua">
+                    //             <h5>Total Harga</h5>
+                    //             <label class="label">${orderItemPrice}</label>
+                    //         </div>
+                    //     </div>
+                    // `;
 
-                    $("#invoice").html(element.invoice);
-                    $("#purchaseDate").html(date);
-                    $("#productContainer").append(productHtml);
-                    $("#name").html(element.buyer.fullname);
-                    $("#email").html(element.buyer.email_address);
-                    $("#payment").html(element.payment_code);
-                    $("#courier").html(element.items[0].courier_id);
-                    $("#costs").html(formatRupiah(element.items[0].courier_price));
-                    $("#resi").html(element.waybill);
+                    // $("#invoice").html(element.invoice);
+                    // $("#purchaseDate").html(date);
+                    // $("#productContainer").append(productHtml);
+                    // $("#name").html(element.buyer.fullname);
+                    // $("#email").html(element.buyer.email_address);
+                    // $("#payment").html(element.payment_code);
+                    // $("#courier").html(element.items[0].courier_id);
+                    // $("#costs").html(formatRupiah(element.items[0].courier_price));
+
+                    let noResi = element.waybill;
+
+                    $("#namaEkspedisi").html(element.courier_id);
+                    $("#layananEkspedisi").html(element.courier_service);
+                    $("#biayaEkspedisi").html(formatRupiah(element.courier_price));
+                    $("#resi").html(noResi);
+                    $("#nameStore").html(element.seller.fullname);
+                    $("#addressStore").html(element.seller.address);
+                    $("#nameBuyer").html(element.buyer.fullname);
+                    $("#addressBuyer").html(element.buyer.address);
+
+                    JsBarcode("#barcodeResi", noResi, {
+                        format: "CODE128",
+                        lineColor: "#000",
+                        width: 2,
+                        height: 50,
+                        displayValue: false
+                    });
                 });
             },
             error: function(err) {
@@ -248,8 +282,6 @@ $request = Services::request();
 
     ConfirmedProduct = async (transactionId, buyerId, el) => {
         let data = new FormData();
-
-        // let transactionId = transactionId;
 
         data.append('transactionId', transactionId);
         data.append('buyerId', buyerId);
@@ -277,4 +309,19 @@ $request = Services::request();
             }
         });
     }
+
+    document.querySelector("#download-detail").addEventListener("click", function() {
+        this.style.display = 'none';
+
+        html2canvas(document.querySelector("#detailProduct .modal-content")).then(function(canvas) {
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'detail_transaction.png';
+            link.click();
+
+            setTimeout(() => {
+                document.querySelector("#download-detail").style.display = 'inline-block';
+            }, 100);
+        });
+    });
 </script>
