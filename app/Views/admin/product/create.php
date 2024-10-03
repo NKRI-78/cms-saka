@@ -5,7 +5,7 @@
 <style>
     .custom {
         line-height: normal;
-        height: 130px !important;
+        height: 300px !important;
     }
 
     .dz-error-message {
@@ -24,16 +24,39 @@
         cursor: pointer;
         display: inline-block;
         color: red;
+        /* margin-left: -3.5rem; */
     }
 
-    .custom-btn{
-        background-Color: #007bff !important; 
+    .dropzone-delete {
+        position: absolute;
+        margin-top: -6rem;
+        margin-left: 6rem;
+    }
+
+    .custom-btn {
+        background-Color: #007bff !important;
         color: #fff !important;
     }
 
-    .custom-btn:hover{
-        background-Color: #295F98 !important; 
+    .custom-btn:hover {
+        background-Color: #295F98 !important;
         color: #fff !important;
+    }
+
+    .image-name {
+        display: inline-block;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .btn-disabled {
+        background-color: #adcdef !important;
+        color: white !important;
+        pointer-events: none;
     }
 </style>
 
@@ -82,7 +105,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label>Caption:</label>
+                                        <label>Deskripsi:</label>
                                         <textarea id="caption" class="form-control custom"></textarea>
                                     </div>
                                     <!-- <div class="form-group col-md-12">
@@ -106,13 +129,16 @@
                                                         <span class="form-text text-muted">Maximum of 5 image uploads.</span>
                                                     </div>
 
-                                                    <div class="dropzone-items wm-200px">
+                                                    <div class="dropzone-items wm-200px" style="display: flex;">
                                                         <div class="dropzone-item" style="display:none ">
-                                                            <div style="display: flex !important; align-items: center; gap: 6rem;">
-                                                                <div class="dropzone-file" style="display: flex; margin-top: 1rem; align-items: center; gap: 0.5rem;">
-                                                                    <img data-dz-thumbnail style="max-width: 100px; max-height: 100px; object-fit: cover; border: 1.5px solid #000; border-radius: 10px;"/>
-                                                                    <div class="dropzone-filename" title="some_image_file_name.jpg">
-                                                                        <span data-dz-name>some_image_file_name.jpg</span>
+                                                            <div style="display: flex !important; align-items: center; margin-top: 1rem; margin-right: 2rem;">
+                                                                <div class="dropzone-toolbar" style="font-size: 2.5rem;">
+                                                                    <span class="dropzone-delete" data-dz-remove><i class="ri ri-close-line"></i></span>
+                                                                </div>
+                                                                <div class="dropzone-file" style="display: flex; align-items: center;">
+                                                                    <div class="dropzone-filename" title="some_image_file_name.jpg" style="display: grid;">
+                                                                        <img data-dz-thumbnail style="max-width: 100px; max-height: 100px; object-fit: cover; border: 1.5px solid #000; border-radius: 10px;" />
+                                                                        <span data-dz-name class="image-name">some_image_file_name.jpg</span>
                                                                         <strong>(<span data-dz-size>340kb</span>)</strong>
                                                                     </div>
 
@@ -125,9 +151,6 @@
                                                                             role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="dropzone-toolbar" style="font-size: 2.5rem;">
-                                                                    <span class="dropzone-delete" data-dz-remove><i class="ri ri-close-line"></i></span>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -51,6 +51,52 @@
         var caption = $("#caption").val();
         // let image = $('#imageProduct')[0].files[0];
 
+        if (!app_id) {
+            toastr.error('App ID is required');
+            return;
+        }
+
+        if (!store_id) {
+            toastr.error('Store ID is required');
+            return;
+        }
+
+        if (!title) {
+            toastr.error('Title is required');
+            return;
+        }
+
+        if (!price || isNaN(price)) {
+            toastr.error('Valid price is required');
+            return;
+        }
+
+        if (!stock || isNaN(stock)) {
+            toastr.error('Stock must be a valid number');
+            return;
+        }
+
+        if (!weight || isNaN(weight)) {
+            toastr.error('Weight must be a valid number');
+            return;
+        }
+
+        if (!category) {
+            toastr.error('Category is required');
+            return;
+        }
+
+        if (!caption) {
+            toastr.error('Deskripsi is required');
+            return;
+        }
+
+        // Memastikan bahwa setidaknya satu gambar dipilih
+        if (myDropzone.files.length === 0) {
+            toastr.error('The image cannot be empty');
+            return;
+        }
+
         data.append('productId', productId);
         data.append('app_id', app_id);
         data.append('store_id', store_id);
@@ -82,6 +128,7 @@
                 }, 1500);
             },
             error: function(err) {
+                console.log(err, 'cek error');
                 toastr.error('something went wrong');
                 $("#createProduct").text('Submit');
             }
@@ -260,11 +307,11 @@
 
     function updateButtonState() {
         const button = document.getElementById('upload-image-button');
-        if (myDropzone.files.length >= 4) {
-            button.classList.add('disabled');
+        if (myDropzone.files.length >= 5) {
+            button.classList.add('btn-disabled');
             button.style.pointerEvents = 'none';
         } else {
-            button.classList.remove('disabled');
+            button.classList.remove('btn-disabled');
             button.style.pointerEvents = 'auto';
         }
     }

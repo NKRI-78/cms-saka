@@ -18,7 +18,7 @@
 
     .custom {
         line-height: normal;
-        height: 130px !important;
+        height: 300px !important;
     }
 
     .dz-error-message {
@@ -43,6 +43,12 @@
         color: red;
     }
 
+    .dropzone-delete {
+        position: absolute;
+        margin-top: -6rem;
+        margin-left: 6rem;
+    }
+
     .custom-btn {
         background-Color: #007bff !important;
         color: #fff !important;
@@ -51,6 +57,22 @@
     .custom-btn:hover {
         background-Color: #295F98 !important;
         color: #fff !important;
+    }
+
+    .image-name {
+        display: inline-block;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .btn-disabled {
+        background-color: #adcdef !important;
+        color: white !important;
+        pointer-events: none;
     }
 </style>
 
@@ -107,34 +129,33 @@ function formatRupiah($amount)
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label>Caption:</label>
+                                        <label>Deskripsi:</label>
                                         <textarea id="caption" class="form-control custom"><?= $product->caption ?></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Image:</label>
                                         <div class="form-group row">
-                                            <!--begin::Label-->
-                                            <!-- <label class="col-lg-2 col-form-label text-lg-right">Upload Files:</label> -->
-                                            <!--end::Label-->
 
                                             <!--begin::Col-->
                                             <div class="col-lg-10">
                                                 <div class="dropzone dropzone-queue mb-2" id="kt_dropzonejs_example_3">
                                                     <div class="dropzone-panel mb-lg-0 mb-2" style="display: flex; gap: 0.5rem;">
                                                         <a id="upload-image-button" class="dropzone-select btn btn-sm me-2 custom-btn"><i class="ri-add-line"></i>Insert Image</a>
-                                                        <!-- <a id="upload-image-button" class="dropzone-select btn btn-sm btn-primary me-2" style="background-Color: #007bff !important; color: #fff;"><i class="ri-add-line"></i>Insert Image</a> -->
                                                         <!-- <a class="dropzone-remove-all btn btn-sm btn-light-primary">Remove All</a> -->
                                                         <span class="form-text text-muted">Maximum of 5 image uploads.</span>
                                                     </div>
 
-                                                    <div class="dropzone-items wm-200px">
+                                                    <div class="dropzone-items wm-200px" style="display: flex;">
                                                         <div class="dropzone-item">
-                                                            <div style="display: flex !important; align-items: center; gap: 6rem;">
-                                                                <div class="dropzone-file" style="display: flex; margin-top: 1rem; align-items: center; gap: 0.5rem;">
-                                                                    <img data-dz-thumbnail style="width: 102px; height: 104px; object-fit: cover; border: 1.5px solid #000; border-radius: 10px;" />
-                                                                    <div class="dropzone-filename" title="some_image_file_name.jpg">
-                                                                        <span data-dz-name>some_image_file_name.jpg</span>
-                                                                        <strong style="display: none !important;">(<span data-dz-size>340kb</span>)</strong>
+                                                            <div style="display: flex !important; align-items: center; margin-top: 1rem; margin-right: 2rem;">
+                                                                <div class="dropzone-toolbar" style="font-size: 2.5rem;">
+                                                                    <span class="dropzone-delete" data-dz-remove><i class="ri ri-close-line"></i></span>
+                                                                </div>
+                                                                <div class="dropzone-file" style="display: flex; align-items: center;">
+                                                                    <div class="dropzone-filename" title="some_image_file_name.jpg" style="display: grid;">
+                                                                        <img data-dz-thumbnail style="max-width: 100px; height: 100px; object-fit: cover; border: 1.5px solid #000; border-radius: 10px;" />
+                                                                        <span data-dz-name class="image-name">some_image_file_name.jpg</span>
+                                                                        <!-- <strong>(<span data-dz-size>340kb</span>)</strong> -->
                                                                     </div>
 
                                                                     <!-- <div class="dropzone-error" data-dz-errormessage></div> -->
@@ -147,13 +168,11 @@ function formatRupiah($amount)
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="dropzone-toolbar" style="font-size: 2.5rem;">
-                                                                    <span class="dropzone-delete" data-dz-remove><i class="ri ri-close-line"></i></span>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <!--end::Col-->
                                         </div>
@@ -240,6 +259,42 @@ function formatRupiah($amount)
         // let image = $('#imageProduct')[0].files[0];
         // let imageId = $('#imageId').val();
 
+        if (!title) {
+            toastr.error('Title is required');
+            return;
+        }
+
+        if (!price || isNaN(price)) {
+            toastr.error('Valid price is required');
+            return;
+        }
+
+        if (!stock || isNaN(stock)) {
+            toastr.error('Stock must be a valid number');
+            return;
+        }
+
+        if (!weight || isNaN(weight)) {
+            toastr.error('Weight must be a valid number');
+            return;
+        }
+
+        if (!category) {
+            toastr.error('Category is required');
+            return;
+        }
+
+        if (!caption) {
+            toastr.error('Deskripsi is required');
+            return;
+        }
+
+        // Memastikan bahwa setidaknya satu gambar dipilih
+        if (myDropzone.files.length === 0) {
+            toastr.error('The image cannot be empty');
+            return;
+        }
+
         data.append('productId', productId);
         data.append('title', title);
         data.append('price', price);
@@ -295,6 +350,7 @@ function formatRupiah($amount)
             success: function(response) {
                 console.log(response, 'aa');
                 console.log('Image deleted successfully', response);
+                // window.location.reload()
             },
             error: function(err) {
                 console.error('Error deleting image', err);
@@ -348,6 +404,31 @@ function formatRupiah($amount)
         path: imagePath[index]
     }));
 
+    // Fungsi untuk mengupdate status tombol upload
+    function updateButtonState() {
+        const button = document.getElementById('upload-image-button');
+        const acceptedFilesCount = myDropzone.files.length;
+        const existingFilesCount = imageFiles.length;
+
+        // Log untuk memeriksa jumlah file
+        console.log('Accepted Files Count:', acceptedFilesCount);
+        console.log('Existing Files Count:', existingFilesCount);
+
+        // Hitung total file
+        const totalFiles = acceptedFilesCount + existingFilesCount;
+
+        console.log('Total Files:', totalFiles);
+
+        // Periksa apakah total file lebih dari 4
+        if (totalFiles >= 5) {
+            button.classList.add('btn-disabled');
+            button.style.pointerEvents = 'none';
+        } else {
+            button.classList.remove('btn-disabled');
+            button.style.pointerEvents = 'auto';
+        }
+    }
+
     // Looping setiap file gambar yang ada
     imageFiles.forEach((file) => {
         const mockFile = {
@@ -361,28 +442,15 @@ function formatRupiah($amount)
         myDropzone.emit("thumbnail", mockFile, file.path);
         myDropzone.emit("complete", mockFile);
 
+        // Menghapus gambar yang sudah ada
         mockFile.previewElement.querySelector("[data-dz-remove]").addEventListener("click", function() {
             deleteImage(mockFile.id);
+            // Hapus file dari daftar manual jika dihapus
+            imageFiles.splice(imageFiles.indexOf(file), 1); // Menghapus file dari imageFiles
+            // Perbarui state tombol
+            updateButtonState();
         });
     });
-
-    function updateButtonState() {
-        const button = document.getElementById('upload-image-button');
-        const acceptedFilesCount = myDropzone.files.length;
-        const existingFilesCount = imageFiles.length;
-
-        // Hitung total file
-        const totalFiles = acceptedFilesCount + existingFilesCount;
-
-        // Periksa apakah total file lebih dari 4
-        if (totalFiles >= 5) {
-            button.classList.add('disabled');
-            button.style.pointerEvents = 'none';
-        } else {
-            button.classList.remove('disabled');
-            button.style.pointerEvents = 'auto';
-        }
-    }
 
     updateButtonState();
 
@@ -392,6 +460,7 @@ function formatRupiah($amount)
         dropzoneItems.forEach(dropzoneItem => {
             dropzoneItem.style.display = '';
         });
+
         // Hitung total file yang ada termasuk file yang sudah ada dan yang baru ditambahkan
         const totalFiles = myDropzone.files.length + imageFiles.length;
 
@@ -406,7 +475,15 @@ function formatRupiah($amount)
 
         file.previewElement.querySelector("[data-dz-remove]").addEventListener("click", function() {
             deleteImage(file.id);
+            // Mengupdate state button setelah menghapus file
+            updateButtonState();
         });
+    });
+
+    // Event listener saat file dihapus
+    myDropzone.on("removedfile", function(file) {
+        // Update status tombol upload saat gambar dihapus
+        updateButtonState();
     });
 
     // Event listener untuk mengupdate progress bar
@@ -443,18 +520,6 @@ function formatRupiah($amount)
         var imgElement = dropzoneItem.querySelector("img");
         if (imgElement) {
             imgElement.src = dataUrl;
-        }
-    });
-
-    // Mengupdate state button ketika file dihapus
-    myDropzone.on("removedfile", function() {
-        updateButtonState();
-
-        const fileId = file.previewElement.dataset.id;
-
-        console.log(fileId, 'id image');
-        if (fileId) {
-            deleteImage(fileId);
         }
     });
 
