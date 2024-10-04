@@ -345,8 +345,6 @@
         data.append('longitude', longitude);
         data.append('posCode', posCode);
 
-        console.log(data, description, 'data');
-
         $("#updateStore").text('Loading...');
         await $.ajax({
             type: "POST",
