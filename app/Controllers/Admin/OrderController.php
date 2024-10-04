@@ -29,7 +29,7 @@ class OrderController extends BaseController
       'shipping' => 'ON PROCESS',
       'delivered' => 'DELIVERED',
       // 'done' => 'DONE',
-      // 'cancelled' => 'CANCELLED',
+      'cancelled' => 'REFUND',
     ];
 
     if (isset($statusMapping[$status])) {

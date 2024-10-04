@@ -46,10 +46,10 @@ $request = Services::request();
                             </li>
                             <!-- <li class="nav-item">
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "done" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/done") ?>">Done</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link <?= $request->uri->getSegment(4) == "cancelled" ? "active" : "" ?>" href="<?= base_url("/admin/reportOrder/status/cancelled") ?>">Cancel</a>
-                            </li> -->
+                            </li>
                         </ul>
                         <!-- <ul class="nav nav-tabs" id="myTab-1" role="tablist">
                             <li class="nav-item">
@@ -114,7 +114,7 @@ $request = Services::request();
                                                                 case "DONE":
                                                                     echo "<div class='badge badge-pill badge-success'>Done</div>";
                                                                     break;
-                                                                case "CANCELLED":
+                                                                case "REFUND":
                                                                     echo "<div class='badge badge-pill badge-danger'>Cancel</div>";
                                                                     break;
                                                                 case "PAID":
