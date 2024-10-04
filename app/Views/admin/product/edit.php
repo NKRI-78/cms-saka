@@ -258,6 +258,7 @@ function formatRupiah($amount)
         // var imageOld = $("#imageOld").val();
         // let image = $('#imageProduct')[0].files[0];
         // let imageId = $('#imageId').val();
+        var oldImagePaths = JSON.parse($("#imagePath").val() || "[]");
 
         if (!title) {
             toastr.error('Title is required');
@@ -290,7 +291,7 @@ function formatRupiah($amount)
         }
 
         // Memastikan bahwa setidaknya satu gambar dipilih
-        if (myDropzone.files.length === 0) {
+        if (myDropzone.files.length === 0 && oldImagePaths.length === 0) {
             toastr.error('The image cannot be empty');
             return;
         }
