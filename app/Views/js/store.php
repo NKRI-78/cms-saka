@@ -327,7 +327,7 @@
         var longitude = document.getElementById("longitude").value;
         var posCode = $("#posCode").val();
 
-        console.log(latitude, longitude, 'mm');
+        console.log(latitude, longitude, description, 'mm');
 
         data.append('store_id', store_id);
         data.append('title', title);
@@ -345,7 +345,7 @@
         data.append('longitude', longitude);
         data.append('posCode', posCode);
 
-        console.log(data, 'data');
+        console.log(data, description, 'data');
 
         $("#updateStore").text('Loading...');
         await $.ajax({
@@ -357,9 +357,9 @@
             data: data,
             success: function(response) {
                 toastr.success('update store success');
-                // setInterval(function() {
-                //     location.href = `${baseUrl}/admin/officialStore`;
-                // }, 1500);
+                setInterval(function() {
+                    location.reload();
+                }, 1500);
             },
             error: function(err) {
                 toastr.error('something went wrong');
