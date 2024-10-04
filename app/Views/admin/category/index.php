@@ -73,18 +73,50 @@
 <?= view('js/admin'); ?>
 <script>
     function DeleteCategory(categoryId) {
-        $.ajax({
-            type: "post",
-            url: `${baseUrl}/admin/category/delete/${categoryId}`,
-            success: function(response) {
-                setInterval(function() {
-                    toastr.success('delete category success');
-                    location.reload();
-                }, 1500);
-            },
-            error: function(err) {
-                toastr.error(err);
-                console.error('Error:', err);
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Category ini akan dihapus!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "post",
+                    url: `${baseUrl}/admin/category/delete/${categoryId}`,
+                    success: function(response, textStatus, xhr) {
+                        if (xhr.status === 200) {
+                            Swal.fire(
+                                'Dihapus!',
+                                'Category berhasil dihapus.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 400) {
+                            Swal.fire({
+                                title: 'Tidak Dapat Dihapus!',
+                                text: 'Ada produk yang menggunakan kategori ini.',
+                                icon: 'error',
+                                timer: 3000, // 3 detik
+                                timerProgressBar: true, 
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                'Terjadi kesalahan. Silakan coba lagi.',
+                                'error'
+                            );
+                        }
+                        console.error('Error:', xhr);
+                    }
+                });
             }
         });
     }

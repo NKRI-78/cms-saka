@@ -76,6 +76,7 @@ class CategoryController extends BaseController
     {
         $result = curlHelper(getenv('API_URL') . '/commerce-service/category?categoryId=' . $categoryId, 'GET');
         $all = curlHelper(getenv('API_URL') . '/commerce-service/category', 'GET');
+
         $data["category"] = $result->data;
         $data["all"] = $all->data;
 
@@ -150,7 +151,7 @@ class CategoryController extends BaseController
         $session = Services::session();
 
         $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/' . $categoryId;
-
+        
         $req = $client->delete(
             $url,
             [
