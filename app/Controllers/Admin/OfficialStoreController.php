@@ -16,11 +16,18 @@ class OfficialStoreController extends BaseController
 
         $session = session();
         $user_id = $session->get('userId');
+        $userRole = session()->get('role');
 
-        $postData = [
-            'user_id' => $user_id
-            // 'user_id' => '61f19d24-3826-4f6d-8c80-121da8a2fc3a'
-        ];
+        if ($userRole === 'client') {
+            $postData = [
+                'user_id' => $user_id
+                // 'user_id' => '61f19d24-3826-4f6d-8c80-121da8a2fc3a'
+            ];
+        } else {
+            $postData = [
+                'user_id' => 'd5e06d55-6080-46a7-bdc1-d30a184d5e2a'
+            ];
+        }
 
         $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/stores';
 

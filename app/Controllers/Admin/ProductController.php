@@ -37,6 +37,8 @@ class ProductController extends BaseController
             return 'Rp ' . number_format($amount, 0, ',', '.');
         }
 
+        $userRole = session()->get('role');
+
         if (!empty($result)) {
             foreach ($result->data->products as $row) {
                 $nestedData['no'] = $no++;
@@ -44,25 +46,55 @@ class ProductController extends BaseController
                 $nestedData['stok'] = $row->stock;
                 $nestedData['category'] = $row->category->name;
                 $nestedData['price'] = formatRupiah($row->price);
-                $nestedData['action'] =
-                    '
-                    <div class="send-panel">
-                        <label class="ml-2 mb-0 iq-bg-primary rounded">
-                        <a href="' . base_url("admin/product/edit/$row->id") . '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit News">
+                // $nestedData['action'] =
+                //     '
+                //     <div class="send-panel">
+                //         <label class="ml-2 mb-0 iq-bg-primary rounded">
+                //         <a href="' . base_url("admin/product/edit/$row->id") . '" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit News">
+                //             <i class="ri-edit-line text-primary"></i>
+                //         </a>
+                //         </label>
+                //         <label class="ml-2 mb-0 iq-bg-primary rounded">
+                //             <a onclick="DetailProduct(\'' . $row->id . '\')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show Detail">
+                //                 <i class="ri-list-check-2 text-primary"></i>
+                //             </a>
+                //         </label>
+                //         <label class="ml-2 mb-0 iq-bg-primary rounded">
+                //             <a onclick="DeleteProduct(\'' . $row->id . '\')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Product">
+                //                 <i class="ri-delete-bin-line text-primary"></i>
+                //             </a>
+                //         </label>
+                //     </div>';
+                $actionButtons = '<div class="send-panel">';
+
+                if ($userRole === 'client') {
+                    $actionButtons .= '
+                    <label class="ml-2 mb-0 iq-bg-primary rounded">
+                        <a href="' . base_url("admin/product/edit/$row->id") . '" data-toggle="tooltip" data-placement="top" title="Edit Product">
                             <i class="ri-edit-line text-primary"></i>
                         </a>
-                        </label>
-                        <label class="ml-2 mb-0 iq-bg-primary rounded">
-                            <a onclick="DetailProduct(\'' . $row->id . '\')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show Detail">
-                                <i class="ri-list-check-2 text-primary"></i>
-                            </a>
-                        </label>
-                        <label class="ml-2 mb-0 iq-bg-primary rounded">
-                            <a onclick="DeleteProduct(\'' . $row->id . '\')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Product">
-                                <i class="ri-delete-bin-line text-primary"></i>
-                            </a>
-                        </label>
-                    </div>';
+                    </label>';
+                }
+
+                $actionButtons .= '
+                <label class="ml-2 mb-0 iq-bg-primary rounded">
+                    <a onclick="DetailProduct(\'' . $row->id . '\')" data-toggle="tooltip" data-placement="top" title="Show Detail">
+                        <i class="ri-list-check-2 text-primary"></i>
+                    </a>
+                </label>';
+
+                if ($userRole === 'client') {
+                    $actionButtons .= '
+                <label class="ml-2 mb-0 iq-bg-primary rounded">
+                    <a onclick="DeleteProduct(\'' . $row->id . '\')" data-toggle="tooltip" data-placement="top" title="Delete Product">
+                        <i class="ri-delete-bin-line text-primary"></i>
+                    </a>
+                </label>';
+                }
+
+                $actionButtons .= '</div>';
+
+                $nestedData['action'] = $actionButtons;
                 $data[] = $nestedData;
             }
         }

@@ -12,7 +12,9 @@
                         <div class="iq-header-title">
                             <h4 class="card-title">Data Category</h4>
                         </div>
-                        <a href="<?= base_url("/admin/category/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
+                        <?php if (session()->get('role') === 'client'): ?>
+                            <a href="<?= base_url("/admin/category/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
+                        <?php endif; ?>
                     </div>
                     <div class="iq-card-body">
                         <div class="table-responsive">
@@ -22,7 +24,9 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Name</th>
                                         <!-- <th scope="col">File Name</th> -->
-                                        <th scope="col">&emsp;&emsp;Action</th>
+                                        <?php if (session()->get('role') === 'client'): ?>
+                                            <th scope="col">&emsp;&emsp;Action</th>
+                                        <?php endif; ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,11 +36,13 @@
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $row->name ?></td>
-                                                <td>
-                                                    <div class="send-panel">
-                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DeleteCategory('<?= $row->id ?>')" data-toggle="tooltip" data-placement="top" title="Delete Category" data-original-title="Delete Category"> <i class="ri-delete-bin-line text-primary"></i></a> </label>
-                                                    </div>
-                                                </td>
+                                                <?php if (session()->get('role') === 'client'): ?>
+                                                    <td>
+                                                        <div class="send-panel">
+                                                            <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DeleteCategory('<?= $row->id ?>')" data-toggle="tooltip" data-placement="top" title="Delete Category" data-original-title="Delete Category"> <i class="ri-delete-bin-line text-primary"></i></a> </label>
+                                                        </div>
+                                                    </td>
+                                                <?php endif; ?>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php } ?>
@@ -105,7 +111,7 @@
                                 text: 'Ada produk yang menggunakan kategori ini.',
                                 icon: 'error',
                                 timer: 3000, // 3 detik
-                                timerProgressBar: true, 
+                                timerProgressBar: true,
                             });
                         } else {
                             Swal.fire(

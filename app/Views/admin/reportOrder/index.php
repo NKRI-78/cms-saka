@@ -133,7 +133,7 @@ $request = Services::request();
                                                         </td>
                                                         <td><?= date('j F Y, H:i:s', strtotime($row['created_at'])) ?></td>
                                                         <td>
-                                                            <?php if ($row['order_status'] == 'PAID') { ?>
+                                                            <?php if ($row['order_status'] == 'PAID' && session()->get('role') === 'client') { ?>
                                                                 <a onclick="ConfirmedProduct('<?= $row['transaction_id'] ?>' , '<?= $row['buyer']['id'] ?>', this)" class="btn mb-3 btn-success confirmedProduct" style="color: #fff;">Confirmed</a>
                                                             <?php } ?>
                                                             <a onclick="DetailProduct('<?= $row['transaction_id'] ?>')" class="btn mb-3 btn-primary" style="color: #fff;">Detail</a>

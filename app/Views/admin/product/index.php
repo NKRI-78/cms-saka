@@ -4,23 +4,29 @@
 
 <style>
     .carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: black; /* Warna latar belakang */
-    border-radius: 50%; /* Jika Anda ingin bentuk bulat */
-}
+    .carousel-control-next-icon {
+        background-color: black;
+        /* Warna latar belakang */
+        border-radius: 50%;
+        /* Jika Anda ingin bentuk bulat */
+    }
 
-.carousel-control-prev-icon::before,
-.carousel-control-next-icon::before {
-    color: white; /* Warna ikon */
-    font-size: 2rem; /* Ukuran ikon */
-}
+    .carousel-control-prev-icon::before,
+    .carousel-control-next-icon::before {
+        color: white;
+        /* Warna ikon */
+        font-size: 2rem;
+        /* Ukuran ikon */
+    }
 
-.carousel-inner img {
-    height: 250px;  /* Tinggi default untuk gambar */
-    width: 100%;  /* Lebar otomatis menyesuaikan dengan container */
-    object-fit: cover;  /* Menyesuaikan gambar untuk mengisi container tanpa merusak proporsi */
-}
-
+    .carousel-inner img {
+        height: 250px;
+        /* Tinggi default untuk gambar */
+        width: 100%;
+        /* Lebar otomatis menyesuaikan dengan container */
+        object-fit: cover;
+        /* Menyesuaikan gambar untuk mengisi container tanpa merusak proporsi */
+    }
 </style>
 
 <!--  Content  -->
@@ -33,7 +39,9 @@
                         <div class="iq-header-title">
                             <h4 class="card-title">Data Product</h4>
                         </div>
-                        <a href="<?= base_url("/admin/product/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
+                        <?php if (session()->get('role') === 'client'): ?>
+                            <a href="<?= base_url("/admin/product/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
+                        <?php endif; ?>
                     </div>
                     <div class="iq-card-body">
                         <div class="table-responsive">
