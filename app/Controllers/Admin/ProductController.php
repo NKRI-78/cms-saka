@@ -111,8 +111,25 @@ class ProductController extends BaseController
         $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/all', 'GET');
         $resultApp = curlHelper(getenv('ECOMMERCE_URL') . '/apps/v1/all', 'GET');
 
+        // Mencari ID berdasarkan nama yang diinginkan
+        $nameToFind = 'saka'; // Ganti dengan nama yang ingin dicari
+        $appData = $resultApp->data;
+
+        // Menggunakan array_filter untuk mencari id berdasarkan name
+        $filteredApp = array_filter($appData, function ($app) use ($nameToFind) {
+            return $app->name === $nameToFind;
+        });
+
+        // Mengambil id jika ditemukan
+        $appId = null;
+        if (!empty($filteredApp)) {
+            $app = reset($filteredApp); // Ambil elemen pertama yang cocok
+            $appId = $app->id; // Ambil id dari elemen tersebut
+        }
+
+        $data["selectedAppId"] = $appId;
         $data["category"] = $result->data;
-        $data["app"] = $resultApp->data;
+        // $data["app"] = $resultApp->data;
         $data["store"] = $resultStore['data'];
 
         return view("admin/product/create", $data);

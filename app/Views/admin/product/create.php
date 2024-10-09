@@ -74,7 +74,7 @@
                         <div class="new-user-info">
                             <form enctype="multipart/form-data">
                                 <div class="row">
-                                    <input type="text" id="app_id" value="<?= $app[0]->id ?>" hidden>
+                                    <input type="text" id="app_id" value="<?= $selectedAppId ?>" hidden>
                                     <input type="text" id="store_id" value="<?= $store['id'] ?>" hidden>
                                     <div class="form-group col-md-6">
                                         <label>Title:</label>
