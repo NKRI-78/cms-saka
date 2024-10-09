@@ -34,7 +34,18 @@ class Filters extends BaseConfig
 				'admin/event',
 				'admin/news',
 				'admin/member',
-				'admin/broadcast'
+				'admin/broadcast',
+				'admin/officialStore',
+				'admin/category',
+				'admin/category/create',
+				'admin/product',
+				'admin/product/create',
+				'admin/product/edit',
+				'admin/reportOrder/status/confirmed',
+				'admin/reportOrder/status/packing',
+				'admin/reportOrder/status/shipping',
+				'admin/reportOrder/status/delivered',
+				'admin/reportOrder/status/cancelled'
 			],
 			'after'  => [
 				'/',
