@@ -9,7 +9,7 @@ class CategoryController extends BaseController
 {
     public function index()
     {
-        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/all', 'GET');
+        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/all?app_name=saka', 'GET');
         $data["category"] = $result->data;
 
         return view("admin/category/index", $data);
