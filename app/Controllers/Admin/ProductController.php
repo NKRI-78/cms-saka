@@ -393,7 +393,7 @@ class ProductController extends BaseController
     public function edit($productId)
     {
         $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/detail/' . $productId, 'GET');
-        $resultCategory = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/all', 'GET');
+        $resultCategory = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category?app_name=saka', 'GET');
 
         $data["product"] = $result->data->product;
         $data["category"] = $resultCategory->data;
