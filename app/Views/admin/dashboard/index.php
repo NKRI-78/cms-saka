@@ -7,17 +7,7 @@
   <div class="container-fluid" style="margin-top: 170px;">
     <div class="row">
       
-      <?php if (session()->get('role') === 'client') : ?>
-        <div class="card" style="width: 18rem; margin-top: -11rem; margin-left: 1rem; background-color: #9c8045; height: 10rem; border-radius: 1rem;">
-          <div class="card-body">
-            <h3 class="card-title" style="margin-top: 1.5rem; font-weight:600; color: #fff;">Total Pembayaran:</h3>
-            <h4 class="card-subtitle mb-2 text-muted" style="font-weight:400; color: #fff !important;"><?= 'Rp.' . number_format($revenue['revenue'], 0, ',', '.') ?></h4>
-            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a> -->
-          </div>
-        </div>
-      <?php endif; ?>
+      
 
       <div class="col-sm-12">
         <div class="wrapper"><br>
