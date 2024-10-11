@@ -140,7 +140,7 @@ class ProductController extends BaseController
             return $e->getMessage();
         }
 
-        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category/all', 'GET');
+        $result = curlHelper(getenv('ECOMMERCE_URL') . '/ecommerces/v1/products/category?app_name=saka', 'GET');
         $resultApp = curlHelper(getenv('ECOMMERCE_URL') . '/apps/v1/all', 'GET');
 
         // Mencari ID berdasarkan nama yang diinginkan
