@@ -474,4 +474,12 @@
     // });
 
     // window.initMap = initMap;
+
+    $('#title').on('input', function() {
+        let inputValue = $(this).val();
+        let capitalizedValue = inputValue.replace(/\b\w/g, function(char) {
+            return char.toUpperCase();
+        });
+        $(this).val(capitalizedValue);
+    });
 </script>
