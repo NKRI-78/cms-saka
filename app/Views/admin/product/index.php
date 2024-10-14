@@ -40,7 +40,7 @@
                             <h4 class="card-title">Data Product</h4>
                         </div>
                         <?php if (session()->get('role') === 'client'): ?>
-                            <a href="<?= base_url("/admin/product/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
+                            <a href="#"  onclick="buttonAddProduct()" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
                         <?php endif; ?>
                     </div>
                     <div class="iq-card-body">
@@ -111,3 +111,20 @@
 <?= view('layouts/footer'); ?>
 <?= view('layouts/script'); ?>
 <?= view('js/product'); ?>
+<script>
+    function buttonAddProduct() {
+        var storeExists = <?= json_encode($storeExists) ?>;
+
+        if (!storeExists) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Toko tidak ada',
+                text: 'Silahkan buka toko terlebih dahulu!',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            window.location.href = "<?= base_url('/admin/product/create') ?>";
+        }
+    }
+</script>

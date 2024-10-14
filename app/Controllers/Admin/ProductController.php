@@ -9,7 +9,45 @@ class ProductController extends BaseController
 {
     public function index()
     {
-        return view("admin/product/index");
+        $client = new \GuzzleHttp\Client();
+        $session = Services::session();
+        $request = Services::request();
+
+        $session = session();
+        $user_id = $session->get('userId');
+
+        $postData = [
+            'user_id' => $user_id
+        ];
+
+        $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/stores';
+
+        try {
+            $response = $client->post(
+                $url,
+                [
+                    "body" => json_encode($postData),
+                    'headers' =>  [
+                        'Authorization' => 'Bearer ' . $session->get('token'),
+                        'Accept'        => 'application/json',
+                        'Content-Type'  => 'application/json',
+                    ]
+                ]
+            );
+            
+            $data = json_decode($response->getBody(), true);
+
+            if (isset($data['error']) && $data['error'] === true) {
+                $storeExists = false;
+            } else {
+                $storeExists = true;
+            }
+
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $storeExists = false;
+        }
+
+        return view("admin/product/index", ['storeExists' => $storeExists]);
     }
 
     public function getData()
