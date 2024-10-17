@@ -22,7 +22,10 @@
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" id="password" class="form-control mb-0" placeholder="Password">
+              <input type="password" id="password" class="form-control mb-0 form-control-password" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <input type="checkbox" class="form-checkbox"> Show password
             </div>
             <div class="d-inline-block w-100">
               <button type="button" id="login" class="btn btn-custom float-right" onclick="Login()">Sign in</button>
@@ -49,3 +52,14 @@
 
 <?= view('layouts/script'); ?>
 <?= view('js/login'); ?>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.form-checkbox').click(function() {
+      if ($(this).is(':checked')) {
+        $('.form-control-password').attr('type', 'text');
+      } else {
+        $('.form-control-password').attr('type', 'password');
+      }
+    });
+  });
+</script>

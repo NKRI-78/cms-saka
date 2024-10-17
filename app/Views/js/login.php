@@ -1,4 +1,10 @@
 <script>
+    $('input').keypress(function(event) {
+      if (event.which == 13) { // 13 is the Enter key
+        $("#login").click(); // Trigger the login button click
+      }
+    });
+
     Login = async () => {
         let data = new FormData();
         var phoneNumber = $("#phone_number").val();
