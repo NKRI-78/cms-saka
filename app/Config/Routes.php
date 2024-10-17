@@ -136,8 +136,8 @@ $routes->group('admin', function ($routes) {
   $routes->group('share', function ($routes) {
     $routes->get('ppob', 'ShareProfitController::ppob', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('ppob', 'ShareProfitController::ppobPost', ['namespace' => 'App\Controllers\Admin']);
-    $routes->get('payment-topup', 'ShareProfitController::topup', ['namespace' => 'App\Controllers\Admin']);
-    $routes->post('payment-topup', 'ShareProfitController::topupPost', ['namespace' => 'App\Controllers\Admin']);
+    // $routes->get('payment-topup', 'ShareProfitController::topup', ['namespace' => 'App\Controllers\Admin']);
+    // $routes->post('payment-topup', 'ShareProfitController::topupPost', ['namespace' => 'App\Controllers\Admin']);
     $routes->get('commerce', 'ShareProfitController::commerce', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('commerce', 'ShareProfitController::commercePost', ['namespace' => 'App\Controllers\Admin']);
   });
@@ -172,6 +172,11 @@ $routes->group('admin', function ($routes) {
     $routes->get('detail/(:any)', 'ProductController::detail/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('delete/(:any)', 'ProductController::delete/$1', ['namespace' => 'App\Controllers\Admin']);
     $routes->post('deleteImage', 'ProductController::deleteImage', ['namespace' => 'App\Controllers\Admin']);
+  });
+
+  $routes->group('topup', function ($routes) {
+    $routes->get('/', 'TopupController::index', ['namespace' => 'App\Controllers\Admin']);
+    $routes->post('getData', 'TopupController::getData', ['namespace' => 'App\Controllers\Admin']);
   });
 });
 

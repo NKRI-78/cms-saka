@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div class="iq-card-body">
-                        <div class="form-row">
+                        <!-- <div class="form-row">
                             <div class="col-md-2">
                                 <label>Start Date</label>
                                 <input type="date" class="form-control" id="start" style="height: 32px;">
@@ -27,16 +27,18 @@
                                 <label style="color: white;">Submit</label><br>
                                 <button onclick="shareTopup()" class="btn dark-icon btn-custom mb-3" style="height: 30px; padding: 2px .75rem !important;"><i class="ri-search-line" style="margin-bottom: 20px;"></i></button>
                             </div>
-                        </div>
-                        <br>
+                        </div> -->
+                        <!-- <br> -->
                         <div class="table-responsive">
                             <table class="table" id="shareTopup">
                                 <thead>
                                     <tr>
-                                        <th>Remark</th>
-                                        <th>Count</th>
-                                        <th>Total Amount</th>
-                                        <th>Total Partner</th>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Total Transaction</th>
+                                        <th>Date Transaction</th>
+                                        <th>Payment Method</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

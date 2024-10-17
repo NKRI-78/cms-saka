@@ -113,11 +113,11 @@ $request = Services::request();
                 <li class="<?= $request->uri->getSegment(2) == "product" ? "active" : "" ?>"><a href="<?= base_url("admin/product") ?>"><i class="ri-shopping-bag-line"></i>Produk</a></li>
               </ul>
             </li>
-            <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : ($request->uri->getSegment(3) == "payment-regis" ? "active" : ($request->uri->getSegment(3) == "payment-topup" ? "active" : ($request->uri->getSegment(3) == "commerce" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : "" )))) ?>">
+            <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : ($request->uri->getSegment(3) == "payment-regis" ? "active" : ($request->uri->getSegment(3) == "topup" ? "active" : ($request->uri->getSegment(3) == "commerce" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : "" )))) ?>">
               <a href="#share" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="true"><i class="ri-file-3-line"></i><span>Report</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
               <ul id="share" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : "" ?>"><a href="<?= base_url("admin/share/ppob") ?>" class="iq-waves-effect"><i class="ri-shopping-cart-2-line"></i><span>Ppob</span></a></li>
-                <li class="<?= $request->uri->getSegment(3) == "payment-topup" ? "active" : "" ?>"><a href="<?= base_url("admin/share/payment-topup") ?>" class="iq-waves-effect"><i class="ri-share-circle-line"></i><span>Topup</span></a></li>
+                <li class="<?= $request->uri->getSegment(3) == "topup" ? "active" : "" ?>"><a href="<?= base_url("admin/topup") ?>" class="iq-waves-effect"><i class="ri-share-circle-line"></i><span>Topup</span></a></li>
                 <li class="<?= $request->uri->getSegment(3) == "commerce" ? "active" : "" ?>"><a href="<?= base_url("admin/share/commerce") ?>" class="iq-waves-effect"><i class="ri-shopping-bag-line"></i><span>Jual Beli</span></a></li>
                 <li class="<?= $request->uri->getSegment(2) == "reportOrder" ? "active" : "" ?>"><a href="<?= base_url("admin/reportOrder/status/confirmed") ?>"><i class="ri-file-text-line"></i>Report Order</a></li>
               </ul>
