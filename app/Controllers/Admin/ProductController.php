@@ -382,13 +382,13 @@ class ProductController extends BaseController
             $body = [
                 "id" => $product_id,
                 "title" => $title,
-                "caption" => $caption,
+                "description" => $caption,
                 "price" => $price,
                 "weight" => $weight,
                 "stock" => $stock,
                 "is_draft" => 0,
                 "cat_id" => $category,
-                "app_id" => $app_id,
+                "app_name" => 'saka',
                 "store_id" => $store_id,
             ];
 
