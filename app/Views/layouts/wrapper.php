@@ -56,15 +56,15 @@ $request = Services::request();
                 <li class="<?= $request->uri->getSegment(2) == "courier" ? "active" : "" ?>"><a href="<?= base_url("admin/courier") ?>"><i class="ri-truck-line"></i>Courier</a></li>
               </ul>
             </li> -->
-            <li class="<?= $request->uri->getSegment(2) == "officialStore" ? "active" : ($request->uri->getSegment(2) == "category" ? "active" : ($request->uri->getSegment(2) == "product" ? "active" : ($request->uri->getSegment(2) == "configuration" ? "active" : ($request->uri->getSegment(2) == "courier" ? "active" : "")))) ?>">
+            <!-- <li class="<?= $request->uri->getSegment(2) == "officialStore" ? "active" : ($request->uri->getSegment(2) == "category" ? "active" : ($request->uri->getSegment(2) == "product" ? "active" : ($request->uri->getSegment(2) == "configuration" ? "active" : ($request->uri->getSegment(2) == "courier" ? "active" : "")))) ?>">
               <a href="#commerce" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="true"><i class="ri-store-2-line"></i><span>Commerce</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
               <ul id="commerce" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 <li class="<?= $request->uri->getSegment(2) == "officialStore" ? "active" : "" ?>"><a href="<?= base_url("admin/officialStore") ?>"><i class="ri-store-3-line"></i>Official Store</a></li>
                 <li class="<?= $request->uri->getSegment(2) == "category" ? "active" : "" ?>"><a href="<?= base_url("admin/category") ?>"><i class="ri-list-check"></i>Category</a></li>
                 <li class="<?= $request->uri->getSegment(2) == "product" ? "active" : "" ?>"><a href="<?= base_url("admin/product") ?>"><i class="ri-shopping-bag-line"></i>Produk</a></li>
               </ul>
-            </li>
-            <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : ($request->uri->getSegment(3) == "payment-regis" ? "active" : ($request->uri->getSegment(2) == "topup" ? "active" : ($request->uri->getSegment(3) == "commerce" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : "" )))) ?>">
+            </li> -->
+            <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : ($request->uri->getSegment(3) == "payment-regis" ? "active" : ($request->uri->getSegment(2) == "topup" ? "active" : ($request->uri->getSegment(3) == "commerce" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : "")))) ?>">
               <a href="#share" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="true"><i class="ri-file-3-line"></i><span>Report</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
               <ul id="share" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : "" ?>"><a href="<?= base_url("admin/share/ppob") ?>" class="iq-waves-effect"><i class="ri-shopping-cart-2-line"></i><span>Ppob</span></a></li>
@@ -79,7 +79,7 @@ $request = Services::request();
             <li class="<?= $request->uri->getSegment(2) == "member" ? "active" : "" ?>" style="margin-top:10px;">
               <a href="<?= base_url("admin/member") ?>" class="iq-waves-effect"><i class="ri-shield-user-line"></i><span>Member</span></a>
             </li>
-            <li class="<?= $request->uri->getSegment(2) == "member" ? "active" : "" ?>" style="margin-top:10px;">
+            <li class="<?= $request->uri->getSegment(2) == "scannerjoin" ? "active" : "" ?>" style="margin-top:10px;">
               <a href="<?= base_url("admin/scannerjoin") ?>" class="iq-waves-effect"><i class="ri-user-follow-line"></i><span>Scanner Join</span></a>
             </li>
             <li class="<?= $request->uri->getSegment(2) == "setting" ? "active" : "" ?>" style="margin-top:10px;">
@@ -105,15 +105,15 @@ $request = Services::request();
                 <li class="<?= $request->uri->getSegment(2) == "news" ? "active" : "" ?>"><a href="<?= base_url("admin/news") ?>"><i class="ri-newspaper-line"></i>News</a></li>
               </ul>
             </li>
-            <li class="<?= $request->uri->getSegment(2) == "officialStore" ? "active" : ($request->uri->getSegment(2) == "category" ? "active" : ($request->uri->getSegment(2) == "product" ? "active" : ($request->uri->getSegment(2) == "configuration" ? "active" : ($request->uri->getSegment(2) == "courier" ? "active" : "")))) ?>">
+            <!-- <li class="<?= $request->uri->getSegment(2) == "officialStore" ? "active" : ($request->uri->getSegment(2) == "category" ? "active" : ($request->uri->getSegment(2) == "product" ? "active" : ($request->uri->getSegment(2) == "configuration" ? "active" : ($request->uri->getSegment(2) == "courier" ? "active" : "")))) ?>">
               <a href="#commerce" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="true"><i class="ri-store-2-line"></i><span>Commerce</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
               <ul id="commerce" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 <li class="<?= $request->uri->getSegment(2) == "officialStore" ? "active" : "" ?>"><a href="<?= base_url("admin/officialStore") ?>"><i class="ri-store-3-line"></i>Official Store</a></li>
                 <li class="<?= $request->uri->getSegment(2) == "category" ? "active" : "" ?>"><a href="<?= base_url("admin/category") ?>"><i class="ri-list-check"></i>Category</a></li>
                 <li class="<?= $request->uri->getSegment(2) == "product" ? "active" : "" ?>"><a href="<?= base_url("admin/product") ?>"><i class="ri-shopping-bag-line"></i>Produk</a></li>
               </ul>
-            </li>
-            <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : ($request->uri->getSegment(3) == "payment-regis" ? "active" : ($request->uri->getSegment(2) == "topup" ? "active" : ($request->uri->getSegment(3) == "commerce" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : "" )))) ?>">
+            </li> -->
+            <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : ($request->uri->getSegment(3) == "payment-regis" ? "active" : ($request->uri->getSegment(2) == "topup" ? "active" : ($request->uri->getSegment(3) == "commerce" ? "active" : ($request->uri->getSegment(2) == "reportOrder" ? "active" : "")))) ?>">
               <a href="#share" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="true"><i class="ri-file-3-line"></i><span>Report</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
               <ul id="share" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                 <li class="<?= $request->uri->getSegment(3) == "ppob" ? "active" : "" ?>"><a href="<?= base_url("admin/share/ppob") ?>" class="iq-waves-effect"><i class="ri-shopping-cart-2-line"></i><span>Ppob</span></a></li>
@@ -128,7 +128,7 @@ $request = Services::request();
             <li class="<?= $request->uri->getSegment(2) == "member" ? "active" : "" ?>" style="margin-top:10px;">
               <a href="<?= base_url("admin/member") ?>" class="iq-waves-effect"><i class="ri-shield-user-line"></i><span>Member</span></a>
             </li>
-            <li class="<?= $request->uri->getSegment(2) == "member" ? "active" : "" ?>" style="margin-top:10px;">
+            <li class="<?= $request->uri->getSegment(2) == "scannerjoin" ? "active" : "" ?>" style="margin-top:10px;">
               <a href="<?= base_url("admin/scannerjoin") ?>" class="iq-waves-effect"><i class="ri-user-follow-line"></i><span>Scanner Join</span></a>
             </li>
             <li class="<?= $request->uri->getSegment(2) == "setting" ? "active" : "" ?>" style="margin-top:10px;">
