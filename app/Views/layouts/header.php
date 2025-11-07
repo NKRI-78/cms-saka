@@ -20,13 +20,13 @@
   <!-- Cdn -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-  
+
   <link rel="stylesheet" href="<?= base_url('public/assets/dropify/dropify.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url("public/assets/css/summernote.min.css") ?>">
   <link rel="stylesheet" href="<?= base_url("public/assets/css/switch.css") ?>">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css"> -->
-  
+
   <link rel="stylesheet" href="<?= base_url('public/assets/css/detailProduct.css') ?>">
 
-  <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/plugins/global/plugins.bundle.css') ?>" />
 </head>

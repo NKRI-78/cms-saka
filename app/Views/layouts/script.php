@@ -53,11 +53,11 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJD7w_-wHs4Pe5rWMf0ubYQFpAt2QF2RA&libraries=places&language=id&callback=initMap" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/dropzone@5/dist/min/dropzone.min.js"></script>
-  <script src="assets/plugins/global/plugins.bundle.js"></script>
+  <script src="<?= base_url('assets/plugins/global/plugins.bundle.js') ?>"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  
+
   <!-- CONSTANT -->
   <script>
     const baseUrl = '<?= base_url(); ?>';
