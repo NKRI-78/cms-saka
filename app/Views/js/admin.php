@@ -437,7 +437,7 @@
 
     $('#dataCommerceBanner').DataTable();
     $('#dataOrder').DataTable({
-        scrollX:true,
+        scrollX: true,
     });
     $('#dataCampaign').DataTable();
 
@@ -582,9 +582,9 @@
         });
     }
 
-    document.getElementById('nameCategory').addEventListener('input', function() {
-        this.value = capitalizeWords(this.value);
-    });
+    // document.getElementById('nameCategory').addEventListener('input', function() {
+    //     this.value = capitalizeWords(this.value);
+    // });
 
     CreateCategory = async () => {
         let data = new FormData();
@@ -884,37 +884,6 @@
             error: function(err) {
                 toastr.error('something went wrong');
                 $("#changePassword").text('Submit');
-            }
-        });
-    }
-
-    UpdateUser = async (userId) => {
-        let data = new FormData();
-        var userId = userId;
-        let fullname = $('#fullname').val();
-        let address = $('#address').val();
-
-        data.append('userId', userId);
-        data.append('fullname', fullname);
-        data.append('address', address);
-
-        $("#updateUser").text('Loading...');
-        await $.ajax({
-            type: "POST",
-            url: `${baseUrl}/admin/member/update`,
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function(response) {
-                toastr.success('update member success');
-                setInterval(function() {
-                    location.href = `${baseUrl}/admin/member`;
-                }, 1500);
-            },
-            error: function(err) {
-                toastr.error('something went wrong');
-                $("#updateUser").text('Submit');
             }
         });
     }

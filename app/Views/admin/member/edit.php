@@ -38,3 +38,35 @@
 <?= view('layouts/footer'); ?>
 <?= view('layouts/script'); ?>
 <?= view('js/admin'); ?>
+<script>
+    UpdateUser = async (userId) => {
+        let data = new FormData();
+        var userId = userId;
+        let fullname = $('#fullname').val();
+        let address = $('#address').val();
+
+        data.append('userId', userId);
+        data.append('fullname', fullname);
+        data.append('address', address);
+
+        $("#updateUser").text('Loading...');
+        await $.ajax({
+            type: "POST",
+            url: `${baseUrl}/admin/member/update`,
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function(response) {
+                toastr.success('update member success');
+                setInterval(function() {
+                    location.href = `${baseUrl}/admin/member`;
+                }, 1500);
+            },
+            error: function(err) {
+                toastr.error('something went wrong');
+                $("#updateUser").text('Submit');
+            }
+        });
+    }
+</script>
