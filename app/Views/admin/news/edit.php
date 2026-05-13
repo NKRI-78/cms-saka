@@ -1,6 +1,7 @@
 <?= view('layouts/header'); ?>
 <?= view('layouts/wrapper'); ?>
 <?= view('layouts/navbar'); ?>
+<?php $news = $news ?? []; ?>
 
 <div id="content-page" class="content-page">
     <div class="container-fluid">
@@ -17,6 +18,7 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <input type="text" id="newsId" value="<?= $news[0]->article_id ?>" hidden>
+                                    <input type="text" id="imageOld" name="imageOld" value="<?= $news[0]->Media[0]->path ?>" hidden>
                                     <div class="form-group col-md-6">
                                         <label>Title:</label>
                                         <input type="text" class="form-control" id="title" value="<?= $news[0]->title ?>">

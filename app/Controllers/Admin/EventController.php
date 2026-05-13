@@ -41,16 +41,51 @@ class EventController extends BaseController
             $shareValue = false;
         }
 
-        if ($_FILES['picture']) {
-            $bodyImage = [
-                "folder" => "images",
-                "subfolder" => "saka",
-                "media" => $_FILES['picture']
-            ];
+        // if ($_FILES['picture']) {
+        //     $bodyImage = [
+        //         "folder" => "images",
+        //         "subfolder" => "saka",
+        //         "media" => $_FILES['picture']
+        //     ];
 
-            $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        //     $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        // }
+
+        $image = $request->getFile('picture');
+
+        $path = null;
+
+        if ($image && $image->isValid()) {
+
+            try {
+                $mediaResponse = $client->post(getenv('API_MEDIA') . '/api/v1/media/upload-local', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $session->get('token'),
+                    ],
+                    'multipart' => [
+                        [
+                            'name' => 'folder',
+                            'contents' => 'Saka',
+                        ],
+                        [
+                            'name' => 'subfolder',
+                            'contents' => 'event',
+                        ],
+                        [
+                            'name'     => 'media',
+                            'contents' => fopen($image->getTempName(), 'r'),
+                            'filename' => $image->getClientName(),
+                        ],
+                    ],
+                ]);
+
+                $result = json_decode($mediaResponse->getBody(), true);
+
+                $path = $result['data']['path'] ?? null;
+            } catch (\Exception $e) {
+                echo 'Error uploading image: ' . $e->getMessage();
+            }
         }
-
 
         $url = getenv('API_URL') . '/content-service/event';
         $body = [
@@ -61,10 +96,12 @@ class EventController extends BaseController
             "end" => date("H:i", strtotime($end)),
             "location" => $location,
             "summary" => $summary,
-            "picture" => isset($_FILES['picture']) ? $result->data->media_id : '',
+            "picture" => $path ?? '',
             "share_news" => $shareValue,
         ];
-        
+
+        // var_dump($body, "body");
+        // die;
 
         $req = $client->post(
             $url,
@@ -78,7 +115,7 @@ class EventController extends BaseController
         );
     }
 
-    public function edit($eventId)
+    public function edit(int $eventId)
     {
         $result = curlHelper(getenv('API_URL') . '/content-service/event/' . $eventId, 'GET');
         $data["event"] = $result->body;
@@ -91,7 +128,7 @@ class EventController extends BaseController
         $client = new \GuzzleHttp\Client();
         $session = Services::session();
         $request = Services::request();
-        
+
         $eventId = $request->getPost('eventId');
         $start = $request->getPost('start');
         $end = $request->getPost('end');
@@ -100,20 +137,58 @@ class EventController extends BaseController
         $description = $request->getPost('description');
         $location = $request->getPost('location');
         $summary = $request->getPost('summary');
+        $image = $request->getFile('picture');
+        $imageOld = $request->getPost('imageOld');
 
-        if (isset($_FILES['picture']) == false) {
-            $result = curlPortHelper(getenv('API_URL') . '/content-service/event/', 'GET', [], $eventId);
-            $image = $result->body[0]->Media[0]->media_id;
-        }
+        // if (isset($_FILES['picture']) == false) {
+        //     $result = curlPortHelper(getenv('API_URL') . '/content-service/event/', 'GET', [], $eventId);
+        //     $image = $result->body[0]->Media[0]->media_id;
+        // }
 
-        if (isset($_FILES['picture'])) {
-            $bodyImage = [
-                "folder" => "images",
-                "subfolder" => "saka",
-                "media" => $_FILES['picture']
-            ];
+        // if (isset($_FILES['picture'])) {
+        //     $bodyImage = [
+        //         "folder" => "images",
+        //         "subfolder" => "saka",
+        //         "media" => $_FILES['picture']
+        //     ];
 
-            $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        //     $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        // }
+
+        $path = null;
+
+        if ($image && $image->isValid()) {
+            try {
+                $mediaResponse = $client->post(getenv('API_MEDIA') . '/api/v1/media/upload-local', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $session->get('token'),
+                    ],
+                    'multipart' => [
+                        [
+                            'name' => 'folder',
+                            'contents' => 'atj',
+                        ],
+                        [
+                            'name' => 'subfolder',
+                            'contents' => 'news',
+                        ],
+                        [
+                            'name'     => 'media',
+                            'contents' => fopen($image->getTempName(), 'r'),
+                            'filename' => $image->getClientName(),
+                        ],
+                    ],
+                ]);
+
+                $result = json_decode($mediaResponse->getBody(), true);
+
+                $path = $result['data']['path'] ?? null;
+            } catch (\Exception $e) {
+
+                echo 'Error uploading image: ' . $e->getMessage();
+            }
+        } else {
+            $path = $imageOld;
         }
 
         $url = getenv('API_URL') . '/content-service/event/' . $eventId;
@@ -125,9 +200,9 @@ class EventController extends BaseController
             "end" => date("H:i", strtotime($end)),
             "location" => $location,
             "summary" => $summary,
-            "picture" => isset($_FILES['picture']) ? $result->data->media_id : $image,
+            "picture" => $path,
         ];
-        
+
         $req = $client->put(
             $url,
             [
@@ -140,7 +215,7 @@ class EventController extends BaseController
         );
     }
 
-    public function detail($eventId)
+    public function detail(int $eventId)
     {
         $result = curlHelper(getenv('API_URL') . '/content-service/event/' . $eventId, 'GET');
 
@@ -149,7 +224,7 @@ class EventController extends BaseController
         ]);
     }
 
-    public function delete($eventId)
+    public function delete(int $eventId)
     {
         $client = new \GuzzleHttp\Client();
         $session = Services::session();

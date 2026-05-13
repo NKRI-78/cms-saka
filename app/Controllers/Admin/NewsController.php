@@ -31,16 +31,52 @@ class NewsController extends BaseController
         $content = $request->getPost('content');
         $content =  str_replace("&lsquo;", '"', str_replace("&rsquo;", '"', str_replace("&rdquo;", '"', str_replace("&ldquo;", '"', str_replace("&quot;", '"', str_replace("&nbsp;", "", $content))))));
 
-        if ($_FILES['image']) {
-            $bodyImage = [
-                "folder" => "images",
-                "subfolder" => "saka",
-                "media" => $_FILES['image']
-            ];
+        // if ($_FILES['image']) {
+        //     $bodyImage = [
+        //         "folder" => "images",
+        //         "subfolder" => "saka",
+        //         "media" => $_FILES['image']
+        //     ];
 
-            $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        //     $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        // }
+
+        $image = $request->getFile('image');
+
+        $path = null;
+
+        if ($image && $image->isValid()) {
+
+            try {
+                $mediaResponse = $client->post(getenv('API_MEDIA') . '/api/v1/media/upload-local', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $session->get('token'),
+                    ],
+                    'multipart' => [
+                        [
+                            'name' => 'folder',
+                            'contents' => 'Saka',
+                        ],
+                        [
+                            'name' => 'subfolder',
+                            'contents' => 'banner',
+                        ],
+                        [
+                            'name'     => 'media',
+                            'contents' => fopen($image->getTempName(), 'r'),
+                            'filename' => $image->getClientName(),
+                        ],
+                    ],
+                ]);
+
+                $result = json_decode($mediaResponse->getBody(), true);
+
+                $path = $result['data']['path'] ?? null;
+            } catch (\Exception $e) {
+
+                echo 'Error uploading image: ' . $e->getMessage();
+            }
         }
-
 
         $url = getenv('API_URL') . '/content-service/article';
         $body = [
@@ -48,7 +84,7 @@ class NewsController extends BaseController
             "highlight" => intval($highlight),
             "title" => $title,
             "type" => "news",
-            "picture" => isset($_FILES['image']) ? $result->data->media_id : '',
+            "picture" => $path ?? '',
         ];
 
         $req = $client->post(
@@ -63,7 +99,7 @@ class NewsController extends BaseController
         );
     }
 
-    public function edit($newsId)
+    public function edit(int $newsId)
     {
         $result = curlHelper(getenv('API_URL') . '/content-service/article/' . $newsId, 'GET');
         $data["news"] = $result->body;
@@ -82,20 +118,58 @@ class NewsController extends BaseController
         $highlight = $request->getPost('highlight');
         $content = $request->getPost('content');
         $content =  str_replace("&lsquo;", '"', str_replace("&rsquo;", '"', str_replace("&rdquo;", '"', str_replace("&ldquo;", '"', str_replace("&quot;", '"', str_replace("&nbsp;", "", $content))))));
-        
-        if (isset($_FILES['image']) == false) {
-            $result = curlPortHelper(getenv('API_URL') . '/content-service/article/', 'GET', [], $newsId);
-            $image = $result->body[0]->Media[0]->media_id;
-        }
+        $image = $request->getFile('image');
+        $imageOld = $request->getPost('imageOld');
 
-        if (isset($_FILES['image'])) {
-            $bodyImage = [
-                "folder" => "images",
-                "subfolder" => "saka",
-                "media" => $_FILES['image']
-            ];
+        // if (isset($_FILES['image']) == false) {
+        //     $result = curlPortHelper(getenv('API_URL') . '/content-service/article/', 'GET', [], $newsId);
+        //     $image = $result->body[0]->Media[0]->media_id;
+        // }
 
-            $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        // if (isset($_FILES['image'])) {
+        //     $bodyImage = [
+        //         "folder" => "images",
+        //         "subfolder" => "saka",
+        //         "media" => $_FILES['image']
+        //     ];
+
+        //     $result = curlImageHelper(getenv('API_URL') . '/media-service/upload', $bodyImage);
+        // }
+
+        $path = null;
+
+        if ($image && $image->isValid()) {
+            try {
+                $mediaResponse = $client->post(getenv('API_MEDIA') . '/api/v1/media/upload-local', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $session->get('token'),
+                    ],
+                    'multipart' => [
+                        [
+                            'name' => 'folder',
+                            'contents' => 'atj',
+                        ],
+                        [
+                            'name' => 'subfolder',
+                            'contents' => 'news',
+                        ],
+                        [
+                            'name'     => 'media',
+                            'contents' => fopen($image->getTempName(), 'r'),
+                            'filename' => $image->getClientName(),
+                        ],
+                    ],
+                ]);
+
+                $result = json_decode($mediaResponse->getBody(), true);
+
+                $path = $result['data']['path'] ?? null;
+            } catch (\Exception $e) {
+
+                echo 'Error uploading image: ' . $e->getMessage();
+            }
+        } else {
+            $path = $imageOld;
         }
 
         $url = getenv('API_URL') . '/content-service/article/' . $newsId;
@@ -104,7 +178,7 @@ class NewsController extends BaseController
             "highlight" => intval($highlight),
             "title" => $title,
             "type" => "news",
-            "picture" => isset($_FILES['image']) ? $result->data->media_id : $image,
+            "picture" => $path,
         ];
 
         $req = $client->put(
@@ -119,7 +193,7 @@ class NewsController extends BaseController
         );
     }
 
-    public function detail($newsId)
+    public function detail(int $newsId)
     {
         $result = curlHelper(getenv('API_URL') . '/content-service/article/' . $newsId, 'GET');
 
@@ -128,7 +202,7 @@ class NewsController extends BaseController
         ]);
     }
 
-    public function delete($newsId)
+    public function delete(int $newsId)
     {
         $client = new \GuzzleHttp\Client();
         $session = Services::session();

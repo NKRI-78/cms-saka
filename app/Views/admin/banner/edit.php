@@ -1,6 +1,7 @@
 <?= view('layouts/header'); ?>
 <?= view('layouts/wrapper'); ?>
 <?= view('layouts/navbar'); ?>
+<?php $banner = $banner ?? []; ?>
 
 <div id="content-page" class="content-page">
     <div class="container-fluid">
@@ -18,6 +19,7 @@
                                 <?php foreach ($banner as $row) : ?>
                                     <div class="row">
                                         <input type="text" value="<?= $row->carousel_id ?>" id="bannerId" hidden>
+                                        <input type="text" id="bannerOldImage" name="banner_old_image" value="<?= $row->Media[0]->path ?>" hidden>
                                         <div class="form-group col-md-6">
                                             <label>Name:</label>
                                             <input type="text" class="form-control" id="name" value="<?= $row->name ?>">

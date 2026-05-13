@@ -1,6 +1,7 @@
 <?= view('layouts/header'); ?>
 <?= view('layouts/wrapper'); ?>
 <?= view('layouts/navbar'); ?>
+<?php $event = $event ?? []; ?>
 
 <!--  Content  -->
 <div id="content-page" class="content-page">

@@ -1,6 +1,8 @@
 <?= view('layouts/header'); ?>
 <?= view('layouts/wrapper'); ?>
 <?= view('layouts/navbar'); ?>
+<?php $event = $event ?? []; ?>
+
 
 <div id="content-page" class="content-page">
     <div class="container-fluid">
@@ -17,6 +19,8 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <input type="text" id="eventId" value="<?= $event[0]->event_id ?>" hidden>
+                                    <input type="text" id="imageOld" name="imageOld" value="<?= $event[0]->Media[0]->path ?>" hidden>
+
                                     <div class="form-group col-md-12">
                                         <label>Title:</label>
                                         <input type="text" class="form-control" id="summary" value="<?= $event[0]->summary ?>">

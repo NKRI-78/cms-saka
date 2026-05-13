@@ -158,11 +158,13 @@
         var name = $("#name").val();
         var placement = $("#placement").val();
         let image = $('#imageBanner')[0].files[0];
+        var bannerOld = $("#bannerOldImage").val();
 
         data.append('bannerId', bannerId);
         data.append('name', name);
         data.append('placement', placement);
         data.append('image', image);
+        data.append('bannerOld', bannerOld);
 
         $("#updateBanner").text('Loading...');
         await $.ajax({
@@ -247,6 +249,7 @@
         let picture = $('#picture')[0].files[0];
         var location = $("#location").val();
         var summary = $("#summary").val();
+        var imageOld = $("#imageOld").val();
 
         data.append('eventId', eventId);
         data.append('start', start);
@@ -257,6 +260,7 @@
         data.append('picture', picture);
         data.append('location', location);
         data.append('summary', summary);
+        data.append('imageOld', imageOld);
 
         $("#updateEvent").text('Loading...');
         await $.ajax({
@@ -291,9 +295,23 @@
             data: data,
             success: function(response) {
                 var data = JSON.parse(response);
+                const startDate = new Date(data.data[0].start_date);
+                const endDate = new Date(data.data[0].end_date);
+
+                const formattedStart = startDate.toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                });
+
+                const formattedEnd = endDate.toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                });
 
                 $("#imageEvent").attr('src', `${data.data[0].Media[0].path}`);
-                $("#eventDate").html(data.data[0].event_date);
+                $("#eventDate").html(formattedStart + " - " + formattedEnd);
                 $("#startEnd").html(data.data[0].start + " - " + data.data[0].end);
                 $("#description").html(data.data[0].description);
                 $("#location").html(data.data[0].location);
@@ -345,12 +363,14 @@
         var highlight = $("#highlight").val();
         let image = $('#imageNews')[0].files[0];
         let content = $("#froalaContent").val();
+        var imageOld = $("#imageOld").val();
 
         data.append('newsId', newsId);
         data.append('title', title);
         data.append('highlight', highlight);
         data.append('image', image);
         data.append('content', content);
+        data.append('imageOld', imageOld);
 
         $("#updateNews").text('Loading...');
         await $.ajax({
