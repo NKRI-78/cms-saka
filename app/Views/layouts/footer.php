@@ -5,7 +5,7 @@
               <div class="col-lg-6">
               </div>
               <div class="col-lg-6 text-right">
-                  Copyright 2021 <a href="https://connexist.com/" target="_blank">Connexist</a> All Rights Reserved.
+                  Copyright 2026 <a href="https://langitdigital78.com/" target="_blank">Langit Digital 78</a> All Rights Reserved.
               </div>
           </div>
       </div>
