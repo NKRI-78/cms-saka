@@ -81,70 +81,70 @@ class DashboardController extends BaseController
     $session = session();
     $data = [];
 
-    if ($session->get('role') !== 'admin') {
-      $client = new \GuzzleHttp\Client();
-      $session = Services::session();
-      $request = Services::request();
+    // if ($session->get('role') !== 'admin') {
+    //   $client = new \GuzzleHttp\Client();
+    //   $session = Services::session();
+    //   $request = Services::request();
 
-      $user_id = $session->get('userId');
+    //   $user_id = $session->get('userId');
 
-      $postData = [
-        'user_id' => $user_id
-      ];
+    //   $postData = [
+    //     'user_id' => $user_id
+    //   ];
 
-      $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/stores';
+    //   $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/stores';
 
-      try {
-        $response = $client->post(
-          $url,
-          [
-            "body" => json_encode($postData),
-            'headers' => [
-              'Authorization' => 'Bearer ' . $session->get('token'),
-              'Accept'        => 'application/json',
-              'Content-Type'  => 'application/json',
-            ]
-          ]
-        );
+    //   try {
+    //     $response = $client->post(
+    //       $url,
+    //       [
+    //         "body" => json_encode($postData),
+    //         'headers' => [
+    //           'Authorization' => 'Bearer ' . $session->get('token'),
+    //           'Accept'        => 'application/json',
+    //           'Content-Type'  => 'application/json',
+    //         ]
+    //       ]
+    //     );
 
-        $resultStore = json_decode($response->getBody(), true);
+    //     $resultStore = json_decode($response->getBody(), true);
 
-        // Cek apakah response status 200 atau apakah store ada
-        if (isset($resultStore['status']) && $resultStore['status'] == 200 && isset($resultStore['data']['id'])) {
-          $storeId = $resultStore['data']['id'];
+    //     // Cek apakah response status 200 atau apakah store ada
+    //     if (isset($resultStore['status']) && $resultStore['status'] == 200 && isset($resultStore['data']['id'])) {
+    //       $storeId = $resultStore['data']['id'];
 
-          $body = [
-            'store_id' => $storeId
-          ];
+    //       $body = [
+    //         'store_id' => $storeId
+    //       ];
 
-          $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/stores/revenue';
+    //       $url = getenv('ECOMMERCE_URL') . '/ecommerces/v1/stores/revenue';
 
-          $responseRevenue = $client->post(
-            $url,
-            [
-              "body" => json_encode($body),
-              'headers' => [
-                'Authorization' => 'Bearer ' . $session->get('token'),
-                'Accept'        => 'application/json',
-                'Content-Type'  => 'application/json',
-              ]
-            ]
-          );
+    //       $responseRevenue = $client->post(
+    //         $url,
+    //         [
+    //           "body" => json_encode($body),
+    //           'headers' => [
+    //             'Authorization' => 'Bearer ' . $session->get('token'),
+    //             'Accept'        => 'application/json',
+    //             'Content-Type'  => 'application/json',
+    //           ]
+    //         ]
+    //       );
 
-          $resultRevenue = json_decode($responseRevenue->getBody(), true);
+    //       $resultRevenue = json_decode($responseRevenue->getBody(), true);
 
-          $data["revenue"] = $resultRevenue['data'];
-        } else {
-          // Jika store tidak ditemukan
-          $data["revenue"] =  ['revenue' => 0];
-          $data["message"] = "Store tidak ditemukan";
-        }
-      } catch (\GuzzleHttp\Exception\RequestException $e) {
-        // Tangani jika ada error dari request API
-        $data["revenue"] = [0];
-        $data["message"] = "Error fetching store data: " . $e->getMessage();
-      }
-    }
+    //       $data["revenue"] = $resultRevenue['data'];
+    //     } else {
+    //       // Jika store tidak ditemukan
+    //       $data["revenue"] =  ['revenue' => 0];
+    //       $data["message"] = "Store tidak ditemukan";
+    //     }
+    //   } catch (\GuzzleHttp\Exception\RequestException $e) {
+    //     // Tangani jika ada error dari request API
+    //     $data["revenue"] = [0];
+    //     $data["message"] = "Error fetching store data: " . $e->getMessage();
+    //   }
+    // }
 
     return view("admin/dashboard/index", $data);
   }
