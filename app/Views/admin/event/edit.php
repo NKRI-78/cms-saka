@@ -19,7 +19,7 @@
                             <form enctype="multipart/form-data">
                                 <div class="row">
                                     <input type="text" id="eventId" value="<?= $event[0]->event_id ?>" hidden>
-                                    <input type="text" id="imageOld" name="imageOld" value="<?= $event[0]->Media[0]->path ?>" hidden>
+                                    <input type="text" id="imageOld" name="imageOld" value="<?= $event[0]->path ?>" hidden>
 
                                     <div class="form-group col-md-12">
                                         <label>Title:</label>
@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Picture (Recommendation Size 700 x 525):</label>
-                                        <input type="file" class="dropify" id="picture" data-default-file="<?= isset($event[0]->Media[0]->path) ? $event[0]->Media[0]->path : "" ?>" data-height="200" />
+                                        <input type="file" class="dropify" id="picture" data-default-file="<?= isset($event[0]->path) ? $event[0]->path : "" ?>" data-height="200" />
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Location:</label>

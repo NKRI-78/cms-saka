@@ -62,7 +62,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <img src="" class="img-fluid" id="imageEvent" alt="image" style="width: 100%; height: auto; max-height: 250px;">
+                                        <img src="" class="img-fluid" id="imageEvent" alt="image" style="width: 100%; height: auto; max-height: 250px; object-fit:contain;">
                                         <br><br>
                                         <div class="row">
                                             <div class="col-md-6">

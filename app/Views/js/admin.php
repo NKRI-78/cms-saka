@@ -310,7 +310,7 @@
                     year: "numeric"
                 });
 
-                $("#imageEvent").attr('src', `${data.data[0].Media[0].path}`);
+                $("#imageEvent").attr('src', `${data.data[0].path}`);
                 $("#eventDate").html(formattedStart + " - " + formattedEnd);
                 $("#startEnd").html(data.data[0].start + " - " + data.data[0].end);
                 $("#description").html(data.data[0].description);
